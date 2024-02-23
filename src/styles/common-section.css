@@ -1,0 +1,17 @@
+
+
+.common__section {
+    background: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), 
+    url("../assets/images/blue-living-room-4k-blue-interior-modern-design-blue-walls.jpg") no-repeat center center;
+    background-size: cover;
+    padding: 100px 0px;
+    height: 300px;
+    display: flex;  
+    align-items: center;
+    justify-content: center;
+}
+
+.common__section h1 {
+    color: #fff;
+    font-weight: 600;
+}
