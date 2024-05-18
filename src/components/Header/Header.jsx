@@ -1,34 +1,32 @@
+// src/components/Header/Header.js
 import React, { useRef, useEffect } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
-
 import "./header.css";
-
 import { motion } from "framer-motion";
-
 import logo from "../../assets/images/eco-logo.png";
 import userIcon from "../../assets/images/user-icon.png";
-
 import { Container, Row } from "reactstrap";
 import { useSelector } from "react-redux";
 
 const nav__links = [
   {
     path: "home",
-    dispaly: "Home",
+    display: "Home",
   },
   {
     path: "shop",
-    dispaly: "Shop",
+    display: "Shop",
   },
   {
     path: "cart",
-    dispaly: "Cart",
+    display: "Cart",
   },
 ];
 
 const Header = () => {
   const headerRef = useRef(null);
   const totalQuantity = useSelector((state) => state.cart.totalQuantity);
+  const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
 
   const menuRef = useRef(null);
   const navigate = useNavigate();
@@ -60,12 +58,16 @@ const Header = () => {
     navigate("/cart");
   };
 
+  const navigateToHome = () => {
+    navigate("/home");
+  };
+
   return (
     <header className="header" ref={headerRef}>
       <Container>
         <Row>
           <div className="nav__wrapper">
-            <div className="logo">
+            <div className="logo" onClick={navigateToHome}>
               <img src={logo} alt="logo_Image" />
               <div>
                 <h1>Ecommerce</h1>
@@ -79,23 +81,47 @@ const Header = () => {
                     <NavLink
                       to={item.path}
                       className={(navClass) =>
-                        navClass.isActive ? "nav__avtive" : ""
+                        navClass.isActive ? "nav__active" : ""
                       }
                     >
-                      {item.dispaly}
+                      {item.display}
                     </NavLink>
                   </li>
                 ))}
+                {isLoggedIn && (
+                  <>
+                    <li className="nav__item">
+                      <NavLink
+                        to="purchase"
+                        className={(navClass) =>
+                          navClass.isActive ? "nav__active" : ""
+                        }
+                      >
+                        Purchase
+                      </NavLink>
+                    </li>
+                    <li className="nav__item">
+                      <NavLink
+                        to="MyAccount"
+                        className={(navClass) =>
+                          navClass.isActive ? "nav__active" : ""
+                        }
+                      >
+                        My Account
+                      </NavLink>
+                    </li>
+                  </>
+                )}
               </ul>
             </div>
 
             <div className="nav__icons">
               <span className="fav__icon">
-                <i class="ri-heart-line"></i>
+                <i className="ri-heart-line"></i>
                 <span className="badge">1</span>
               </span>
               <span className="cart__icon" onClick={navigateToCart}>
-                <i class="ri-shopping-bag-3-line"></i>
+                <i className="ri-shopping-bag-3-line"></i>
                 <span className="badge">{totalQuantity}</span>
               </span>
               <span>
@@ -107,7 +133,7 @@ const Header = () => {
               </span>
               <div className="mobile__menu">
                 <span onClick={menuToggle}>
-                  <i class="ri-menu-line"></i>
+                  <i className="ri-menu-line"></i>
                 </span>
               </div>
             </div>
