@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 
 import CommonSection from "../components/UI/CommonSection";
 import Helmet from "../components/Helmet/Helmet";
@@ -13,12 +13,50 @@ const Shop = () => {
 
   const handleFilter = (e) => {
     const filterValue = e.target.value;
+    /// Change affter add data base
     if (filterValue === "sofa") {
       const filteredProducts = products.filter(
         (item) => item.category === "sofa"
       );
       setProductsData(filteredProducts);
     }
+
+    if (filterValue === "mobile") {
+      const filteredProducts = products.filter(
+        (item) => item.category === "mobile"
+      );
+      setProductsData(filteredProducts);
+    }
+
+    if (filterValue === "chair") {
+      const filteredProducts = products.filter(
+        (item) => item.category === "chair"
+      );
+      setProductsData(filteredProducts);
+    }
+
+    if (filterValue === "wireless") {
+      const filteredProducts = products.filter(
+        (item) => item.category === "wireless"
+      );
+      setProductsData(filteredProducts);
+    }
+
+    if (filterValue === "watch") {
+      const filteredProducts = products.filter(
+        (item) => item.category === "watch"
+      );
+      setProductsData(filteredProducts);
+    }
+  };
+
+  const handleSearch = (e) => {
+    const searchTerm = e.target.value;
+    const searchedProducts = products.filter((item) =>
+      item.productName.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+
+    setProductsData(searchedProducts);
   };
 
   return (
@@ -28,7 +66,7 @@ const Shop = () => {
       <section>
         <Container>
           <Row>
-            <Col lg="3" md="3">
+            <Col lg="3" md="6">
               <div className="filter__widget">
                 <select onChange={handleFilter}>
                   <option>Filter By Category</option>
@@ -40,7 +78,7 @@ const Shop = () => {
                 </select>
               </div>
             </Col>
-            <Col lg="3" md="3">
+            <Col lg="3" md="6" className="text-end">
               <div className="filter__widget">
                 <select>
                   <option>Sort By</option>
@@ -49,9 +87,13 @@ const Shop = () => {
                 </select>
               </div>
             </Col>
-            <Col lg="6" md="6">
+            <Col lg="6" md="12">
               <div className="search__box">
-                <input type="text" placeholder="Search.........." />
+                <input
+                  type="text"
+                  placeholder="Search.........."
+                  onChange={handleSearch}
+                />
                 <span>
                   <i class="ri-search-line"></i>
                 </span>
@@ -64,7 +106,7 @@ const Shop = () => {
           <Container>
             <Row>
               {productsData.length === 0 ? (
-                <h1>No Products Found</h1>
+                <h1 className="text-center fs-2">No Products Found</h1>
               ) : (
                 <ProductsList data={productsData} />
               )}
