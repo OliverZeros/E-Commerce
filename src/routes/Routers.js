@@ -7,6 +7,7 @@ import Checkout from "../pages/Checkout";
 import Signup from "../pages/Signup";
 import Survey from "../pages/Survey";
 import Shop from "../pages/Shop";
+import Profile from "../pages/Profile";
 import ProductDetail from "../pages/ProductDetails";
 
 const Routers = () => {
@@ -19,6 +20,7 @@ const Routers = () => {
       <Route path="checkout" element={<Checkout />} />
       <Route path="signup" element={<Signup />} />
       <Route path="survey" element={<Survey />} />
+      <Route path="profile" element={<Profile />} />
       <Route path="shop" element={<Shop />} />
       <Route path="shop/:id" element={<ProductDetail />} />
     </Routes>

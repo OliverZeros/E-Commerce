@@ -7,14 +7,23 @@ import { Container, Row, Col } from "reactstrap";
 import { motion } from "framer-motion";
 import { cartActions } from "../redux/slices/cartSlice";
 import { useSelector, useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 import { Link } from "react-router-dom";
 
 const Cart = () => {
+  const isLoggedIn = useSelector((state) => (state.auth.token ? true : false));
   const cartItems = useSelector((state) => state.cart.cartItems);
   const totalAmount = useSelector((state) => state.cart.totalAmount);
+  const navigate = useNavigate();
 
-  console.log(totalAmount);
+  const handleCheckout = () => {
+    if (isLoggedIn) {
+      navigate("/checkout");
+    } else {
+      navigate("/login");
+    }
+  };
 
   return (
     <Helmet title="Cart">
@@ -57,13 +66,15 @@ const Cart = () => {
                 taxes and shipping will calculate in checkout
               </p>
               <div>
-                <button className="buy__btn w-100">
-                  <Link to="/checkout">Checkout</Link>
+                <button onClick={handleCheckout} className="buy__btn w-100">
+                  Checkout
                 </button>
 
-                <button className="buy__btn w-100 mt-3">
-                  <Link to="/shop">Continue Shopping</Link>
-                </button>
+                <Link to="/shop">
+                  <button className="buy__btn w-100 mt-3">
+                    Continue Shopping
+                  </button>
+                </Link>
               </div>
             </Col>
           </Row>

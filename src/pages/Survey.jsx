@@ -1,12 +1,21 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import Helmet from "../components/Helmet/Helmet";
+import { useNavigate } from "react-router-dom";
+import { Container, Row, Col, Form, FormGroup } from "reactstrap";
+import CommonSection from "../components/UI/CommonSection";
+import { useSelector } from "react-redux";
+import axios from "axios";
+
+import "../styles/survey.css";
 
 function Survey() {
-  const [type, setType] = useState([]);
+  const [category, setCategory] = useState([]);
   const [color, setColor] = useState([]);
   const [size, setSize] = useState([]);
-  const [style, setStyle] = useState([]);
+  const [model, setModel] = useState([]);
+  const token = useSelector((state) => state.auth.token);
+
   const navigate = useNavigate();
 
   const handleCheckboxChange = (setter, value) => {
@@ -17,137 +26,188 @@ function Survey() {
     );
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    const surveyData = { type, color, size, style };
-    console.log(surveyData);
+
+    console.log(category, color, size, model);
+    console.log(token);
+    const response = await axios.post(
+      "http://192.168.102.8:3000/user/survey",
+      {
+        category,
+        color,
+        size,
+        model,
+      },
+      {
+        headers: {
+          Authorization: token,
+        },
+      }
+    );
+    const data = response.data;
+    console.log(data);
+
     toast.success("Survey submitted! Shop Now!");
-    navigate("/shop");
+    navigate("/login");
   };
 
   return (
-    <div>
-      <h2>Let us know about your needs</h2>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label>Type of Interior:</label>
-          <div>
-            <label>
-              <input
-                type="checkbox"
-                value="Living Room"
-                onChange={() => handleCheckboxChange(setType, "Living Room")}
-              />
-              Living Room
-            </label>
-            <label>
-              <input
-                type="checkbox"
-                value="Bedroom"
-                onChange={() => handleCheckboxChange(setType, "Bedroom")}
-              />
-              Bedroom
-            </label>
-            <label>
-              <input
-                type="checkbox"
-                value="Kitchen"
-                onChange={() => handleCheckboxChange(setType, "Kitchen")}
-              />
-              Kitchen
-            </label>
-          </div>
-        </div>
-        <div>
-          <label>Preferred Color:</label>
-          <div>
-            <label>
-              <input
-                type="checkbox"
-                value="Red"
-                onChange={() => handleCheckboxChange(setColor, "Red")}
-              />
-              Red
-            </label>
-            <label>
-              <input
-                type="checkbox"
-                value="Blue"
-                onChange={() => handleCheckboxChange(setColor, "Blue")}
-              />
-              Blue
-            </label>
-            <label>
-              <input
-                type="checkbox"
-                value="Green"
-                onChange={() => handleCheckboxChange(setColor, "Green")}
-              />
-              Green
-            </label>
-          </div>
-        </div>
-        <div>
-          <label>Preferred Size:</label>
-          <div>
-            <label>
-              <input
-                type="checkbox"
-                value="Small"
-                onChange={() => handleCheckboxChange(setSize, "Small")}
-              />
-              Small
-            </label>
-            <label>
-              <input
-                type="checkbox"
-                value="Medium"
-                onChange={() => handleCheckboxChange(setSize, "Medium")}
-              />
-              Medium
-            </label>
-            <label>
-              <input
-                type="checkbox"
-                value="Large"
-                onChange={() => handleCheckboxChange(setSize, "Large")}
-              />
-              Large
-            </label>
-          </div>
-        </div>
-        <div>
-          <label>Preferred Style:</label>
-          <div>
-            <label>
-              <input
-                type="checkbox"
-                value="Modern"
-                onChange={() => handleCheckboxChange(setStyle, "Modern")}
-              />
-              Modern
-            </label>
-            <label>
-              <input
-                type="checkbox"
-                value="Classic"
-                onChange={() => handleCheckboxChange(setStyle, "Classic")}
-              />
-              Classic
-            </label>
-            <label>
-              <input
-                type="checkbox"
-                value="Rustic"
-                onChange={() => handleCheckboxChange(setStyle, "Rustic")}
-              />
-              Rustic
-            </label>
-          </div>
-        </div>
-        <button type="submit">Submit Survey</button>
-      </form>
-    </div>
+    <Helmet title={"Survey"}>
+      {console.log(token)}
+      <CommonSection title="Let us know about your needs" />
+      <section>
+        <Container>
+          <Row>
+            <Col lg="6" className="m-auto text-center">
+              <Form className="auth__form" onSubmit={handleSubmit}>
+                <FormGroup className="form__group">
+                  <p>Type of Interior:</p>
+                  <div>
+                    <label>
+                      <input
+                        type="checkbox"
+                        value="Sofa"
+                        onChange={() =>
+                          handleCheckboxChange(setCategory, "Sofa")
+                        }
+                      />
+                      Sofa
+                    </label>
+                    <label>
+                      <input
+                        type="checkbox"
+                        value="Chair"
+                        onChange={() =>
+                          handleCheckboxChange(setCategory, "Chair")
+                        }
+                      />
+                      Chair
+                    </label>
+                    <label>
+                      <input
+                        type="checkbox"
+                        value="Clock"
+                        onChange={() =>
+                          handleCheckboxChange(setCategory, "Clock")
+                        }
+                      />
+                      Clock
+                    </label>
+                  </div>
+                </FormGroup>
+
+                <FormGroup className="form__group">
+                  <div>
+                    <p className="mt-4">Interested Color:</p>
+                    <div>
+                      <label>
+                        <input
+                          type="checkbox"
+                          value="Red"
+                          onChange={() => handleCheckboxChange(setColor, "Red")}
+                        />
+                        Light
+                      </label>
+                      <label>
+                        <input
+                          type="checkbox"
+                          value="Blue"
+                          onChange={() =>
+                            handleCheckboxChange(setColor, "Blue")
+                          }
+                        />
+                        Dark
+                      </label>
+                    </div>
+                  </div>
+                </FormGroup>
+
+                <FormGroup className="form__group">
+                  <div>
+                    <p className="mt-4 ">Preferred Size:</p>
+                    <div>
+                      <label>
+                        <input
+                          type="checkbox"
+                          value="Small"
+                          onChange={() =>
+                            handleCheckboxChange(setSize, "Small")
+                          }
+                        />
+                        Small
+                      </label>
+                      <label>
+                        <input
+                          type="checkbox"
+                          value="Medium"
+                          onChange={() =>
+                            handleCheckboxChange(setSize, "Medium")
+                          }
+                        />
+                        Medium
+                      </label>
+                      <label>
+                        <input
+                          type="checkbox"
+                          value="Large"
+                          onChange={() =>
+                            handleCheckboxChange(setSize, "Large")
+                          }
+                        />
+                        Large
+                      </label>
+                    </div>
+                  </div>
+                </FormGroup>
+
+                <FormGroup className="form__group">
+                  <div>
+                    <p className="mt-4">Interested Style:</p>
+                    <div>
+                      <label>
+                        <input
+                          type="checkbox"
+                          value="Modern"
+                          onChange={() =>
+                            handleCheckboxChange(setModel, "Modern")
+                          }
+                        />
+                        Modern
+                      </label>
+                      <label>
+                        <input
+                          type="checkbox"
+                          value="Classic"
+                          onChange={() =>
+                            handleCheckboxChange(setModel, "Classic")
+                          }
+                        />
+                        Classic
+                      </label>
+                      <label>
+                        <input
+                          type="checkbox"
+                          value="Rustic"
+                          onChange={() =>
+                            handleCheckboxChange(setModel, "Rustic")
+                          }
+                        />
+                        Rustic
+                      </label>
+                    </div>
+                  </div>
+                </FormGroup>
+
+                <button type="submit" className="buy__btn auth__btn">
+                  Shopping Now
+                </button>
+              </Form>
+            </Col>
+          </Row>
+        </Container>
+      </section>
+    </Helmet>
   );
 }
 

@@ -1,4 +1,3 @@
-// src/components/Header/Header.js
 import React, { useRef, useEffect } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import "./header.css";
@@ -26,7 +25,7 @@ const nav__links = [
 const Header = () => {
   const headerRef = useRef(null);
   const totalQuantity = useSelector((state) => state.cart.totalQuantity);
-  const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
+  const isLoggedIn = useSelector((state) => (state.auth.token ? true : false));
 
   const menuRef = useRef(null);
   const navigate = useNavigate();
@@ -88,11 +87,11 @@ const Header = () => {
                     </NavLink>
                   </li>
                 ))}
-                {isLoggedIn && (
+                {isLoggedIn ? (
                   <>
                     <li className="nav__item">
                       <NavLink
-                        to="purchase"
+                        to="/purchase"
                         className={(navClass) =>
                           navClass.isActive ? "nav__active" : ""
                         }
@@ -102,15 +101,26 @@ const Header = () => {
                     </li>
                     <li className="nav__item">
                       <NavLink
-                        to="MyAccount"
+                        to="/profile"
                         className={(navClass) =>
                           navClass.isActive ? "nav__active" : ""
                         }
                       >
-                        My Account
+                        Profile
                       </NavLink>
                     </li>
                   </>
+                ) : (
+                  <li className="nav__item">
+                    <NavLink
+                      to="/login"
+                      className={(navClass) =>
+                        navClass.isActive ? "nav__active" : ""
+                      }
+                    >
+                      Login
+                    </NavLink>
+                  </li>
                 )}
               </ul>
             </div>

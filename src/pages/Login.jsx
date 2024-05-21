@@ -1,67 +1,80 @@
 import React from "react";
 import { useState } from "react";
 import Helmet from "../components/Helmet/Helmet";
+import { useNavigate, Link } from "react-router-dom";
+import { Container, Row, Col, Form, FormGroup } from "reactstrap";
 import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
 import { login } from "../redux/slices/authSlice";
+import axios from "axios";
+
+import "../styles/login.css";
 
 const Login = () => {
-  const [username, setUsername] = useState("");
+  const [email, setemail] = useState("");
   const [password, setPassword] = useState("");
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const handleUsernameChange = (e) => {
-    setUsername(e.target.value);
+  const handleEmailChange = (e) => {
+    setemail(e.target.value);
   };
 
   const handlePasswordChange = (e) => {
     setPassword(e.target.value);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-
-    const user = { username };
-    dispatch(login(user));
+    const response = await axios.post("http://192.168.102.8:3000/auth/login", {
+      email,
+      password,
+    });
+    const data = response.data;
+    const token = data.bearer;
+    dispatch(login(token));
     navigate("/home");
   };
 
   return (
     <Helmet title={"Login"}>
-      <div>
-        <h2>Login</h2>
-        <form onSubmit={handleSubmit}>
-          <div>
-            <label htmlFor="username">Username:</label>
-            <input
-              type="text"
-              id="username"
-              value={username}
-              onChange={handleUsernameChange}
-            />
-          </div>
-          <div>
-            <label htmlFor="password">Password:</label>
-            <input
-              type="password"
-              id="password"
-              value={password}
-              onChange={handlePasswordChange}
-            />
-          </div>
+      <section>
+        <Container>
+          <Row>
+            <Col lg="6" className="m-auto text-center">
+              <h3 className="fw-bold mb-4">Login</h3>
 
-          <div>
-            <button type="submit">Login</button>
-            <button
-              type="button"
-              onClick={() => (window.location.href = "/signup")}
-            >
-              Sign Up
-            </button>
-          </div>
-        </form>
-      </div>
+              <Form className="auth__form" onSubmit={handleSubmit}>
+                <FormGroup className="form__group">
+                  <input
+                    type="text"
+                    id="email"
+                    value={email}
+                    onChange={handleEmailChange}
+                    placeholder="Enter your email"
+                  />
+                </FormGroup>
+
+                <FormGroup className="form__group">
+                  <input
+                    type="password"
+                    id="password"
+                    value={password}
+                    onChange={handlePasswordChange}
+                    placeholder="Enter your password"
+                  />
+                </FormGroup>
+
+                <button type="submit" className="buy__btn auth__btn">
+                  Login
+                </button>
+                <p>
+                  Don't have account? <Link to="/signup">Create account</Link>
+                </p>
+              </Form>
+            </Col>
+          </Row>
+        </Container>
+      </section>
     </Helmet>
   );
 };

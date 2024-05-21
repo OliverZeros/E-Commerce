@@ -18,13 +18,15 @@ import Clock from "../components/UI/Clock";
 
 import counterImg from "../assets/images/counter-timer-img.png";
 
+import { useSelector } from "react-redux";
+
 const Home = () => {
   const [trendingProducts, setTrendingProducts] = useState([]);
   const [bestSalesProducts, setBestSalesProducts] = useState([]);
   const [mobileProducts, setMobileProducts] = useState([]);
   const [wirelessProducts, setWirelessProducts] = useState([]);
   const [popularProducts, setPopularProducts] = useState([]);
-  
+  const token = useSelector((state) => state.auth.token);
 
   const year = new Date().getFullYear();
 
@@ -58,6 +60,7 @@ const Home = () => {
 
   return (
     <Helmet title="Home">
+      {console.log(token)}
       <section className="hero__section">
         <Container>
           <Row>
@@ -146,7 +149,7 @@ const Home = () => {
       </section>
 
       <section className="popular__category">
-      <Container>
+        <Container>
           <Row>
             <Col lg="12" className="text-center mb-5">
               <h2 className="section__title">Popular in Category</h2>
