@@ -3,6 +3,13 @@
 
 /*  css variables */
 :root {
+  --main-bg: #2a3447;
+  --soft-bg: #384256;
+  --dark-bg: #222b3c;
+  --main-color: white;
+  --soft-color: #ddd;
+  --dark-color: #2a3447;
+
   --card-bg-01: #fdefe6;
   --card-bg-02: #d6e5fb;
   --card-bg-03: #ceebe9;
@@ -55,22 +62,21 @@ a {
   color: unset;
 }
 
-immg{
+immg {
   width: 100%;
 }
 
-section{
+section {
   padding: 60px 0px;
 }
 
-.section__title{
+.section__title {
   color: var(--primary-color);
   font-weight: 600;
 }
 
-@media only screen and (max-width: 768px){
-  section{
+@media only screen and (max-width: 768px) {
+  section {
     padding: 40px 0px;
   }
 }
-

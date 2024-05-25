@@ -9,6 +9,12 @@ import Survey from "../pages/Survey";
 import Shop from "../pages/Shop";
 import Profile from "../pages/Profile";
 import ProductDetail from "../pages/ProductDetails";
+import AdminMain from "../admin/page/AdminMain";
+import AddProducts from "../admin/page/AddProducts";
+import AllProducts from "../admin/page/AllProducts";
+import Dashboard from "../admin/page/Dashboard.jsx";
+import AllUsers from "../admin/page/AllUsers.jsx";
+import AllOrders from "../admin/page/AllOrders.jsx";
 
 const Routers = () => {
   return (
@@ -23,6 +29,13 @@ const Routers = () => {
       <Route path="profile" element={<Profile />} />
       <Route path="shop" element={<Shop />} />
       <Route path="shop/:id" element={<ProductDetail />} />
+      <Route path="admin" element={<AdminMain />}>
+        <Route path="all-products" element={<AllProducts />} />
+        <Route path="add-products" element={<AddProducts />} />
+        <Route path="all-users" element={<AllUsers />} />
+        <Route path="dashboard" element={<Dashboard />} />
+        <Route path="all-orders" element={<AllOrders />} />
+      </Route>
     </Routes>
   );
 };
