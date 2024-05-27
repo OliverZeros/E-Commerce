@@ -40,7 +40,7 @@ const AddProducts = () => {
       imageUrl,
       productType,
     };
-    // await axios.post("http://192.168.102.8:3000/products", productData);
+    // await axios.post("https://ece-project.adaptable.app/products", productData);
     navigate("/admin/all-products");
   };
 

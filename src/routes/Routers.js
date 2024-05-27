@@ -14,7 +14,7 @@ import AddProducts from "../admin/page/AddProducts";
 import AllProducts from "../admin/page/AllProducts";
 import Dashboard from "../admin/page/Dashboard.jsx";
 import AllUsers from "../admin/page/AllUsers.jsx";
-import AllOrders from "../admin/page/AllOrders.jsx";
+import AllReceipts from "../admin/page/AllReceipts.jsx";
 
 const Routers = () => {
   return (
@@ -34,7 +34,7 @@ const Routers = () => {
         <Route path="add-products" element={<AddProducts />} />
         <Route path="all-users" element={<AllUsers />} />
         <Route path="dashboard" element={<Dashboard />} />
-        <Route path="all-orders" element={<AllOrders />} />
+        <Route path="all-receipts" element={<AllReceipts />} />
       </Route>
     </Routes>
   );

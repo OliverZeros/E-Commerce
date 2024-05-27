@@ -32,7 +32,7 @@ function Survey() {
     console.log(category, color, size, model);
     console.log(token);
     const response = await axios.post(
-      "http://192.168.102.8:3000/user/survey",
+      "https://ece-project.adaptable.app/user/survey",
       {
         category,
         color,

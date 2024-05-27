@@ -21,8 +21,8 @@ const nav__links = [
     display: "Users",
   },
   {
-    path: "admin/all-orders",
-    display: "Orders",
+    path: "admin/all-receipts",
+    display: "Receipt",
   },
 ];
 

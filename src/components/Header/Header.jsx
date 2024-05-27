@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from "react";
+import React, { useRef, useEffect, useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import "./header.css";
 import { motion } from "framer-motion";
@@ -26,6 +26,7 @@ const Header = () => {
   const headerRef = useRef(null);
   const totalQuantity = useSelector((state) => state.cart.totalQuantity);
   const isLoggedIn = useSelector((state) => (state.auth.token ? true : false));
+  const [showLogout, setShowLogout] = useState(false);
 
   const menuRef = useRef(null);
   const navigate = useNavigate();
@@ -59,6 +60,10 @@ const Header = () => {
 
   const navigateToHome = () => {
     navigate("/home");
+  };
+
+  const toggleProfileAction = () => {
+    setShowLogout(!showLogout);
   };
 
   return (
@@ -134,13 +139,25 @@ const Header = () => {
                 <i className="ri-shopping-bag-3-line"></i>
                 <span className="badge">{totalQuantity}</span>
               </span>
-              <span>
+              <div className="profile">
                 <motion.img
                   whileTap={{ scale: 1.2 }}
                   src={userIcon}
                   alt="user_Icon"
+                  onClick={toggleProfileAction}
                 />
-              </span>
+                {isLoggedIn ? (
+                  <div
+                    className="profile_action"
+                    onClick={toggleProfileAction}
+                    style={{
+                      display: showLogout ? "block" : "none",
+                    }}
+                  >
+                    <span>Logout</span>
+                  </div>
+                ) : null}
+              </div>
               <div className="mobile__menu">
                 <span onClick={menuToggle}>
                   <i className="ri-menu-line"></i>

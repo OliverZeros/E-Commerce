@@ -29,7 +29,7 @@ const Signup = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const response = await axios.post(
-      "http://192.168.102.8:3000/auth/signup",
+      "https://ece-project.adaptable.app/auth/signup",
       {
         username,
         email,

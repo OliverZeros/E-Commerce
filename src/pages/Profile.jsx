@@ -17,7 +17,7 @@ const Profile = () => {
     const fetchUserData = async () => {
       try {
         const response = await axios.get(
-          "http://192.168.102.8:3000/user/profile",
+          "https://ece-project.adaptable.app/user/profile",
           {
             headers: {
               Authorization: token,

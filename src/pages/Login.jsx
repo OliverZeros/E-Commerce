@@ -25,10 +25,13 @@ const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const response = await axios.post("http://192.168.102.8:3000/auth/login", {
-      email,
-      password,
-    });
+    const response = await axios.post(
+      "https://ece-project.adaptable.app/auth/login",
+      {
+        email,
+        password,
+      }
+    );
     const data = response.data;
     const token = data.bearer;
     dispatch(login(token));

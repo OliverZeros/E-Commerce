@@ -24,27 +24,11 @@ const Checkout = () => {
                 </FormGroup>
 
                 <FormGroup className="form__group">
-                  <input type="email" placeholder="Enter your email" />
-                </FormGroup>
-
-                <FormGroup className="form__group">
                   <input type="number" placeholder="Enter your Phone number" />
                 </FormGroup>
 
                 <FormGroup className="form__group">
-                  <input type="text" placeholder="Enter your Postal code" />
-                </FormGroup>
-
-                <FormGroup className="form__group">
                   <input type="text" placeholder="Enter your Address" />
-                </FormGroup>
-
-                <FormGroup className="form__group">
-                  <input type="text" placeholder="Enter your City" />
-                </FormGroup>
-
-                <FormGroup className="form__group">
-                  <input type="text" placeholder="Enter your Country" />
                 </FormGroup>
               </Form>
             </Col>
