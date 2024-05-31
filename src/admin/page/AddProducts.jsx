@@ -1,26 +1,30 @@
 import React, { useState } from "react";
-// import Helmet from "../components/Helmet/Helmet";
 import { useNavigate } from "react-router-dom";
 import { Container, Row, Col, Form, FormGroup, Label, Input } from "reactstrap";
 import axios from "axios";
-
+import { useSelector } from "react-redux";
 import "../styles/add-products.css";
 
 const AddProducts = () => {
+  const token = useSelector((state) => state.auth.token);
   const [name, setName] = useState("");
   const [price, setPrice] = useState();
   const [slot, setSlot] = useState();
   const [rating, setRating] = useState();
   const [description, setDescription] = useState("");
-  const [imageUrl, setImageUrl] = useState([""]);
+  const [image, setImage] = useState(null);
   const [productType, setProductType] = useState({
-    category: "Sofa/Chair/Clock",
-    color: "Lght/Dark",
-    size: "Small/Medium/Large",
-    model: "Modern/Classic/Rustic",
+    category: "Sofa",
+    color: "Light",
+    size: "Small",
+    model: "Modern",
   });
 
   const navigate = useNavigate();
+
+  function handleChangeImg(e) {
+    setImage(e.target.files?.[0]);
+  }
 
   const handleProductTypeChange = (e) => {
     setProductType({
@@ -29,18 +33,34 @@ const AddProducts = () => {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    const productData = {
-      name,
-      price,
-      slot,
-      rating,
-      description,
-      imageUrl,
-      productType,
-    };
-    // await axios.post("https://ece-project.adaptable.app/products", productData);
+    const formData = new FormData();
+
+    formData.append("image", image);
+
+    formData.append("name", name);
+    formData.append("price", price);
+    formData.append("slot", slot);
+    formData.append("rating", rating);
+    formData.append("description", description);
+    formData.append("category", productType.category);
+    formData.append("color", productType.color);
+    formData.append("size", productType.size);
+    formData.append("model", productType.model);
+
+    const response = await axios.post(
+      "https://ece-project.adaptable.app/product/add",
+      formData,
+      {
+        headers: {
+          "Content-Type": "multipart/form-data",
+          Authorization: token,
+        },
+      }
+    );
+    console.log(response);
+
     navigate("/admin/all-products");
   };
 
@@ -112,66 +132,156 @@ const AddProducts = () => {
             </Col>
             <Col>
               <FormGroup className="form__group">
-                <Label for="imageUrl">Image URL</Label>
-                <Input
-                  type="text"
-                  id="imageUrl"
-                  value={imageUrl}
-                  onChange={(e) => setImageUrl(e.target.value)}
-                  placeholder="Enter image URL "
-                />
+                <Label for="image">Image</Label>
+                <Input type="file" id="images" onChange={handleChangeImg} />
               </FormGroup>
             </Col>
             <Col>
-              <FormGroup className="form__group">
+              <FormGroup className="type__product">
                 <Label for="category">Category</Label>
-                <Input
-                  type="text"
-                  name="category"
-                  id="category"
-                  value={productType.category}
-                  onChange={handleProductTypeChange}
-                  placeholder="Enter product category"
-                />
+                <div>
+                  <Label>
+                    <Input
+                      type="radio"
+                      name="category"
+                      value="Sofa"
+                      checked={productType.category === "Sofa"}
+                      onChange={handleProductTypeChange}
+                    />
+                    Sofa
+                  </Label>
+                  <Label>
+                    <Input
+                      type="radio"
+                      name="category"
+                      value="Table"
+                      checked={productType.category === "Table"}
+                      onChange={handleProductTypeChange}
+                    />
+                    Table
+                  </Label>
+                  <Label>
+                    <Input
+                      type="radio"
+                      name="category"
+                      value="Armchair"
+                      checked={productType.category === "Armchair"}
+                      onChange={handleProductTypeChange}
+                    />
+                    Armchair
+                  </Label>
+                  <Label>
+                    <Input
+                      type="radio"
+                      name="category"
+                      value="Bed"
+                      checked={productType.category === "Bed"}
+                      onChange={handleProductTypeChange}
+                    />
+                    Bed
+                  </Label>
+                </div>
               </FormGroup>
             </Col>
             <Col>
-              <FormGroup className="form__group">
+              <FormGroup className="type__product">
                 <Label for="color">Color</Label>
-                <Input
-                  type="text"
-                  name="color"
-                  id="color"
-                  value={productType.color}
-                  onChange={handleProductTypeChange}
-                  placeholder="Enter product color"
-                />
+                <div>
+                  <Label>
+                    <Input
+                      type="radio"
+                      name="color"
+                      value="Light"
+                      checked={productType.color === "Light"}
+                      onChange={handleProductTypeChange}
+                    />
+                    Light
+                  </Label>
+                  <Label>
+                    <Input
+                      type="radio"
+                      name="color"
+                      value="Dark"
+                      checked={productType.color === "Dark"}
+                      onChange={handleProductTypeChange}
+                    />
+                    Dark
+                  </Label>
+                </div>
               </FormGroup>
             </Col>
             <Col>
-              <FormGroup className="form__group">
+              <FormGroup className="type__product">
                 <Label for="size">Size</Label>
-                <Input
-                  type="text"
-                  name="size"
-                  id="size"
-                  value={productType.size}
-                  onChange={handleProductTypeChange}
-                  placeholder="Enter product size"
-                />
+                <div>
+                  <Label>
+                    <Input
+                      type="radio"
+                      name="size"
+                      value="Small"
+                      checked={productType.size === "Small"}
+                      onChange={handleProductTypeChange}
+                    />
+                    Small
+                  </Label>
+                  <Label>
+                    <Input
+                      type="radio"
+                      name="size"
+                      value="Medium"
+                      checked={productType.size === "Medium"}
+                      onChange={handleProductTypeChange}
+                    />
+                    Medium
+                  </Label>
+                  <Label>
+                    <Input
+                      type="radio"
+                      name="size"
+                      value="Large"
+                      checked={productType.size === "Large"}
+                      onChange={handleProductTypeChange}
+                    />
+                    Large
+                  </Label>
+                </div>
               </FormGroup>
             </Col>
             <Col>
-              <FormGroup className="form__group">
+              <FormGroup className="type__product">
                 <Label for="model">Model</Label>
-                <Input
-                  type="text"
-                  name="model"
-                  id="model"
-                  value={productType.model}
-                  onChange={handleProductTypeChange}
-                  placeholder="Enter product model"
-                />
+                <div>
+                  <Label>
+                    <Input
+                      type="radio"
+                      name="model"
+                      value="Modern"
+                      checked={productType.model === "Modern"}
+                      onChange={handleProductTypeChange}
+                    />
+                    Modern
+                  </Label>
+                  <Label>
+                    <Input
+                      type="radio"
+                      name="model"
+                      value="Classic"
+                      checked={productType.model === "Classic"}
+                      onChange={handleProductTypeChange}
+                    />
+                    Classic
+                  </Label>
+                  <Label>
+                    <Input
+                      type="radio"
+                      name="model"
+                      value="Rustic"
+                      checked={productType.model === "Rustic"}
+                      onChange={handleProductTypeChange}
+                    />
+                    Rustic
+                  </Label>
+                </div>
               </FormGroup>
             </Col>
             <Col lg="12" className="text-center">

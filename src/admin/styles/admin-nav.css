@@ -42,10 +42,25 @@
   cursor: pointer;
 }
 
-.nav__icons {
+.nav__icons .profile {
+  position: relative;
+  z-index: 9;
+}
+
+.nav__icons .profile .profile_action {
+  position: absolute;
+  top: 92%;
+  left: 0;
+  width: 150px;
+  z-index: 10;
+  padding: 15px;
   display: flex;
   align-items: center;
-  column-gap: 1rem;
+  flex-direction: column;
+  background: var(--card-bg-01);
+  line-height: 30px;
+  margin-top: 0;
+  cursor: pointer;
 }
 
 .nav__icons span i {

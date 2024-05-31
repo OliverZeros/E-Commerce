@@ -9,10 +9,10 @@ import Survey from "../pages/Survey";
 import Shop from "../pages/Shop";
 import Profile from "../pages/Profile";
 import ProductDetail from "../pages/ProductDetails";
+import Order from "../pages/Order";
 import AdminMain from "../admin/page/AdminMain";
 import AddProducts from "../admin/page/AddProducts";
 import AllProducts from "../admin/page/AllProducts";
-import Dashboard from "../admin/page/Dashboard.jsx";
 import AllUsers from "../admin/page/AllUsers.jsx";
 import AllReceipts from "../admin/page/AllReceipts.jsx";
 
@@ -26,6 +26,7 @@ const Routers = () => {
       <Route path="checkout" element={<Checkout />} />
       <Route path="signup" element={<Signup />} />
       <Route path="survey" element={<Survey />} />
+      <Route path="order" element={<Order />} />
       <Route path="profile" element={<Profile />} />
       <Route path="shop" element={<Shop />} />
       <Route path="shop/:id" element={<ProductDetail />} />
@@ -33,7 +34,6 @@ const Routers = () => {
         <Route path="all-products" element={<AllProducts />} />
         <Route path="add-products" element={<AddProducts />} />
         <Route path="all-users" element={<AllUsers />} />
-        <Route path="dashboard" element={<Dashboard />} />
         <Route path="all-receipts" element={<AllReceipts />} />
       </Route>
     </Routes>

@@ -25,4 +25,12 @@
   color: #fff;
 }
 
+.type__product div label {
+  color: #fff;
+  font-weight: 600;
+  margin-right: 30px;
+}
 
+.type__product input {
+  margin-right: 10px;
+}

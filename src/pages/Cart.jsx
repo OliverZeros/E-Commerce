@@ -59,11 +59,11 @@ const Cart = () => {
               <div>
                 <h6 className="d-flex align-item-center justify-content-between">
                   Subtotal
-                  <span className="fs-4 fw-bold">${totalAmount}</span>
+                  <span className="fs-4 fw-bold">{totalAmount} VNĐ</span>
                 </h6>
               </div>
               <p className="fs-6 mt-2">
-                taxes and shipping will calculate in checkout
+                Thuế và phí vận chuyển sẽ được tính khi thanh toán
               </p>
               <div>
                 <button onClick={handleCheckout} className="buy__btn w-100">
@@ -96,7 +96,7 @@ const Tr = ({ item }) => {
         <img src={item.imgUrl} alt="" />
       </td>
       <td>{item.productName}</td>
-      <td>${item.price}</td>
+      <td>{item.price} VNĐ</td>
       <td>{item.quantity}</td>
       <td>
         <motion.i

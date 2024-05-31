@@ -34,8 +34,13 @@ const Login = () => {
     );
     const data = response.data;
     const token = data.bearer;
+    const isadmin = data.isAdmin;
     dispatch(login(token));
-    navigate("/home");
+    if (isadmin) {
+      navigate("/admin/all-products");
+    } else {
+      navigate("/home");
+    }
   };
 
   return (

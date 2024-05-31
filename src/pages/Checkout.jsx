@@ -1,7 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import { Container, Row, Col, Form, FormGroup } from "reactstrap";
 import Helmet from "../components/Helmet/Helmet";
+import { toast } from "react-toastify";
 import CommonSection from "../components/UI/CommonSection";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
 import "../styles/checkout.css";
 
 import { useSelector } from "react-redux";
@@ -9,7 +12,33 @@ import { useSelector } from "react-redux";
 const Checkout = () => {
   const totalQty = useSelector((state) => state.cart.totalQuantity);
   const totalAmount = useSelector((state) => state.cart.totalAmount);
+  const cartItems = useSelector((state) => state.cart.cartItems);
+  const [name, setName] = useState("");
+  const [phoneNumber, setPhoneNumber] = useState("");
+  const [address, setAddress] = useState("");
 
+  const token = useSelector((state) => state.auth.token);
+  const navigate = useNavigate();
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const response = await axios.post(
+      "https://ece-project.adaptable.app/receipt/create",
+      {
+        name,
+        phoneNumber,
+        address,
+      },
+      {
+        headers: {
+          Authorization: token,
+        },
+      }
+    );
+
+    toast.success("Đã thanh toán thành công! Cảm ơn bạn đã mua hàng!");
+    navigate("/home");
+  };
   return (
     <Helmet title="Checkout">
       <CommonSection title="Checkout" />
@@ -20,15 +49,33 @@ const Checkout = () => {
               <h6 className="mb-4 fw-bold">Billing Information</h6>
               <Form className="billing__form">
                 <FormGroup className="form__group">
-                  <input type="text" placeholder="Enter your name" />
+                  <input
+                    type="text"
+                    placeholder="Enter your name"
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                    required
+                  />
                 </FormGroup>
 
                 <FormGroup className="form__group">
-                  <input type="number" placeholder="Enter your Phone number" />
+                  <input
+                    type="number"
+                    placeholder="Enter your Phone number"
+                    value={phoneNumber}
+                    onChange={(e) => setPhoneNumber(e.target.value)}
+                    required
+                  />
                 </FormGroup>
 
                 <FormGroup className="form__group">
-                  <input type="text" placeholder="Enter your Address" />
+                  <input
+                    type="text"
+                    placeholder="Enter your Address"
+                    value={address}
+                    onChange={(e) => setAddress(e.target.value)}
+                    required
+                  />
                 </FormGroup>
               </Form>
             </Col>
@@ -39,16 +86,19 @@ const Checkout = () => {
                   Total Qty: <span>{totalQty}</span>
                 </h6>
                 <h6>
-                  Subtotal: <span>${totalAmount}</span>
+                  Subtotal: <span>{totalAmount} VNĐ</span>
                 </h6>
                 <h6>
                   Shipping: <span>0</span>
                 </h6>
                 <h6>Free shipping</h6>
                 <h4>
-                  Total Cost: <span>${totalAmount}</span>
+                  Total Cost: <span>{totalAmount} VNĐ</span>
                 </h4>
-                <button className="buy__btn auth__btn w-100">
+                <button
+                  className="buy__btn auth__btn w-100"
+                  onClick={handleSubmit}
+                >
                   Place an order
                 </button>
               </div>

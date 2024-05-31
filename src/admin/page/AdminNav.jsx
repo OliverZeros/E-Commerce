@@ -1,17 +1,14 @@
-import React, { useRef, useEffect } from "react";
+import React, { useRef, useEffect, useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import "../styles/admin-nav.css";
 import { motion } from "framer-motion";
 import logo from "../../assets/images/eco-logo.png";
 import userIcon from "../../assets/images/user-icon.png";
 import { Container, Row } from "reactstrap";
-// import { useSelector } from "react-redux";
+import { logout } from "../../redux/slices/authSlice";
+import { useDispatch } from "react-redux";
 
 const nav__links = [
-  {
-    path: "admin/dashboard",
-    display: "Dashboard",
-  },
   {
     path: "admin/all-products",
     display: "Products",
@@ -28,9 +25,11 @@ const nav__links = [
 
 const Header = () => {
   const headerRef = useRef(null);
+  const [showLogout, setShowLogout] = useState(false);
 
   const menuRef = useRef(null);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const stickyHeaderFunc = () => {
     window.addEventListener("scroll", () => {
@@ -56,6 +55,16 @@ const Header = () => {
   };
 
   const navigateToHome = () => {
+    navigate("/home");
+  };
+
+  const toggleProfileAction = () => {
+    setShowLogout(!showLogout);
+  };
+
+  const logoutUser = () => {
+    dispatch(logout());
+    // setShowLogout(!showLogout);
     navigate("/home");
   };
 
@@ -89,13 +98,23 @@ const Header = () => {
             </div>
 
             <div className="nav__icons">
-              <span>
+              <div className="profile">
                 <motion.img
                   whileTap={{ scale: 1.2 }}
                   src={userIcon}
                   alt="user_Icon"
+                  onClick={toggleProfileAction}
                 />
-              </span>
+                <div
+                  className="profile_action"
+                  onClick={logoutUser}
+                  style={{
+                    display: showLogout ? "block" : "none",
+                  }}
+                >
+                  <span>Logout</span>
+                </div>
+              </div>
               <div className="mobile__menu">
                 <span onClick={menuToggle}>
                   <i className="ri-menu-line"></i>

@@ -4,7 +4,6 @@ import "../styles/data-table.css";
 import { Link } from "react-router-dom";
 // import { useMutation, useQueryClient } from "@tanstack/react-query";
 
-
 const DataTable = ({ columns, rows, slug }) => {
   // TEST THE API
 
@@ -53,7 +52,7 @@ const DataTable = ({ columns, rows, slug }) => {
         initialState={{
           pagination: {
             paginationModel: {
-              pageSize: 5,
+              pageSize: 10,
             },
           },
         }}
@@ -68,7 +67,7 @@ const DataTable = ({ columns, rows, slug }) => {
         // checkboxSelection
         disableRowSelectionOnClick
         disableColumnFilter
-        disableDensitySelector
+        // disableDensitySelector
         disableColumnSelector
       />
     </div>

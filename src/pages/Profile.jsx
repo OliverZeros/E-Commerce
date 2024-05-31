@@ -51,7 +51,7 @@ const Profile = () => {
       <section>
         <Container>
           <Row>
-            <Col lg="6" className="m-auto text-center">
+            <Col lg="6" className="m-auto">
               <h3 className="fw-bold mb-4">Profile</h3>
               {userData && (
                 <div>
@@ -61,7 +61,7 @@ const Profile = () => {
                   <p>
                     <strong>Email:</strong> {userData.email}
                   </p>
-                  <div>
+                  <div className="m-auto">
                     <h4 className="fw-bold mb-4">Interested Interior:</h4>
                     <p>
                       <strong>Category:</strong>{" "}

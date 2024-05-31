@@ -1,7 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import DataTable from "../components/DataTable";
 import { useNavigate } from "react-router-dom";
-import { products } from "../data";
+import { useDispatch } from "react-redux";
+import { setProducts } from "../../redux/slices/productsSlice";
+import axios, { all } from "axios";
 
 const columns = [
   { field: "id", headerName: "ID", width: 80 },
@@ -59,19 +61,34 @@ const columns = [
 
 const AllProducts = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const [allProduct, setProduct] = useState([]);
+  const getProducts = async () => {
+    const response = await axios.get(
+      "https://ece-project.adaptable.app/product/getAll"
+    );
+    const products = response.data;
+    const newProducts = products.map((product, index) => {
+      return {
+        id: index + 1,
+        img: product.imageUrl[0],
+        title: product.name,
+        slot: product.slot,
+        price: product.price,
+        category: product.productType.category,
+        model: product.productType.model,
+        color: product.productType.color,
+        size: product.productType.size,
+      };
+    });
+    setProduct(newProducts);
+    dispatch(setProducts(products));
+  };
+  getProducts();
 
   const addProducts = () => {
     navigate("/admin/add-products");
   };
-  // TEST THE API
-
-  // const { isLoading, data } = useQuery({
-  //   queryKey: ["allproducts"],
-  //   queryFn: () =>
-  //     fetch("http://localhost:8800/api/products").then(
-  //       (res) => res.json()
-  //     ),
-  // });
 
   return (
     <div className="products">
@@ -79,7 +96,7 @@ const AllProducts = () => {
         <h1>Products</h1>
         <button onClick={addProducts}>Add New Products</button>
       </div>
-      <DataTable slug="products" columns={columns} rows={products} />
+      <DataTable slug="products" columns={columns} rows={allProduct} />
       {/* TEST THE API */}
       {/* {isLoading ? (
         "Loading..."

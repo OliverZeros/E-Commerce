@@ -5,7 +5,8 @@ import { motion } from "framer-motion";
 import logo from "../../assets/images/eco-logo.png";
 import userIcon from "../../assets/images/user-icon.png";
 import { Container, Row } from "reactstrap";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { logout } from "../../redux/slices/authSlice";
 
 const nav__links = [
   {
@@ -30,6 +31,7 @@ const Header = () => {
 
   const menuRef = useRef(null);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const stickyHeaderFunc = () => {
     window.addEventListener("scroll", () => {
@@ -62,8 +64,17 @@ const Header = () => {
     navigate("/home");
   };
 
+  const navigateToLogin = () => {
+    navigate("/login");
+  };
+
   const toggleProfileAction = () => {
     setShowLogout(!showLogout);
+  };
+
+  const logoutUser = () => {
+    dispatch(logout());
+    navigate("/home");
   };
 
   return (
@@ -96,12 +107,12 @@ const Header = () => {
                   <>
                     <li className="nav__item">
                       <NavLink
-                        to="/purchase"
+                        to="/order"
                         className={(navClass) =>
                           navClass.isActive ? "nav__active" : ""
                         }
                       >
-                        Purchase
+                        Order
                       </NavLink>
                     </li>
                     <li className="nav__item">
@@ -116,16 +127,7 @@ const Header = () => {
                     </li>
                   </>
                 ) : (
-                  <li className="nav__item">
-                    <NavLink
-                      to="/login"
-                      className={(navClass) =>
-                        navClass.isActive ? "nav__active" : ""
-                      }
-                    >
-                      Login
-                    </NavLink>
-                  </li>
+                  <></>
                 )}
               </ul>
             </div>
@@ -140,23 +142,34 @@ const Header = () => {
                 <span className="badge">{totalQuantity}</span>
               </span>
               <div className="profile">
-                <motion.img
-                  whileTap={{ scale: 1.2 }}
-                  src={userIcon}
-                  alt="user_Icon"
-                  onClick={toggleProfileAction}
-                />
                 {isLoggedIn ? (
-                  <div
-                    className="profile_action"
-                    onClick={toggleProfileAction}
-                    style={{
-                      display: showLogout ? "block" : "none",
-                    }}
-                  >
-                    <span>Logout</span>
+                  <div>
+                    <motion.img
+                      whileTap={{ scale: 1.2 }}
+                      src={userIcon}
+                      alt="user_Icon"
+                      onClick={toggleProfileAction}
+                    />
+                    <div
+                      className="profile_action"
+                      onClick={logoutUser}
+                      style={{
+                        display: showLogout ? "block" : "none",
+                      }}
+                    >
+                      <span>Logout</span>
+                    </div>
                   </div>
-                ) : null}
+                ) : (
+                  <div>
+                    <motion.img
+                      whileTap={{ scale: 1.2 }}
+                      src={userIcon}
+                      alt="user_Icon"
+                      onClick={navigateToLogin}
+                    />
+                  </div>
+                )}
               </div>
               <div className="mobile__menu">
                 <span onClick={menuToggle}>

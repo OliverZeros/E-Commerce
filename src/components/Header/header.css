@@ -106,10 +106,6 @@
   cursor: pointer;
 }
 
-.show__profileAction {
-  display: block;
-}
-
 .mobile__menu {
   font-style: 1.3rem;
   color: var(--primary-color);
