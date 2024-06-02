@@ -3,7 +3,7 @@ import DataTable from "../components/DataTable";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { setProducts } from "../../redux/slices/productsSlice";
-import axios, { all } from "axios";
+import axios from "axios";
 
 const columns = [
   { field: "id", headerName: "ID", width: 80 },
@@ -16,7 +16,7 @@ const columns = [
     },
   },
   {
-    field: "title",
+    field: "name",
     type: "string",
     headerName: "Name",
     width: 250,
@@ -70,9 +70,9 @@ const AllProducts = () => {
     const products = response.data;
     const newProducts = products.map((product, index) => {
       return {
-        id: index + 1,
+        id: product.id,
         img: product.imageUrl[0],
-        title: product.name,
+        name: product.name,
         slot: product.slot,
         price: product.price,
         category: product.productType.category,
@@ -85,7 +85,6 @@ const AllProducts = () => {
     dispatch(setProducts(products));
   };
   getProducts();
-
   const addProducts = () => {
     navigate("/admin/add-products");
   };
@@ -96,7 +95,7 @@ const AllProducts = () => {
         <h1>Products</h1>
         <button onClick={addProducts}>Add New Products</button>
       </div>
-      <DataTable slug="products" columns={columns} rows={allProduct} />
+      <DataTable slug="product" columns={columns} rows={allProduct} />
       {/* TEST THE API */}
       {/* {isLoading ? (
         "Loading..."

@@ -22,7 +22,8 @@ const Checkout = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const response = await axios.post(
+    console.log(token);
+    await axios.post(
       "https://ece-project.adaptable.app/receipt/create",
       {
         name,
@@ -35,8 +36,29 @@ const Checkout = () => {
         },
       }
     );
+    const response = await axios.get(
+      "https://ece-project.adaptable.app/receipt/get",
+      {
+        headers: {
+          Authorization: token,
+        },
+      }
+    );
+    const receiptId = response.data[0].id;
+    const status = await axios
+      .post(
+        "https://ece-project.adaptable.app/receipt/pay",
+        {
+          receiptid: receiptId,
+        },
+        {
+          headers: {
+            Authorization: token,
+          },
+        }
+      )
 
-    toast.success("Đã thanh toán thành công! Cảm ơn bạn đã mua hàng!");
+      .toast.success("Đã thanh toán thành công! Cảm ơn bạn đã mua hàng!");
     navigate("/home");
   };
   return (

@@ -15,6 +15,7 @@ import AddProducts from "../admin/page/AddProducts";
 import AllProducts from "../admin/page/AllProducts";
 import AllUsers from "../admin/page/AllUsers.jsx";
 import AllReceipts from "../admin/page/AllReceipts.jsx";
+import UpdateProducts from "../admin/page/UpdateProduct.jsx";
 
 const Routers = () => {
   return (
@@ -33,6 +34,7 @@ const Routers = () => {
       <Route path="admin" element={<AdminMain />}>
         <Route path="all-products" element={<AllProducts />} />
         <Route path="add-products" element={<AddProducts />} />
+        <Route path="update-product/:id" element={<UpdateProducts />} />
         <Route path="all-users" element={<AllUsers />} />
         <Route path="all-receipts" element={<AllReceipts />} />
       </Route>

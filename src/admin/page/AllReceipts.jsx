@@ -6,7 +6,7 @@ import { products } from "../data";
 const columns = [
   { field: "id", headerName: "ID", width: 80 },
   {
-    field: "title",
+    field: "name",
     type: "string",
     headerName: "Name",
     width: 250,

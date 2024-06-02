@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import axios from "axios";
 
-const DataTable = ({ columns, rows, slug }) => {
+const OrderCard = ({ columns, rows, slug }) => {
   const navigation = useNavigate();
   const token = useSelector((state) => state.auth.token);
   const handleDelete = async (id) => {
@@ -92,4 +92,4 @@ const DataTable = ({ columns, rows, slug }) => {
   );
 };
 
-export default DataTable;
+export default OrderCard;
