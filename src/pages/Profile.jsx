@@ -51,7 +51,7 @@ const Profile = () => {
       <section>
         <Container>
           <Row>
-            <Col lg="6" className="m-auto">
+            <Col lg="6">
               <h3 className="fw-bold mb-4">Profile</h3>
               {userData && (
                 <div>

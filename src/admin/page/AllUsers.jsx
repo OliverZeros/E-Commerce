@@ -1,87 +1,85 @@
-import { GridColDef } from "@mui/x-data-grid";
+import React, { useState, useEffect } from "react";
 import DataTable from "../components/DataTable";
-// import "./Users.scss";
-import { useState } from "react";
-// import Add from "../../components/add/Add";
-import { userRows } from "../data";
-// import { useQuery } from "@tanstack/react-query";
+import { useSelector } from "react-redux";
+
+import axios from "axios";
 
 const columns = [
-  { field: "id", headerName: "ID", width: 90 },
+  { field: "id", headerName: "ID", width: 80 },
   {
-    field: "img",
-    headerName: "Avatar",
-    width: 80,
-    renderCell: (params) => {
-      return <img src={params.row.img || "/noavatar.png"} alt="" />;
-    },
-  },
-  {
-    field: "firstName",
+    field: "username",
     type: "string",
-    headerName: "First name",
-    width: 150,
-  },
-  {
-    field: "lastName",
-    type: "string",
-    headerName: "Last name",
-    width: 150,
+    headerName: "User Name",
+    width: 200,
   },
   {
     field: "email",
     type: "string",
     headerName: "Email",
-    width: 200,
+    width: 250,
   },
   {
-    field: "phone",
+    field: "category",
     type: "string",
-    headerName: "Phone",
-    width: 200,
+    headerName: "Interested Category",
+    width: 220,
   },
   {
-    field: "createdAt",
-    headerName: "Created At",
-    width: 200,
+    field: "model",
     type: "string",
+    headerName: "Interested Model",
+    width: 220,
   },
   {
-    field: "verified",
-    headerName: "Verified",
-    width: 150,
-    type: "boolean",
+    field: "color",
+    type: "string",
+    headerName: "Interested Color",
+    width: 220,
+  },
+  {
+    field: "size",
+    type: "string",
+    headerName: "Interested Size",
+    width: 220,
   },
 ];
 
 const AllUsers = () => {
-  const [open, setOpen] = useState(false);
-
-  // TEST THE API
-
-  // const { isLoading, data } = useQuery({
-  //   queryKey: ["allusers"],
-  //   queryFn: () =>
-  //     fetch("http://localhost:8800/api/users").then(
-  //       (res) => res.json()
-  //     ),
-  // });
+  const token = useSelector((state) => state.auth.token);
+  const [allUser, setUser] = useState([]);
+  const getUsers = async () => {
+    const response = await axios.get(
+      "https://ece-project.adaptable.app/user/all",
+      {
+        headers: {
+          Authorization: token,
+        },
+      }
+    );
+    const users = response.data;
+    const newUser = users.map((user, index) => {
+      return {
+        id: index,
+        username: user.username,
+        email: user.email,
+        category: user.survey.category,
+        model: user.survey.model,
+        color: user.survey.color,
+        size: user.survey.size,
+      };
+    });
+    setUser(newUser);
+  };
+  useEffect(() => {
+    getUsers();
+  }, []);
 
   return (
-    <div className="users">
-      <div className="info">
-        <h1>Users</h1>
-        <button onClick={() => setOpen(true)}>Add New User</button>
+    <div className="products">
+      <div className="info mt-3">
+        <h1>All Users</h1>
       </div>
-      <DataTable slug="users" columns={columns} rows={userRows} />
-      {/* TEST THE API */}
-
-      {/* {isLoading ? (
-        "Loading..."
-      ) : (
-        <DataTable slug="users" columns={columns} rows={data} />
-      )} */}
-      {/* {open && <Add slug="user" columns={columns} setOpen={setOpen} />} */}
+      <DataTable slug="user" columns={columns} rows={allUser} />
     </div>
   );
 };

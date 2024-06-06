@@ -85,14 +85,15 @@ const AllProducts = () => {
     dispatch(setProducts(products));
   };
   getProducts();
+
   const addProducts = () => {
     navigate("/admin/add-products");
   };
 
   return (
     <div className="products">
-      <div className="info">
-        <h1>Products</h1>
+      <div className="info mt-3">
+        <h1>All Products</h1>
         <button onClick={addProducts}>Add New Products</button>
       </div>
       <DataTable slug="product" columns={columns} rows={allProduct} />

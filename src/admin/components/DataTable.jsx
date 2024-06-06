@@ -46,7 +46,7 @@ const DataTable = ({ columns, rows, slug }) => {
               });
             }}
           >
-            <i class="ri-draft-line update"></i>
+            <i className="ri-draft-line update"></i>
           </div>
           <div
             className="delete"
@@ -61,12 +61,16 @@ const DataTable = ({ columns, rows, slug }) => {
     },
   };
 
+  const dataGridColumns =
+    slug === "user" || slug === "order" ? columns : [...columns, actionColumn];
+
   return (
     <div className="dataTable">
       <DataGrid
         className="dataGrid"
         rows={rows}
-        columns={[...columns, actionColumn]}
+        // rowHeight={100}
+        columns={dataGridColumns}
         initialState={{
           pagination: {
             paginationModel: {
@@ -74,7 +78,7 @@ const DataTable = ({ columns, rows, slug }) => {
             },
           },
         }}
-        slots={{ toolbar: GridToolbar }}
+        slots={slug === "order" ? {} : { toolbar: GridToolbar }}
         // slotProps={{
         //   toolbar: {
         //     showQuickFilter: true,

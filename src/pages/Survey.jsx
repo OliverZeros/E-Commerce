@@ -77,23 +77,71 @@ function Survey() {
                     <label>
                       <input
                         type="checkbox"
-                        value="Chair"
+                        value="Table"
                         onChange={() =>
-                          handleCheckboxChange(setCategory, "Chair")
+                          handleCheckboxChange(setCategory, "Table")
                         }
                       />
-                      Chair
+                      Table
                     </label>
                     <label>
                       <input
                         type="checkbox"
-                        value="Clock"
+                        value="Armchair"
                         onChange={() =>
-                          handleCheckboxChange(setCategory, "Clock")
+                          handleCheckboxChange(setCategory, "Armchair")
                         }
                       />
-                      Clock
+                      Armchair
                     </label>
+                    <label>
+                      <input
+                        type="checkbox"
+                        value="Bed"
+                        onChange={() =>
+                          handleCheckboxChange(setCategory, "Bed")
+                        }
+                      />
+                      Bed
+                    </label>
+                  </div>
+                </FormGroup>
+
+                <FormGroup className="form__group">
+                  <div>
+                    <p className="mt-4">Interested Style:</p>
+                    <div>
+                      <label>
+                        <input
+                          type="checkbox"
+                          value="Modern"
+                          onChange={() =>
+                            handleCheckboxChange(setModel, "Modern")
+                          }
+                        />
+                        Modern
+                      </label>
+                      <label>
+                        <input
+                          type="checkbox"
+                          value="Classic"
+                          onChange={() =>
+                            handleCheckboxChange(setModel, "Classic")
+                          }
+                        />
+                        Classic
+                      </label>
+                      <label>
+                        <input
+                          type="checkbox"
+                          value="Rustic"
+                          onChange={() =>
+                            handleCheckboxChange(setModel, "Rustic")
+                          }
+                        />
+                        Rustic
+                      </label>
+                    </div>
                   </div>
                 </FormGroup>
 
@@ -156,44 +204,6 @@ function Survey() {
                           }
                         />
                         Large
-                      </label>
-                    </div>
-                  </div>
-                </FormGroup>
-
-                <FormGroup className="form__group">
-                  <div>
-                    <p className="mt-4">Interested Style:</p>
-                    <div>
-                      <label>
-                        <input
-                          type="checkbox"
-                          value="Modern"
-                          onChange={() =>
-                            handleCheckboxChange(setModel, "Modern")
-                          }
-                        />
-                        Modern
-                      </label>
-                      <label>
-                        <input
-                          type="checkbox"
-                          value="Classic"
-                          onChange={() =>
-                            handleCheckboxChange(setModel, "Classic")
-                          }
-                        />
-                        Classic
-                      </label>
-                      <label>
-                        <input
-                          type="checkbox"
-                          value="Rustic"
-                          onChange={() =>
-                            handleCheckboxChange(setModel, "Rustic")
-                          }
-                        />
-                        Rustic
                       </label>
                     </div>
                   </div>

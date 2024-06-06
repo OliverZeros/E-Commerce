@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Container, Row, Col, Form, FormGroup, Label, Input } from "reactstrap";
+import { toast } from "react-toastify";
 import axios from "axios";
 import { useSelector } from "react-redux";
 import "../styles/add-products.css";
@@ -63,7 +64,7 @@ const UpdateProducts = () => {
         },
       }
     );
-    console.log(response);
+    toast.success("Product update successfully");
 
     navigate("/admin/all-products");
   };

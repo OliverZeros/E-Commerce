@@ -1,6 +1,7 @@
 import React from "react";
 import { useState } from "react";
 import Helmet from "../components/Helmet/Helmet";
+import { toast } from "react-toastify";
 import { useNavigate, Link } from "react-router-dom";
 import { Container, Row, Col, Form, FormGroup } from "reactstrap";
 import { useDispatch } from "react-redux";
@@ -25,21 +26,27 @@ const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const response = await axios.post(
-      "https://ece-project.adaptable.app/auth/login",
-      {
-        email,
-        password,
+    try {
+      const response = await axios.post(
+        "https://ece-project.adaptable.app/auth/login",
+        {
+          email,
+          password,
+        }
+      );
+      const data = response.data;
+      const token = data.bearer;
+      const isadmin = data.isAdmin;
+      dispatch(login(token));
+      toast.success("Logged in successfully");
+      if (isadmin) {
+        navigate("/admin/all-products");
+      } else {
+        navigate("/home");
       }
-    );
-    const data = response.data;
-    const token = data.bearer;
-    const isadmin = data.isAdmin;
-    dispatch(login(token));
-    if (isadmin) {
-      navigate("/admin/all-products");
-    } else {
-      navigate("/home");
+    } catch (error) {
+      console.error("Login failed:", error);
+      toast.error("Invalid email or password! Plaese try again!");
     }
   };
 
