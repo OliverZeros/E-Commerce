@@ -12,7 +12,6 @@ import { useSelector } from "react-redux";
 const Checkout = () => {
   const totalQty = useSelector((state) => state.cart.totalQuantity);
   const totalAmount = useSelector((state) => state.cart.totalAmount);
-  const cartItems = useSelector((state) => state.cart.cartItems);
   const [name, setName] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
   const [address, setAddress] = useState("");
@@ -22,7 +21,6 @@ const Checkout = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(token);
     await axios.post(
       "https://ece-project.adaptable.app/receipt/create",
       {
@@ -45,20 +43,21 @@ const Checkout = () => {
       }
     );
     const receiptId = response.data[0].id;
-    const status = await axios
-      .post(
-        "https://ece-project.adaptable.app/receipt/pay",
-        {
-          receiptid: receiptId,
+    const status = await axios.post(
+      "https://ece-project.adaptable.app/receipt/pay",
+      {
+        receiptid: receiptId,
+      },
+      {
+        headers: {
+          Authorization: token,
         },
-        {
-          headers: {
-            Authorization: token,
-          },
-        }
-      )
+      }
+    );
 
-      .toast.success("Đã thanh toán thành công! Cảm ơn bạn đã mua hàng!");
+    toast.success(
+      "Payment completed successfully! Thank you for your purchase!"
+    );
     navigate("/home");
   };
   return (

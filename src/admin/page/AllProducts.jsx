@@ -97,12 +97,6 @@ const AllProducts = () => {
         <button onClick={addProducts}>Add New Products</button>
       </div>
       <DataTable slug="product" columns={columns} rows={allProduct} />
-      {/* TEST THE API */}
-      {/* {isLoading ? (
-        "Loading..."
-      ) : (
-        <DataTable slug="products" columns={columns} rows={data} />
-      )} */}
     </div>
   );
 };
