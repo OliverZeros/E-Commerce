@@ -18,11 +18,14 @@ import Clock from "../components/UI/Clock";
 
 import counterImg from "../assets/images/counter-timer-img.png";
 
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setProducts } from "../redux/slices/productsSlice";
 import axios from "axios";
 
 const Home = () => {
+  const token = useSelector((state) => state.auth.token);
+  const [userSurvey, setSurvey] = useState([]);
+  const [reconmendedProducts, setReconmendedProducts] = useState([]);
   const [trendingProducts, setTrendingProducts] = useState([]);
   const [bestSalesProducts, setBestSalesProducts] = useState([]);
   const [sofaProducts, setsofaProducts] = useState([]);
@@ -40,6 +43,8 @@ const Home = () => {
       const products = response.data;
 
       dispatch(setProducts(products));
+
+      console.log("ss");
 
       const filteredTrendingProducts = products.filter(
         (item) => item.productType.category === "Sofa"
@@ -61,14 +66,36 @@ const Home = () => {
         (item) => item.productType.category === "Table"
       );
 
+      const filteredRecommendedProducts = products.filter((item) =>
+        userSurvey.includes(item.productType.category)
+      );
+
       setTrendingProducts(filteredTrendingProducts);
       setBestSalesProducts(filteredBestSalesProducts);
       setsofaProducts(filteredsofaProducts);
       setarmchairProducts(filteredarmchairProducts);
       setPopularProducts(filteredPopularProducts);
+      setReconmendedProducts(filteredRecommendedProducts);
     };
     getProducts();
-  }, []);
+  }, [userSurvey]);
+
+  useEffect(() => {
+    const getUserInfo = async () => {
+      if (!token) return;
+      const response = await axios.get(
+        "https://ece-project.adaptable.app/user/profile",
+        {
+          headers: {
+            Authorization: token,
+          },
+        }
+      );
+      const survey = response.data.survey.category;
+      setSurvey(survey);
+    };
+    getUserInfo();
+  }, [token]);
 
   return (
     <Helmet title="Home">
@@ -80,8 +107,7 @@ const Home = () => {
                 <p className="hero__subtitle">Trending product in {year}</p>
                 <h2>Make Your Interior More Minimalistic & Modern</h2>
                 <p>
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Autem
-                  itaque doloribus in accusantium ea esse!
+                  Giving you a minimalist space that still meets your needs!
                 </p>
                 <motion.button whileTap={{ scale: 1.2 }} className="buy__btn">
                   <Link to="/shop">SHOP NOW</Link>
@@ -99,6 +125,19 @@ const Home = () => {
       </section>
 
       <Services />
+
+      {reconmendedProducts.length > 0 && (
+        <section className="recommend__products">
+          <Container>
+            <Row>
+              <Col lg="12" className="text-center">
+                <h2 className="section__title">Recommended for You</h2>
+              </Col>
+              <ProductsList data={reconmendedProducts} />
+            </Row>
+          </Container>
+        </section>
+      )}
 
       <section className="trending__products">
         <Container>

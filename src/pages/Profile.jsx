@@ -58,7 +58,7 @@ const Profile = () => {
                   <p>
                     <strong>Name:</strong> {userData.username}
                   </p>
-                  <p>
+                  <p className="mb-5">
                     <strong>Email:</strong> {userData.email}
                   </p>
                   <div className="m-auto">
