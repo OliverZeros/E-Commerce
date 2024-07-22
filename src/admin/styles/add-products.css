@@ -1,0 +1,36 @@
+.auth__form {
+  background: var(--primary-color);
+  padding: 40px;
+  border-radius: 5px;
+}
+
+.auth__form h3 {
+  color: #fff;
+  font-size: 24px;
+  font-weight: 600;
+  margin-bottom: 20px;
+}
+
+.auth__btn {
+  background: #fff !important;
+  color: var(--primary-color);
+  font-weight: 600;
+}
+
+.auth__form p {
+  margin-top: 30px;
+}
+
+.auth__form p a {
+  color: #fff;
+}
+
+.type__product div label {
+  color: #fff;
+  font-weight: 600;
+  margin-right: 30px;
+}
+
+.type__product input {
+  margin-right: 10px;
+}

@@ -7,14 +7,23 @@ import { Container, Row, Col } from "reactstrap";
 import { motion } from "framer-motion";
 import { cartActions } from "../redux/slices/cartSlice";
 import { useSelector, useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 import { Link } from "react-router-dom";
 
 const Cart = () => {
+  const isLoggedIn = useSelector((state) => (state.auth.token ? true : false));
   const cartItems = useSelector((state) => state.cart.cartItems);
   const totalAmount = useSelector((state) => state.cart.totalAmount);
+  const navigate = useNavigate();
 
-  console.log(totalAmount);
+  const handleCheckout = () => {
+    if (isLoggedIn) {
+      navigate("/checkout");
+    } else {
+      navigate("/login");
+    }
+  };
 
   return (
     <Helmet title="Cart">
@@ -50,20 +59,22 @@ const Cart = () => {
               <div>
                 <h6 className="d-flex align-item-center justify-content-between">
                   Subtotal
-                  <span className="fs-4 fw-bold">${totalAmount}</span>
+                  <span className="fs-4 fw-bold">{totalAmount} VNĐ</span>
                 </h6>
               </div>
               <p className="fs-6 mt-2">
-                taxes and shipping will calculate in checkout
+                Thuế và phí vận chuyển sẽ được tính khi thanh toán
               </p>
               <div>
-                <button className="buy__btn w-100">
-                  <Link to="/checkout">Checkout</Link>
+                <button onClick={handleCheckout} className="buy__btn w-100">
+                  Checkout
                 </button>
 
-                <button className="buy__btn w-100 mt-3">
-                  <Link to="/shop">Continue Shopping</Link>
-                </button>
+                <Link to="/shop">
+                  <button className="buy__btn w-100 mt-3">
+                    Continue Shopping
+                  </button>
+                </Link>
               </div>
             </Col>
           </Row>
@@ -85,7 +96,7 @@ const Tr = ({ item }) => {
         <img src={item.imgUrl} alt="" />
       </td>
       <td>{item.productName}</td>
-      <td>${item.price}</td>
+      <td>{item.price} VNĐ</td>
       <td>{item.quantity}</td>
       <td>
         <motion.i

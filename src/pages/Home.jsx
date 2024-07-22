@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import products from "../assets/data/products";
+// import products from "../assets/data/products";
 
 import Helmet from "../components/Helmet/Helmet";
 import "../styles/home.css";
@@ -18,43 +18,84 @@ import Clock from "../components/UI/Clock";
 
 import counterImg from "../assets/images/counter-timer-img.png";
 
+import { useDispatch, useSelector } from "react-redux";
+import { setProducts } from "../redux/slices/productsSlice";
+import axios from "axios";
+
 const Home = () => {
+  const token = useSelector((state) => state.auth.token);
+  const [userSurvey, setSurvey] = useState([]);
+  const [reconmendedProducts, setReconmendedProducts] = useState([]);
   const [trendingProducts, setTrendingProducts] = useState([]);
   const [bestSalesProducts, setBestSalesProducts] = useState([]);
-  const [mobileProducts, setMobileProducts] = useState([]);
-  const [wirelessProducts, setWirelessProducts] = useState([]);
+  const [sofaProducts, setsofaProducts] = useState([]);
+  const [armchairProducts, setarmchairProducts] = useState([]);
   const [popularProducts, setPopularProducts] = useState([]);
-  
+  const dispatch = useDispatch();
 
   const year = new Date().getFullYear();
 
   useEffect(() => {
-    const filteredTrendingProducts = products.filter(
-      (item) => item.category === "chair"
-    );
+    const getProducts = async () => {
+      const response = await axios.get(
+        "https://ece-project.adaptable.app/product/getAll"
+      );
+      const products = response.data;
 
-    const filteredBestSalesProducts = products.filter(
-      (item) => item.category === "sofa"
-    );
+      dispatch(setProducts(products));
 
-    const filteredMobileProducts = products.filter(
-      (item) => item.category === "mobile"
-    );
+      console.log("ss");
 
-    const filteredWirelessProducts = products.filter(
-      (item) => item.category === "wireless"
-    );
+      const filteredTrendingProducts = products.filter(
+        (item) => item.productType.category === "Sofa"
+      );
 
-    const filteredPopularProducts = products.filter(
-      (item) => item.category === "watch"
-    );
+      const filteredBestSalesProducts = products.filter(
+        (item) => item.productType.category === "Armchair"
+      );
 
-    setTrendingProducts(filteredTrendingProducts);
-    setBestSalesProducts(filteredBestSalesProducts);
-    setMobileProducts(filteredMobileProducts);
-    setWirelessProducts(filteredWirelessProducts);
-    setPopularProducts(filteredPopularProducts);
-  }, []);
+      const filteredsofaProducts = products.filter(
+        (item) => item.productType.category === "Sofa"
+      );
+
+      const filteredarmchairProducts = products.filter(
+        (item) => item.productType.category === "Armchair"
+      );
+
+      const filteredPopularProducts = products.filter(
+        (item) => item.productType.category === "Table"
+      );
+
+      const filteredRecommendedProducts = products.filter((item) =>
+        userSurvey.includes(item.productType.category)
+      );
+
+      setTrendingProducts(filteredTrendingProducts);
+      setBestSalesProducts(filteredBestSalesProducts);
+      setsofaProducts(filteredsofaProducts);
+      setarmchairProducts(filteredarmchairProducts);
+      setPopularProducts(filteredPopularProducts);
+      setReconmendedProducts(filteredRecommendedProducts);
+    };
+    getProducts();
+  }, [userSurvey]);
+
+  useEffect(() => {
+    const getUserInfo = async () => {
+      if (!token) return;
+      const response = await axios.get(
+        "https://ece-project.adaptable.app/user/profile",
+        {
+          headers: {
+            Authorization: token,
+          },
+        }
+      );
+      const survey = response.data.survey.category;
+      setSurvey(survey);
+    };
+    getUserInfo();
+  }, [token]);
 
   return (
     <Helmet title="Home">
@@ -66,8 +107,7 @@ const Home = () => {
                 <p className="hero__subtitle">Trending product in {year}</p>
                 <h2>Make Your Interior More Minimalistic & Modern</h2>
                 <p>
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Autem
-                  itaque doloribus in accusantium ea esse!
+                  Giving you a minimalist space that still meets your needs!
                 </p>
                 <motion.button whileTap={{ scale: 1.2 }} className="buy__btn">
                   <Link to="/shop">SHOP NOW</Link>
@@ -85,6 +125,19 @@ const Home = () => {
       </section>
 
       <Services />
+
+      {reconmendedProducts.length > 0 && (
+        <section className="recommend__products">
+          <Container>
+            <Row>
+              <Col lg="12" className="text-center">
+                <h2 className="section__title">Recommended for You</h2>
+              </Col>
+              <ProductsList data={reconmendedProducts} />
+            </Row>
+          </Container>
+        </section>
+      )}
 
       <section className="trending__products">
         <Container>
@@ -139,14 +192,14 @@ const Home = () => {
             <Col lg="12" className="text-center mb-5">
               <h2 className="section__title">New Arrivals</h2>
             </Col>
-            <ProductsList data={mobileProducts} />
-            <ProductsList data={wirelessProducts} />
+            <ProductsList data={sofaProducts} />
+            <ProductsList data={armchairProducts} />
           </Row>
         </Container>
       </section>
 
       <section className="popular__category">
-      <Container>
+        <Container>
           <Row>
             <Col lg="12" className="text-center mb-5">
               <h2 className="section__title">Popular in Category</h2>

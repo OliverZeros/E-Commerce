@@ -4,24 +4,42 @@ import "../../styles/product-card.css";
 import { Col } from "reactstrap";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { cartActions } from "../../redux/slices/cartSlice";
 
 const ProductCard = ({ item }) => {
+  const isLoggedIn = useSelector((state) => (state.auth.token ? true : false));
+  const token = useSelector((state) => state.auth.token);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
-  const addToCart = () => {
-    dispatch(
-      cartActions.addItem({
-        id: item.id,
-        productName: item.productName,
-        price: item.price,
-        imgUrl: item.imgUrl,
-      })
-    );
-
-    toast.success("Product added successfully");
+  const addToCart = async () => {
+    if (!isLoggedIn) {
+      toast.error("Please login to add the product to the cart");
+      navigate("/login");
+    } else {
+      dispatch(
+        cartActions.addItem({
+          id: item.id,
+          productName: item.name,
+          price: item.price,
+          imgUrl: item.imageUrl,
+        })
+      );
+      toast.success("Product added successfully");
+      const response = await axios.post(
+        "https://ece-project.adaptable.app/cart/add",
+        { productid: item.id },
+        {
+          headers: {
+            Authorization: token,
+          },
+        }
+      );
+    }
   };
 
   return (
@@ -31,23 +49,25 @@ const ProductCard = ({ item }) => {
           <Link to={`/shop/${item.id}`}>
             <motion.img
               whileHover={{ scale: 0.9 }}
-              src={item.imgUrl}
+              src={item.imageUrl}
               alt=""
-              style={{ width: "100%", height: "100%" }}
+              style={{ width: "310px", height: "310px" }}
             />
           </Link>
         </div>
-        <div className="p-2 product__info">
-          <h3 className="product__name">
-            <Link to={`/shop/${item.id}`}>{item.productName}</Link>
-          </h3>
-          <span>{item.category}</span>
-        </div>
-        <div className="product__card-bottom d-flex align-items-center justify-content-between p-2">
-          <span className="price">${item.price}</span>
-          <motion.span whileTap={{ scale: 1.2 }} onClick={addToCart}>
-            <i class="ri-add-line"></i>
-          </motion.span>
+        <div className="product__bottom">
+          <div className="p-2 product__info">
+            <h3 className="product__name">
+              <Link to={`/shop/${item.id}`}>{item.name}</Link>
+            </h3>
+            <span>{item.category}</span>
+          </div>
+          <div className="product__card-bottom d-flex align-items-center justify-content-between p-2">
+            <span className="price">{item.price} VNĐ</span>
+            <motion.span whileTap={{ scale: 1.2 }} onClick={addToCart}>
+              <i class="ri-add-line"></i>
+            </motion.span>
+          </div>
         </div>
       </div>
     </Col>

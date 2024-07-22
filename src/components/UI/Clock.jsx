@@ -11,7 +11,7 @@ const Clock = () => {
   let interval;
 
   const countDown = () => {
-    const destination = new Date("May 6, 2024").getTime();
+    const destination = new Date("June 10, 2024").getTime();
     interval = setInterval(() => {
       const now = new Date().getTime();
       const different = destination - now;
@@ -25,20 +25,19 @@ const Clock = () => {
 
       const seconds = Math.floor((different % (1000 * 60)) / 1000);
 
-      if (destination < 0) 
-        clearInterval(interval.current)
-        else {
-          setDays(days);
-          setHours(hours);
-          setMinutes(minutes);
-          setSeconds(seconds);
+      if (destination < 0) clearInterval(interval.current);
+      else {
+        setDays(days);
+        setHours(hours);
+        setMinutes(minutes);
+        setSeconds(seconds);
       }
     });
   };
 
-  useEffect(() =>{
+  useEffect(() => {
     countDown();
-  })
+  });
 
   return (
     <div className="clock__wrapper d-flex align-items-center gap-3">
