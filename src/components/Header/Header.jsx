@@ -85,7 +85,7 @@ const Header = () => {
             <div className="logo" onClick={navigateToHome}>
               <img src={logo} alt="logo_Image" />
               <div>
-                <h1>Ecommerce</h1>
+                <h1>Interior Modern</h1>
               </div>
             </div>
 
