@@ -28,7 +28,7 @@ const Login = () => {
     e.preventDefault();
     try {
       const response = await axios.post(
-        "https://ece-project.adaptable.app/auth/login",
+        `${process.env.REACT_APP_API_URL}/auth/login`,
         {
           email,
           password,

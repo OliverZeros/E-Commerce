@@ -16,6 +16,7 @@ import AllProducts from "../admin/page/AllProducts";
 import AllUsers from "../admin/page/AllUsers.jsx";
 import AllReceipts from "../admin/page/AllReceipts.jsx";
 import UpdateProducts from "../admin/page/UpdateProduct.jsx";
+import NotFound from "../pages/NotFound";
 
 const Routers = () => {
   return (
@@ -31,6 +32,8 @@ const Routers = () => {
       <Route path="profile" element={<Profile />} />
       <Route path="shop" element={<Shop />} />
       <Route path="shop/:id" element={<ProductDetail />} />
+      <Route path="404" element={<NotFound />} />
+      <Route path="*" element={<Navigate to="/404" />} />
       <Route path="admin" element={<AdminMain />}>
         <Route path="all-products" element={<AllProducts />} />
         <Route path="add-products" element={<AddProducts />} />

@@ -15,7 +15,7 @@ const Order = () => {
   useEffect(() => {
     const getOrder = async () => {
       const response = await axios.get(
-        "https://ece-project.adaptable.app/receipt/get",
+        `${process.env.REACT_APP_API_URL}/receipt/get`,
         {
           headers: {
             Authorization: token,

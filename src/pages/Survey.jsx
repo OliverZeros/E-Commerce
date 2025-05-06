@@ -32,7 +32,7 @@ function Survey() {
     console.log(category, color, size, model);
     console.log(token);
     const response = await axios.post(
-      "https://ece-project.adaptable.app/user/survey",
+      `${process.env.REACT_APP_API_URL}/user/survey`,
       {
         category,
         color,

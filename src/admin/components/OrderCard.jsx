@@ -14,7 +14,7 @@ const OrderCard = ({ columns, rows, slug }) => {
     let config = {
       method: "delete",
       maxBodyLength: Infinity,
-      url: "https://ece-project.adaptable.app/product/delete",
+      url: `${process.env.REACT_APP_API_URL}/product/delete`,
       headers: {
         Authorization: token,
       },

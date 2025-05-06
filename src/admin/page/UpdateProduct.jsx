@@ -55,7 +55,7 @@ const UpdateProducts = () => {
     formData.append("model", productType.model);
 
     const response = await axios.patch(
-      "https://ece-project.adaptable.app/product/update",
+      `${process.env.REACT_APP_API_URL}/product/update`,
       formData,
       {
         headers: {

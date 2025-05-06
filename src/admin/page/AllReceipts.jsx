@@ -47,7 +47,7 @@ const AllReceipts = () => {
   useEffect(() => {
     const getAllOrder = async () => {
       const response = await axios.get(
-        "https://ece-project.adaptable.app/receipt/all",
+        `${process.env.REACT_APP_API_URL}/receipt/all`,
         {
           headers: {
             Authorization: token,

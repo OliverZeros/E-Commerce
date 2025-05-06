@@ -28,6 +28,18 @@
   box-sizing: border-box;
 }
 
+html,
+body {
+  height: 100%;
+  margin: 0;
+}
+
+#root {
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+}
+
 body {
   font-family: "Montserrat", sans-serif;
 }
@@ -62,7 +74,7 @@ a {
   color: unset;
 }
 
-immg {
+img {
   width: 100%;
 }
 

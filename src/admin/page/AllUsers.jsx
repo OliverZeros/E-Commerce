@@ -49,7 +49,7 @@ const AllUsers = () => {
   const [allUser, setUser] = useState([]);
   const getUsers = async () => {
     const response = await axios.get(
-      "https://ece-project.adaptable.app/user/all",
+      `${process.env.REACT_APP_API_URL}/user/all`,
       {
         headers: {
           Authorization: token,

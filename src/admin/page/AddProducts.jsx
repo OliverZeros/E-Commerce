@@ -51,7 +51,7 @@ const AddProducts = () => {
     formData.append("model", productType.model);
 
     const response = await axios.post(
-      "https://ece-project.adaptable.app/product/add",
+      `${process.env.REACT_APP_API_URL}/product/add`,
       formData,
       {
         headers: {

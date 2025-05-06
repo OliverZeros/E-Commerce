@@ -38,7 +38,7 @@ const Home = () => {
   useEffect(() => {
     const getProducts = async () => {
       const response = await axios.get(
-        "https://ece-project.adaptable.app/product/getAll"
+        `${process.env.REACT_APP_API_URL}/product/getAll`
       );
       const products = response.data;
 
@@ -78,13 +78,13 @@ const Home = () => {
       setReconmendedProducts(filteredRecommendedProducts);
     };
     getProducts();
-  }, [userSurvey]);
+  }, [userSurvey, dispatch]);
 
   useEffect(() => {
     const getUserInfo = async () => {
       if (!token) return;
       const response = await axios.get(
-        "https://ece-project.adaptable.app/user/profile",
+        `${process.env.REACT_APP_API_URL}/user/profile`,
         {
           headers: {
             Authorization: token,
@@ -174,8 +174,9 @@ const Home = () => {
               <motion.button
                 whileTap={{ scale: 1.2 }}
                 className="buy__btn store__btn"
+                onClick={() => (window.location.href = "/shop")}
               >
-                <Link to="/shop">Visit Store</Link>
+                Visit Store
               </motion.button>
             </Col>
 

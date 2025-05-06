@@ -17,7 +17,7 @@ const Profile = () => {
     const fetchUserData = async () => {
       try {
         const response = await axios.get(
-          "https://ece-project.adaptable.app/user/profile",
+          `${process.env.REACT_APP_API_URL}/user/profile`,
           {
             headers: {
               Authorization: token,

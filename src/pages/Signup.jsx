@@ -29,7 +29,7 @@ const Signup = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const response = await axios.post(
-      "https://ece-project.adaptable.app/auth/signup",
+      `${process.env.REACT_APP_API_URL}/auth/signup`,
       {
         username,
         email,

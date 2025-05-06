@@ -31,7 +31,7 @@ const ProductCard = ({ item }) => {
       );
       toast.success("Product added successfully");
       const response = await axios.post(
-        "https://ece-project.adaptable.app/cart/add",
+        `${process.env.REACT_APP_API_URL}/cart/add`,
         { productid: item.id },
         {
           headers: {

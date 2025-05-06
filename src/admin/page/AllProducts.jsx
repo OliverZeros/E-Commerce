@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import DataTable from "../components/DataTable";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
@@ -65,7 +65,7 @@ const AllProducts = () => {
   const [allProduct, setProduct] = useState([]);
   const getProducts = async () => {
     const response = await axios.get(
-      "https://ece-project.adaptable.app/product/getAll"
+      `${process.env.REACT_APP_API_URL}/product/getAll`
     );
     const products = response.data;
     const newProducts = products.map((product, index) => {
@@ -84,7 +84,10 @@ const AllProducts = () => {
     setProduct(newProducts);
     dispatch(setProducts(products));
   };
-  getProducts();
+
+  useEffect(() => {
+    getProducts();
+  }, []);
 
   const addProducts = () => {
     navigate("/admin/add-products");

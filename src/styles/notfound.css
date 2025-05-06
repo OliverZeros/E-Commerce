@@ -1,0 +1,46 @@
+@import url("https://fonts.googleapis.com/css?family=Arvo");
+.page_404 {
+  font-family: "Arvo", serif;
+  padding: 40px 0;
+  background: #fff;
+  display: flex;
+  justify-content: center;
+
+  text-align: center;
+  height: 100vh;
+}
+
+.page_404 img {
+  width: 100%;
+}
+
+.four_zero_four_bg {
+  background-image: url(https://cdn.dribbble.com/users/285475/screenshots/2083086/dribbble_1.gif);
+  height: 400px;
+  background-position: center;
+}
+
+.text {
+  font-size: 80px;
+  font-weight: 700;
+  color: #512808;
+}
+
+.four_zero_four_bg h3 {
+  font-size: 80px;
+}
+
+.contant_box_404 {
+  margin-top: -50px;
+}
+
+.link_404 {
+  font-size: 18px !important;
+  color: #fff !important;
+  padding: 15px 30px;
+  background: #39ac31;
+  margin: 20px 0;
+  display: inline-block;
+  text-decoration: none;
+  border-radius: 5px;
+}

@@ -22,7 +22,7 @@ const Checkout = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     await axios.post(
-      "https://ece-project.adaptable.app/receipt/create",
+      `${process.env.REACT_APP_API_URL}/receipt/create`,
       {
         name,
         phoneNumber,
@@ -35,7 +35,7 @@ const Checkout = () => {
       }
     );
     const response = await axios.get(
-      "https://ece-project.adaptable.app/receipt/get",
+      `${process.env.REACT_APP_API_URL}/receipt/get`,
       {
         headers: {
           Authorization: token,
@@ -44,7 +44,7 @@ const Checkout = () => {
     );
     const receiptId = response.data[0].id;
     const status = await axios.post(
-      "https://ece-project.adaptable.app/receipt/pay",
+      `${process.env.REACT_APP_API_URL}/receipt/pay`,
       {
         receiptid: receiptId,
       },
