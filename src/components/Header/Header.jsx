@@ -2,7 +2,7 @@ import React, { useRef, useEffect, useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import "./header.css";
 import { motion } from "framer-motion";
-import logo from "../../assets/images/eco-logo.png";
+import logo from "../../assets/images/logo1.png";
 import userIcon from "../../assets/images/user-icon.png";
 import { Container, Row } from "reactstrap";
 import { useSelector, useDispatch } from "react-redux";
@@ -84,9 +84,6 @@ const Header = () => {
           <div className="nav__wrapper">
             <div className="logo" onClick={navigateToHome}>
               <img src={logo} alt="logo_Image" />
-              <div>
-                <h1>Interior Modern</h1>
-              </div>
             </div>
 
             <div className="navigation" ref={menuRef} onClick={menuToggle}>

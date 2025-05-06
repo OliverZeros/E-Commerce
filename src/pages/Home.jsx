@@ -44,8 +44,6 @@ const Home = () => {
 
       dispatch(setProducts(products));
 
-      console.log("ss");
-
       const filteredTrendingProducts = products.filter(
         (item) => item.productType.category === "Sofa"
       );
@@ -174,9 +172,8 @@ const Home = () => {
               <motion.button
                 whileTap={{ scale: 1.2 }}
                 className="buy__btn store__btn"
-                onClick={() => (window.location.href = "/shop")}
               >
-                Visit Store
+                <Link to="/shop">Visit Store</Link>
               </motion.button>
             </Col>
 
