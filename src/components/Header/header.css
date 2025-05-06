@@ -18,8 +18,8 @@
 }
 
 .logo img {
-  width: 8.6rem;
-  height: 3.2rem;
+  width: 8.6rem !important;
+  height: 3.2rem !important;
 }
 
 .logo h1 {
