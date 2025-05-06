@@ -1,7 +1,7 @@
 .header_admin {
   width: 100%;
   line-height: 70px;
-  background-color: rgb(88, 111, 240) !important;
+  background-color: var(--primary-color) !important;
 }
 
 .nav__wrapper {
@@ -11,19 +11,19 @@
   height: 60px;
 }
 
-.logo {
+.logoad {
   display: flex;
   align-items: center;
   column-gap: 8px;
   cursor: pointer;
 }
 
-.logo img {
-  width: 1.6rem;
-  height: 1.6rem;
+.logoad img {
+  width: 8rem !important;
+  height: 3.5rem !important;
 }
 
-.logo h1 {
+.logoad h1 {
   font-size: 1.2rem;
   font-weight: 700;
   color: var(--primary-color);
@@ -38,7 +38,7 @@
 
 .nav__item a {
   font-weight: 500;
-  color: var(--primary-color);
+  color: #fff;
   cursor: pointer;
 }
 
@@ -142,12 +142,12 @@
     font-size: 1.1rem !important;
   }
 
-  .logo img {
+  .logoad img {
     width: 1rem;
     height: 1rem;
   }
 
-  .logo h1 {
+  .logoad h1 {
     font-size: 1rem;
   }
 

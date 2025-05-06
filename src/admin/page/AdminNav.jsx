@@ -2,7 +2,7 @@ import React, { useRef, useEffect, useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import "../styles/admin-nav.css";
 import { motion } from "framer-motion";
-import logo from "../../assets/images/eco-logo.png";
+import logo from "../../assets/images/logo2.png";
 import userIcon from "../../assets/images/user-icon.png";
 import { Container, Row } from "reactstrap";
 import { logout } from "../../redux/slices/authSlice";
@@ -73,11 +73,8 @@ const Header = () => {
       <Container>
         <Row>
           <div className="nav__wrapper">
-            <div className="logo" onClick={navigateToHome}>
+            <div className="logoad" onClick={navigateToHome}>
               <img src={logo} alt="logo_Image" />
-              <div>
-                <h1>Ecommerce</h1>
-              </div>
             </div>
 
             <div className="navigation" ref={menuRef} onClick={menuToggle}>
