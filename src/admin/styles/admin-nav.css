@@ -21,6 +21,7 @@
 .logoad img {
   width: 8.2rem !important;
   height: 3.5rem !important;
+  z-index: 100;
 }
 
 .logoad h1 {
