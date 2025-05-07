@@ -2,7 +2,6 @@ import React, { useRef, useEffect, useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import "../styles/admin-nav.css";
 import { motion } from "framer-motion";
-import logo from "../../assets/images/logo2.png";
 import userIcon from "../../assets/images/user-icon.png";
 import { Container, Row } from "reactstrap";
 import { logout } from "../../redux/slices/authSlice";
@@ -74,7 +73,10 @@ const Header = () => {
         <Row>
           <div className="nav__wrapper">
             <div className="logoad" onClick={navigateToHome}>
-              <img src={logo} alt="logo_Image" />
+              <img
+                src="https://res.cloudinary.com/dxw7hwodj/image/upload/v1746629543/logo2_y9efmx.png"
+                alt="logo_Image"
+              />
             </div>
 
             <div className="navigation" ref={menuRef} onClick={menuToggle}>
