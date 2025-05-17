@@ -115,7 +115,7 @@ const Home = () => {
 
             <Col lg="6" md="6">
               <div className="hero__img">
-                <img src={heroImg} alt="hero" />
+                <img fetchpriority="high" src={heroImg} alt="hero" />
               </div>
             </Col>
           </Row>
