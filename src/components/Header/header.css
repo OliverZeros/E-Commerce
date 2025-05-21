@@ -25,7 +25,7 @@
 .logo h1 {
   font-size: 1.2rem;
   font-weight: 700;
-  color: var(--primary-color);
+  color: var(--primary-color) !important;
 }
 
 .menu {
@@ -37,7 +37,7 @@
 
 .nav__item a {
   font-weight: 500;
-  color: var(--primary-color);
+  color: var(--primary-color) !important;
   cursor: pointer;
 }
 
@@ -112,8 +112,10 @@
   display: none;
 }
 
-.nav__avtive {
+.nav__active {
   font-weight: 700 !important;
+  color: var(--primary-color) !important;
+  position: relative;
 }
 
 .sticky__header {
