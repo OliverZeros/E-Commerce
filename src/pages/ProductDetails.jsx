@@ -62,9 +62,7 @@ const ProductDetails = () => {
       }, 0);
 
       dispatch(cartActions.setTotalQuantity(totalQuantity));
-    } catch (error) {
-      // console.error("Failed to add product to cart:", error);
-    }
+    } catch (error) {}
   };
 
   useEffect(() => {

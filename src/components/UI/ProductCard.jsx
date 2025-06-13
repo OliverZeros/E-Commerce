@@ -31,9 +31,7 @@ const ProductCard = ({ item }) => {
         }, 0);
 
         dispatch(cartActions.setTotalQuantity(totalQuantity));
-      } catch (error) {
-        toast.error("Failed to add product to cart");
-      }
+      } catch (error) {}
     }
   };
 

@@ -12,19 +12,17 @@ import "react-toastify/dist/ReactToastify.css";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
-  <React.StrictMode>
-    <BrowserRouter>
-      <Provider store={store}>
-        <ToastContainer
-          theme="dark"
-          className={"toast__message"}
-          position="top-right"
-          autoClose={3000}
-          closeOnClick
-          pauseOnHover={false}
-        />
-        <App />
-      </Provider>
-    </BrowserRouter>
-  </React.StrictMode>
+  <BrowserRouter>
+    <Provider store={store}>
+      <ToastContainer
+        theme="dark"
+        className={"toast__message"}
+        position="top-right"
+        autoClose={3000}
+        closeOnClick
+        pauseOnHover={false}
+      />
+      <App />
+    </Provider>
+  </BrowserRouter>
 );
