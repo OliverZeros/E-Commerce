@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Container, Row, Col, Form, FormGroup, Label, Input } from "reactstrap";
 import { toast } from "react-toastify";
-import axios from "axios";
+import { updateProduct } from "../../service/productService";
 import { useSelector } from "react-redux";
 import "../styles/add-products.css";
 
@@ -54,16 +54,13 @@ const UpdateProducts = () => {
     formData.append("size", productType.size);
     formData.append("model", productType.model);
 
-    const response = await axios.patch(
-      `${process.env.REACT_APP_API_URL}/product/update`,
-      formData,
-      {
-        headers: {
-          "Content-Type": "multipart/form-data",
-          Authorization: token,
-        },
-      }
-    );
+    try {
+      await updateProduct(formData, token);
+    } catch (error) {
+      // console.error("Error updating product:", error);
+      toast.error("Failed to update product");
+      return;
+    }
     toast.success("Product update successfully");
 
     navigate("/admin/all-products");

@@ -1,13 +1,34 @@
 .table tr td img {
-    width: 90px !important;
-    height: 90px !important;
-    object-fit: contain;
+  width: 90px !important;
+  height: 90px !important;
+  object-fit: contain;
 }
 
 td i {
-    cursor: pointer;
+  cursor: pointer;
 }
 
-td, th {
-    color: var(--primary-color);
+td,
+th {
+  color: var(--primary-color);
+}
+
+.delete-icon {
+  font-size: 18px;
+  color: #333;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.delete-icon:hover {
+  color: #ff0000;
+}
+
+td {
+  position: relative;
+}
+td .delete-icon {
+  position: absolute;
+  right: 65%;
+  height: 100%;
 }

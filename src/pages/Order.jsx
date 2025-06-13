@@ -6,7 +6,7 @@ import { Container, Row, Col } from "reactstrap";
 
 import { useSelector } from "react-redux";
 
-import axios from "axios";
+import { getReceipts } from "../service/receiptService";
 
 const Order = () => {
   const token = useSelector((state) => state.auth.token);
@@ -14,14 +14,7 @@ const Order = () => {
 
   useEffect(() => {
     const getOrder = async () => {
-      const response = await axios.get(
-        `${process.env.REACT_APP_API_URL}/receipt/get`,
-        {
-          headers: {
-            Authorization: token,
-          },
-        }
-      );
+      const response = await getReceipts(token);
       const orders = response.data;
       setOrderInfo(orders);
     };

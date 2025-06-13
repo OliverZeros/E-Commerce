@@ -4,6 +4,7 @@ import { useSelector } from "react-redux";
 import "../styles/all-order.css";
 
 import axios from "axios";
+import { getAllReceipts } from "../../service/receiptService";
 
 const columns = [
   {
@@ -46,16 +47,8 @@ const AllReceipts = () => {
 
   useEffect(() => {
     const getAllOrder = async () => {
-      const response = await axios.get(
-        `${process.env.REACT_APP_API_URL}/receipt/all`,
-        {
-          headers: {
-            Authorization: token,
-          },
-        }
-      );
+      const response = await getAllReceipts(token);
       const orders = response.data;
-      console.log(orders);
       setAllOrders(orders);
     };
     getAllOrder();
@@ -94,6 +87,23 @@ const AllReceipts = () => {
                     minute: "2-digit",
                     second: "2-digit",
                   })}
+                </td>
+              </tr>
+              <tr>
+                <th>Payment Status: </th>
+                <td>
+                  <span
+                    style={{
+                      padding: "5px 10px",
+                      borderRadius: "5px",
+                      backgroundColor: item.isPaid
+                        ? "rgba(0, 128, 0, 0.151)"
+                        : "rgba(255, 30, 0, 0.1)",
+                      color: item.isPaid ? "green" : "red",
+                    }}
+                  >
+                    {item.isPaid ? "Paid" : "Pending"}
+                  </span>
                 </td>
               </tr>
             </table>

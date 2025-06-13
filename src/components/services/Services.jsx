@@ -5,7 +5,7 @@ import { motion } from "framer-motion";
 
 import "./services.css";
 
-import serviceData from "../assets/data/serviceData";
+import serviceData from "../../assets/data/serviceData";
 
 const Services = () => {
   return (

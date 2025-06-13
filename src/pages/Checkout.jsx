@@ -1,65 +1,74 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Container, Row, Col, Form, FormGroup } from "reactstrap";
 import Helmet from "../components/Helmet/Helmet";
 import { toast } from "react-toastify";
 import CommonSection from "../components/UI/CommonSection";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
+import { getCartItems } from "../service/cartService";
+import {
+  createReceipt,
+  getReceipts,
+  payReceipt,
+} from "../service/receiptService";
+
 import "../styles/checkout.css";
 
 import { useSelector } from "react-redux";
 
 const Checkout = () => {
-  const totalQty = useSelector((state) => state.cart.totalQuantity);
-  const totalAmount = useSelector((state) => state.cart.totalAmount);
   const [name, setName] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
   const [address, setAddress] = useState("");
+  const [totalAmount, setTotalAmount] = useState(0);
+  const [totalQty, setTotalQty] = useState(0);
 
   const token = useSelector((state) => state.auth.token);
   const navigate = useNavigate();
 
+  const calTotalAmount = async () => {
+    try {
+      const response = await getCartItems(token);
+      const { productsInCart } = response.data;
+      setTotalQty(productsInCart.reduce((acc, item) => acc + item.quantity, 0));
+      setTotalAmount(
+        productsInCart.reduce((acc, item) => {
+          return acc + item.price * item.quantity;
+        }, 0)
+      );
+    } catch (error) {
+      // console.error("Failed to fetch cart items", error);
+      return [];
+    }
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await axios.post(
-      `${process.env.REACT_APP_API_URL}/receipt/create`,
+    await createReceipt(
       {
         name,
         phoneNumber,
         address,
       },
-      {
-        headers: {
-          Authorization: token,
-        },
-      }
+      token
     );
-    const response = await axios.get(
-      `${process.env.REACT_APP_API_URL}/receipt/get`,
-      {
-        headers: {
-          Authorization: token,
-        },
-      }
-    );
+    const response = await getReceipts(token);
     const receiptId = response.data[0].id;
-    const status = await axios.post(
-      `${process.env.REACT_APP_API_URL}/receipt/pay`,
-      {
-        receiptid: receiptId,
-      },
-      {
-        headers: {
-          Authorization: token,
-        },
-      }
-    );
+    const status = await payReceipt(receiptId, token);
 
     toast.success(
       "Payment completed successfully! Thank you for your purchase!"
     );
     navigate("/home");
   };
+
+  useEffect(() => {
+    if (!token) {
+      navigate("/login");
+    } else {
+      calTotalAmount();
+    }
+  }, []);
+
   return (
     <Helmet title="Checkout">
       <CommonSection title="Checkout" />

@@ -6,7 +6,7 @@ import { useNavigate, Link } from "react-router-dom";
 import { Container, Row, Col, Form, FormGroup } from "reactstrap";
 import { useDispatch } from "react-redux";
 import { login } from "../redux/slices/authSlice";
-import axios from "axios";
+import { loginService } from "../service/authService";
 
 import "../styles/login.css";
 
@@ -27,13 +27,10 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post(
-        `${process.env.REACT_APP_API_URL}/auth/login`,
-        {
-          email,
-          password,
-        }
-      );
+      const response = await loginService({
+        email,
+        password,
+      });
       const data = response.data;
       const token = data.bearer;
       const isadmin = data.isAdmin;

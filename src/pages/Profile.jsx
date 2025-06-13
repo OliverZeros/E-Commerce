@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import axios from "axios";
+import { getUserProfile } from "../service/userService";
 import { Container, Row, Col } from "reactstrap";
 import Helmet from "../components/Helmet/Helmet";
 import CommonSection from "../components/UI/CommonSection";
@@ -16,14 +16,7 @@ const Profile = () => {
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        const response = await axios.get(
-          `${process.env.REACT_APP_API_URL}/user/profile`,
-          {
-            headers: {
-              Authorization: token,
-            },
-          }
-        );
+        const response = await getUserProfile(token);
         setUserData(response.data);
         setLoading(false);
       } catch (error) {

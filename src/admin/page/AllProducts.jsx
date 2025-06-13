@@ -3,7 +3,7 @@ import DataTable from "../components/DataTable";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { setProducts } from "../../redux/slices/productsSlice";
-import axios from "axios";
+import { getAllProducts } from "../../service/productService";
 
 const columns = [
   { field: "id", headerName: "ID", width: 80 },
@@ -64,9 +64,7 @@ const AllProducts = () => {
   const dispatch = useDispatch();
   const [allProduct, setProduct] = useState([]);
   const getProducts = async () => {
-    const response = await axios.get(
-      `${process.env.REACT_APP_API_URL}/product/getAll`
-    );
+    const response = await getAllProducts();
     const products = response.data;
     const newProducts = products.map((product, index) => {
       return {
@@ -99,7 +97,12 @@ const AllProducts = () => {
         <h1>All Products</h1>
         <button onClick={addProducts}>Add New Products</button>
       </div>
-      <DataTable slug="product" columns={columns} rows={allProduct} />
+      <DataTable
+        slug="product"
+        columns={columns}
+        rows={allProduct}
+        fetchData={getProducts}
+      />
     </div>
   );
 };

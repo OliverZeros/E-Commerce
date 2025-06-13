@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from "react";
 import DataTable from "../components/DataTable";
 import { useSelector } from "react-redux";
-
-import axios from "axios";
+import { getAllUsers } from "../../service/userService";
 
 const columns = [
   { field: "id", headerName: "ID", width: 80 },
@@ -48,14 +47,7 @@ const AllUsers = () => {
   const token = useSelector((state) => state.auth.token);
   const [allUser, setUser] = useState([]);
   const getUsers = async () => {
-    const response = await axios.get(
-      `${process.env.REACT_APP_API_URL}/user/all`,
-      {
-        headers: {
-          Authorization: token,
-        },
-      }
-    );
+    const response = await getAllUsers(token);
     const users = response.data;
     const newUser = users.map((user, index) => {
       return {

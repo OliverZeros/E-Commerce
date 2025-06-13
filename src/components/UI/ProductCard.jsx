@@ -5,40 +5,35 @@ import { Col } from "reactstrap";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
-
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { cartActions } from "../../redux/slices/cartSlice";
+import { addToCartService } from "../../service/cartService";
+
+import { useSelector } from "react-redux";
 
 const ProductCard = ({ item }) => {
   const isLoggedIn = useSelector((state) => (state.auth.token ? true : false));
   const token = useSelector((state) => state.auth.token);
-  const dispatch = useDispatch();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const addToCart = async () => {
     if (!isLoggedIn) {
       toast.error("Please login to add the product to the cart");
       navigate("/login");
     } else {
-      dispatch(
-        cartActions.addItem({
-          id: item.id,
-          productName: item.name,
-          price: item.price,
-          imgUrl: item.imageUrl,
-        })
-      );
       toast.success("Product added successfully");
-      const response = await axios.post(
-        `${process.env.REACT_APP_API_URL}/cart/add`,
-        { productid: item.id },
-        {
-          headers: {
-            Authorization: token,
-          },
-        }
-      );
+      try {
+        const response = await addToCartService(item.id, token);
+        const { productsInCart } = response.data;
+        const totalQuantity = productsInCart.reduce((acc, item) => {
+          return acc + item.quantity;
+        }, 0);
+
+        dispatch(cartActions.setTotalQuantity(totalQuantity));
+      } catch (error) {
+        toast.error("Failed to add product to cart");
+      }
     }
   };
 

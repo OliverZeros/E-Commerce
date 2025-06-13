@@ -4,7 +4,7 @@ import { Container, Row, Col, Form, FormGroup } from "reactstrap";
 import Helmet from "../components/Helmet/Helmet";
 import { useDispatch } from "react-redux";
 import { login } from "../redux/slices/authSlice";
-import axios from "axios";
+import { registerService } from "../service/authService";
 import { toast } from "react-toastify";
 
 const Signup = () => {
@@ -28,20 +28,25 @@ const Signup = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const response = await axios.post(
-      `${process.env.REACT_APP_API_URL}/auth/signup`,
-      {
+    if (!username || !email || !password) {
+      toast.error("Please fill in all fields");
+      return;
+    }
+    try {
+      const response = await registerService({
         username,
         email,
         password,
-      }
-    );
-    const data = response.data;
-    const token = data.bearer;
-    dispatch(login(token));
-    toast.success("Account created!");
-
-    navigate("/survey");
+      });
+      const data = response.data;
+      const token = data.bearer;
+      dispatch(login(token));
+      toast.success("Account created!");
+      navigate("/survey");
+    } catch (error) {
+      toast.error(error.response?.data?.message || "Failed to create account");
+      return;
+    }
   };
 
   return (

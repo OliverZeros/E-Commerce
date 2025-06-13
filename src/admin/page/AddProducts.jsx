@@ -2,8 +2,9 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Container, Row, Col, Form, FormGroup, Label, Input } from "reactstrap";
 import { toast } from "react-toastify";
-import axios from "axios";
+import { addProduct } from "../../service/productService";
 import { useSelector } from "react-redux";
+import axios from "axios";
 import "../styles/add-products.css";
 
 const AddProducts = () => {
@@ -24,7 +25,8 @@ const AddProducts = () => {
   const navigate = useNavigate();
 
   function handleChangeImg(e) {
-    setImage(e.target.files?.[0]);
+    const file = e.target.files?.[0];
+    setImage(file);
   }
 
   const handleProductTypeChange = (e) => {
@@ -39,7 +41,6 @@ const AddProducts = () => {
     const formData = new FormData();
 
     formData.append("image", image);
-
     formData.append("name", name);
     formData.append("price", price);
     formData.append("slot", slot);
@@ -55,11 +56,13 @@ const AddProducts = () => {
       formData,
       {
         headers: {
+          "ngrok-skip-browser-warning": "69420",
           "Content-Type": "multipart/form-data",
           Authorization: token,
         },
       }
     );
+    console.log("formdata", formData);
 
     toast.success("Product added successfully!");
     navigate("/admin/all-products");
@@ -134,7 +137,13 @@ const AddProducts = () => {
             <Col>
               <FormGroup className="form__group">
                 <Label for="image">Image</Label>
-                <Input type="file" id="images" onChange={handleChangeImg} />
+                <Input
+                  type="file"
+                  id="images"
+                  accept="image/*"
+                  required
+                  onChange={handleChangeImg}
+                />
               </FormGroup>
             </Col>
             <Col>

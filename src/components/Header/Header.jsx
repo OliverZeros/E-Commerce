@@ -33,24 +33,23 @@ const Header = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const stickyHeaderFunc = () => {
-    window.addEventListener("scroll", () => {
-      if (
-        document.body.scrollTop > 80 ||
-        document.documentElement.scrollTop > 80
-      ) {
-        headerRef.current.classList.add("sticky__header");
-      } else {
-        headerRef.current.classList.remove("sticky__header");
-      }
-    });
-  };
+  // const stickyHeaderFunc = () => {
+  //   window.addEventListener("scroll", () => {
+  //     if (
+  //       document.body.scrollTop > 80 ||
+  //       document.documentElement.scrollTop > 80
+  //     ) {
+  //       headerRef.current.classList.add("sticky__header");
+  //     } else {
+  //       headerRef.current.classList.remove("sticky__header");
+  //     }
+  //   });
+  // };
 
-  useEffect(() => {
-    stickyHeaderFunc();
-
-    return () => window.removeEventListener("scroll", stickyHeaderFunc);
-  });
+  // useEffect(() => {
+  //   stickyHeaderFunc();
+  //   return () => window.removeEventListener("scroll", stickyHeaderFunc);
+  // });
 
   const menuToggle = () => {
     menuRef.current.classList.toggle("active__menu");

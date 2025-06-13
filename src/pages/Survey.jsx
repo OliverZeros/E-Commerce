@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { Container, Row, Col, Form, FormGroup } from "reactstrap";
 import CommonSection from "../components/UI/CommonSection";
 import { useSelector } from "react-redux";
-import axios from "axios";
+import { userSurvey } from "../service/userService";
 
 import "../styles/survey.css";
 
@@ -31,22 +31,7 @@ function Survey() {
 
     console.log(category, color, size, model);
     console.log(token);
-    const response = await axios.post(
-      `${process.env.REACT_APP_API_URL}/user/survey`,
-      {
-        category,
-        color,
-        size,
-        model,
-      },
-      {
-        headers: {
-          Authorization: token,
-        },
-      }
-    );
-    const data = response.data;
-    console.log(data);
+    await userSurvey({ category, color, size, model }, token);
 
     toast.success("Survey submitted! Shop Now!");
     navigate("/login");

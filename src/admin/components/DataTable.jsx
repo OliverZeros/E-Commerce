@@ -3,32 +3,20 @@ import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import "../styles/data-table.css";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
-import axios from "axios";
+import { deleteProduct } from "../../service/productService";
 
-const DataTable = ({ columns, rows, slug }) => {
+const DataTable = ({ columns, rows, slug, fetchData }) => {
   const navigation = useNavigate();
   const token = useSelector((state) => state.auth.token);
   const handleDelete = async (id) => {
-    const data = new FormData();
-    data.append("productId", id);
-    let config = {
-      method: "delete",
-      maxBodyLength: Infinity,
-      url: `${process.env.REACT_APP_API_URL}/product/delete`,
-      headers: {
-        Authorization: token,
-      },
-      data: data,
-    };
-
-    axios
-      .request(config)
-      .then((response) => {
-        console.log(JSON.stringify(response.data));
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    try {
+      deleteProduct(id, token);
+      if (fetchData) {
+        fetchData();
+      }
+    } catch (error) {
+      console.error("Failed to delete product", error);
+    }
   };
 
   const actionColumn = {

@@ -5,25 +5,53 @@ import CommonSection from "../components/UI/CommonSection";
 import { Container, Row, Col } from "reactstrap";
 
 import { motion } from "framer-motion";
-import { cartActions } from "../redux/slices/cartSlice";
 import { useSelector, useDispatch } from "react-redux";
+import { cartActions } from "../redux/slices/cartSlice";
 import { useNavigate } from "react-router-dom";
 
 import { Link } from "react-router-dom";
 
+import { toast } from "react-toastify";
+import { getCartItems, deleteCartItem } from "../service/cartService";
+import { useEffect, useState } from "react";
+
 const Cart = () => {
-  const isLoggedIn = useSelector((state) => (state.auth.token ? true : false));
-  const cartItems = useSelector((state) => state.cart.cartItems);
-  const totalAmount = useSelector((state) => state.cart.totalAmount);
+  const token = useSelector((state) => state.auth.token);
+  const [cartItems, setCartItems] = useState([]);
+  const [totalAmount, setTotalAmount] = useState(0);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const handleCheckout = () => {
-    if (isLoggedIn) {
+    if (token) {
       navigate("/checkout");
     } else {
       navigate("/login");
     }
   };
+
+  const getCartData = async () => {
+    try {
+      const response = await getCartItems(token);
+      const { productsInCart } = response.data;
+      setCartItems(productsInCart);
+      const total = productsInCart.reduce((acc, item) => {
+        return acc + item.price * item.quantity;
+      }, 0);
+      setTotalAmount(total);
+      const totalQuantity = productsInCart.reduce((acc, item) => {
+        return acc + item.quantity;
+      }, 0);
+      dispatch(cartActions.setTotalQuantity(totalQuantity));
+    } catch (error) {
+      // console.error("Failed to fetch cart items", error);
+      return [];
+    }
+  };
+
+  useEffect(() => {
+    getCartData();
+  }, [token]);
 
   return (
     <Helmet title="Cart">
@@ -39,7 +67,7 @@ const Cart = () => {
                   <thead>
                     <tr>
                       <th>Image</th>
-                      <th>Title</th>
+                      <th>Product Name</th>
                       <th>Price</th>
                       <th>Qty</th>
                       <th>Delete</th>
@@ -48,7 +76,12 @@ const Cart = () => {
 
                   <tbody>
                     {cartItems.map((item, index) => (
-                      <Tr item={item} key={index} />
+                      <Tr
+                        item={item}
+                        key={index}
+                        token={token}
+                        getCartData={getCartData}
+                      />
                     ))}
                   </tbody>
                 </table>
@@ -84,25 +117,29 @@ const Cart = () => {
   );
 };
 
-const Tr = ({ item }) => {
-  const dispatch = useDispatch();
-
-  const deleteProduct = () => {
-    dispatch(cartActions.deleteItem(item.id));
+const Tr = ({ item, token, getCartData }) => {
+  const deleteProduct = async () => {
+    try {
+      await deleteCartItem(item.id, token);
+      toast.success("Product removed from cart");
+      getCartData();
+    } catch (error) {
+      console.error("Failed to delete product from cart", error);
+    }
   };
   return (
     <tr>
       <td>
-        <img src={item.imgUrl} alt="" />
+        <img src={item.imageUrl} alt="" />
       </td>
-      <td>{item.productName}</td>
+      <td>{item.name}</td>
       <td>{item.price} VNĐ</td>
       <td>{item.quantity}</td>
       <td>
         <motion.i
           whileTap={{ scale: 1.2 }}
           onClick={deleteProduct}
-          class="ri-delete-bin-line"
+          class="ri-delete-bin-line delete-icon"
         ></motion.i>
       </td>
     </tr>

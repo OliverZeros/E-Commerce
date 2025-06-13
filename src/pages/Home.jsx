@@ -11,7 +11,7 @@ import { Container, Row, Col } from "reactstrap";
 
 import heroImg from "../assets/images/hero-img.png";
 
-import Services from "../services/Services";
+import Services from "../components/services/Services";
 import ProductsList from "../components/UI/ProductsList";
 
 import Clock from "../components/UI/Clock";
@@ -20,7 +20,8 @@ import counterImg from "../assets/images/counter-timer-img.png";
 
 import { useDispatch, useSelector } from "react-redux";
 import { setProducts } from "../redux/slices/productsSlice";
-import axios from "axios";
+import { getAllProducts } from "../service/productService";
+import { getUserProfile } from "../service/userService";
 
 const Home = () => {
   const token = useSelector((state) => state.auth.token);
@@ -37,9 +38,7 @@ const Home = () => {
 
   useEffect(() => {
     const getProducts = async () => {
-      const response = await axios.get(
-        `${process.env.REACT_APP_API_URL}/product/getAll`
-      );
+      const response = await getAllProducts();
       const products = response.data;
 
       dispatch(setProducts(products));
@@ -81,14 +80,7 @@ const Home = () => {
   useEffect(() => {
     const getUserInfo = async () => {
       if (!token) return;
-      const response = await axios.get(
-        `${process.env.REACT_APP_API_URL}/user/profile`,
-        {
-          headers: {
-            Authorization: token,
-          },
-        }
-      );
+      const response = await getUserProfile(token);
       const survey = response.data.survey.category;
       setSurvey(survey);
     };

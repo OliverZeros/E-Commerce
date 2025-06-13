@@ -6,18 +6,21 @@ import CommonSection from "../components/UI/CommonSection";
 import Helmet from "../components/Helmet/Helmet";
 import { motion } from "framer-motion";
 import ProductsList from "../components/UI/ProductsList";
-import { useDispatch } from "react-redux";
-import { cartActions } from "../redux/slices/cartSlice";
+import { addToCartService } from "../service/cartService";
 import { toast } from "react-toastify";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { cartActions } from "../redux/slices/cartSlice";
+import { useNavigate } from "react-router-dom";
 
 import "../styles/product-details.css";
 
 const ProductDetails = () => {
   const products = useSelector((state) => state.products.products);
+  const token = useSelector((state) => state.auth.token);
   const [tab, setTab] = useState("desc");
   const reviewUser = useRef("");
   const reviewMsg = useRef("");
+  const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const [rating, setRating] = useState(null);
@@ -43,16 +46,25 @@ const ProductDetails = () => {
     (item) => item.productType.category === product.productType.category
   );
 
-  const addToCart = () => {
-    dispatch(
-      cartActions.addItem({
-        id: product.id,
-        productName: product.name,
-        price: product.price,
-        imgUrl: product.imageUrl,
-      })
-    );
-    toast.success("Product added to cart");
+  const addToCart = async () => {
+    if (!token) {
+      toast.error("Please login to add the product to the cart");
+      navigate("/login");
+      return;
+    }
+
+    toast.success("Product added to cart successfully");
+    try {
+      const response = await addToCartService(id, token);
+      const { productsInCart } = response.data;
+      const totalQuantity = productsInCart.reduce((acc, item) => {
+        return acc + item.quantity;
+      }, 0);
+
+      dispatch(cartActions.setTotalQuantity(totalQuantity));
+    } catch (error) {
+      // console.error("Failed to add product to cart:", error);
+    }
   };
 
   useEffect(() => {
@@ -62,7 +74,6 @@ const ProductDetails = () => {
   return (
     <Helmet title={product.name}>
       <CommonSection title={product.name} />
-
       <section className="pt-0">
         <Container>
           <Row>

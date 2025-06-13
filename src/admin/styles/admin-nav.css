@@ -37,7 +37,7 @@
   margin-bottom: 0;
 }
 
-.nav__item a {
+.ad_nav_item a {
   font-weight: 500;
   color: #fff;
   cursor: pointer;
@@ -89,7 +89,7 @@
   display: none;
 }
 
-.nav__avtive {
+.ad_nav_active {
   font-weight: 700 !important;
 }
 
