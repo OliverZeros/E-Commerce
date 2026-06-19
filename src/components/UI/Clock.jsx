@@ -1,43 +1,53 @@
 import React, { useState, useEffect } from "react";
-
 import "../../styles/clock.css";
 
 const Clock = () => {
-  const [days, setDays] = useState();
-  const [hours, setHours] = useState();
-  const [minutes, setMinutes] = useState();
-  const [seconds, setSeconds] = useState();
-
-  let interval;
-
-  const countDown = () => {
-    const destination = new Date("June 30, 2025").getTime();
-    interval = setInterval(() => {
-      const now = new Date().getTime();
-      const different = destination - now;
-      const days = Math.floor(different / (1000 * 60 * 60 * 24));
-
-      const hours = Math.floor(
-        (different % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
-      );
-
-      const minutes = Math.floor((different % (1000 * 60 * 60)) / (1000 * 60));
-
-      const seconds = Math.floor((different % (1000 * 60)) / 1000);
-
-      if (destination < 0) clearInterval(interval.current);
-      else {
-        setDays(days);
-        setHours(hours);
-        setMinutes(minutes);
-        setSeconds(seconds);
-      }
-    });
-  };
+  const [days, setDays] = useState(0);
+  const [hours, setHours] = useState(0);
+  const [minutes, setMinutes] = useState(0);
+  const [seconds, setSeconds] = useState(0);
 
   useEffect(() => {
-    countDown();
-  });
+    const getDestination = () => {
+      const now = new Date();
+      let targetDate = new Date(now.getFullYear(), now.getMonth(), 30, 0, 0, 0);
+
+      if (now.getTime() > targetDate.getTime()) {
+        targetDate.setMonth(targetDate.getMonth() + 1);
+      }
+      return targetDate.getTime();
+    };
+
+    const destination = getDestination();
+
+    const interval = setInterval(() => {
+      const now = new Date().getTime();
+      const different = destination - now;
+
+      if (different <= 0) {
+        clearInterval(interval);
+        setDays(0);
+        setHours(0);
+        setMinutes(0);
+        setSeconds(0);
+        return;
+      }
+
+      const d = Math.floor(different / (1000 * 60 * 60 * 24));
+      const h = Math.floor(
+        (different % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60),
+      );
+      const m = Math.floor((different % (1000 * 60 * 60)) / (1000 * 60));
+      const s = Math.floor((different % (1000 * 60)) / 1000);
+
+      setDays(d);
+      setHours(h);
+      setMinutes(m);
+      setSeconds(s);
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, []);
 
   return (
     <div className="clock__wrapper d-flex align-items-center gap-3">
