@@ -25,22 +25,6 @@ const Checkout = () => {
   const token = useSelector((state) => state.auth.token);
   const navigate = useNavigate();
 
-  const calTotalAmount = async () => {
-    try {
-      const response = await getCartItems(token);
-      const { productsInCart } = response.data;
-      setTotalQty(productsInCart.reduce((acc, item) => acc + item.quantity, 0));
-      setTotalAmount(
-        productsInCart.reduce((acc, item) => {
-          return acc + item.price * item.quantity;
-        }, 0)
-      );
-    } catch (error) {
-      // console.error("Failed to fetch cart items", error);
-      return [];
-    }
-  };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     await createReceipt(
@@ -49,25 +33,45 @@ const Checkout = () => {
         phoneNumber,
         address,
       },
-      token
+      token,
     );
     const response = await getReceipts(token);
     const receiptId = response.data[0].id;
+
+    // eslint-disable-next-line no-unused-vars
     const status = await payReceipt(receiptId, token);
 
     toast.success(
-      "Payment completed successfully! Thank you for your purchase!"
+      "Payment completed successfully! Thank you for your purchase!",
     );
     navigate("/home");
   };
 
   useEffect(() => {
+    const calTotalAmount = async () => {
+      try {
+        const response = await getCartItems(token);
+        const { productsInCart } = response.data;
+        setTotalQty(
+          productsInCart.reduce((acc, item) => acc + item.quantity, 0),
+        );
+        setTotalAmount(
+          productsInCart.reduce((acc, item) => {
+            return acc + item.price * item.quantity;
+          }, 0),
+        );
+      } catch (error) {
+        // console.error("Failed to fetch cart items", error);
+        return [];
+      }
+    };
+
     if (!token) {
       navigate("/login");
     } else {
       calTotalAmount();
     }
-  }, []);
+  }, [token, navigate]);
 
   return (
     <Helmet title="Checkout">

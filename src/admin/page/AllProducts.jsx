@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import DataTable from "../components/DataTable";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
@@ -63,10 +63,11 @@ const AllProducts = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [allProduct, setProduct] = useState([]);
-  const getProducts = async () => {
+
+  const getProducts = useCallback(async () => {
     const response = await getAllProducts();
     const products = response.data;
-    const newProducts = products.map((product, index) => {
+    const newProducts = products.map((product) => {
       return {
         id: product.id,
         img: product.imageUrl[0],
@@ -81,11 +82,11 @@ const AllProducts = () => {
     });
     setProduct(newProducts);
     dispatch(setProducts(products));
-  };
+  }, [dispatch]);
 
   useEffect(() => {
     getProducts();
-  }, []);
+  }, [getProducts]);
 
   const addProducts = () => {
     navigate("/admin/add-products");

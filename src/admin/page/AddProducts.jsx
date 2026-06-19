@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Container, Row, Col, Form, FormGroup, Label, Input } from "reactstrap";
 import { toast } from "react-toastify";
-import { addProduct } from "../../service/productService";
 import { useSelector } from "react-redux";
 import axios from "axios";
 import "../styles/add-products.css";
@@ -51,16 +50,16 @@ const AddProducts = () => {
     formData.append("size", productType.size);
     formData.append("model", productType.model);
 
+    // eslint-disable-next-line no-unused-vars
     const response = await axios.post(
       `${process.env.REACT_APP_API_URL}/product/add`,
       formData,
       {
         headers: {
-          "ngrok-skip-browser-warning": "69420",
           "Content-Type": "multipart/form-data",
           Authorization: token,
         },
-      }
+      },
     );
     console.log("formdata", formData);
 

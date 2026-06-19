@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import "../styles/cart.css";
 import Helmet from "../components/Helmet/Helmet";
 import CommonSection from "../components/UI/CommonSection";
@@ -13,7 +13,6 @@ import { Link } from "react-router-dom";
 
 import { toast } from "react-toastify";
 import { getCartItems, deleteCartItem } from "../service/cartService";
-import { useEffect, useState } from "react";
 
 const Cart = () => {
   const token = useSelector((state) => state.auth.token);
@@ -30,7 +29,7 @@ const Cart = () => {
     }
   };
 
-  const getCartData = async () => {
+  const getCartData = useCallback(async () => {
     try {
       const response = await getCartItems(token);
       const { productsInCart } = response.data;
@@ -44,14 +43,12 @@ const Cart = () => {
       }, 0);
       dispatch(cartActions.setTotalQuantity(totalQuantity));
     } catch (error) {
-      // console.error("Failed to fetch cart items", error);
       return [];
     }
-  };
-
+  }, [token, dispatch]);
   useEffect(() => {
     getCartData();
-  }, [token]);
+  }, [getCartData]);
 
   return (
     <Helmet title="Cart">
@@ -139,7 +136,7 @@ const Tr = ({ item, token, getCartData }) => {
         <motion.i
           whileTap={{ scale: 1.2 }}
           onClick={deleteProduct}
-          class="ri-delete-bin-line delete-icon"
+          className="ri-delete-bin-line delete-icon"
         ></motion.i>
       </td>
     </tr>

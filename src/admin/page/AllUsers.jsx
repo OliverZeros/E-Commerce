@@ -46,25 +46,28 @@ const columns = [
 const AllUsers = () => {
   const token = useSelector((state) => state.auth.token);
   const [allUser, setUser] = useState([]);
-  const getUsers = async () => {
-    const response = await getAllUsers(token);
-    const users = response.data;
-    const newUser = users.map((user, index) => {
-      return {
-        id: index,
-        username: user.username,
-        email: user.email,
-        category: user.survey.category,
-        model: user.survey.model,
-        color: user.survey.color,
-        size: user.survey.size,
-      };
-    });
-    setUser(newUser);
-  };
   useEffect(() => {
+    const getUsers = async () => {
+      if (!token) return;
+
+      const response = await getAllUsers(token);
+      const users = response.data;
+      const newUser = users.map((user, index) => {
+        return {
+          id: index,
+          username: user.username,
+          email: user.email,
+          category: user.survey.category,
+          model: user.survey.model,
+          color: user.survey.color,
+          size: user.survey.size,
+        };
+      });
+      setUser(newUser);
+    };
+
     getUsers();
-  }, []);
+  }, [token]);
 
   return (
     <div className="products">

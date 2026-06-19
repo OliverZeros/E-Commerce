@@ -14,12 +14,14 @@ const Order = () => {
 
   useEffect(() => {
     const getOrder = async () => {
-      const response = await getReceipts(token);
-      const orders = response.data;
-      setOrderInfo(orders);
+      if (token) {
+        const response = await getReceipts(token);
+        const orders = response.data;
+        setOrderInfo(orders);
+      }
     };
     getOrder();
-  }, []);
+  }, [token]);
 
   return (
     <Helmet title="Cart">
@@ -34,33 +36,38 @@ const Order = () => {
               ) : (
                 <div>
                   {orderInfo.map((item, index) => (
-                    <div className="order__card">
+                    <div className="order__card" key={item.id || index}>
                       <table className="order__info">
-                        <tr>
-                          <th>Name: </th>
-                          <td>{item.billingInfo.name}</td>
-                        </tr>
-                        <tr>
-                          <th>Phone Number: </th>
-                          <td>{item.billingInfo.phoneNumber}</td>
-                        </tr>
-                        <tr>
-                          <th>Address: </th>
-                          <td>{item.billingInfo.address}</td>
-                        </tr>
-                        <tr>
-                          <th>Date Created :</th>
-                          <td>
-                            {new Date(item.createdAt).toLocaleString("en-US", {
-                              year: "numeric",
-                              month: "long",
-                              day: "numeric",
-                              hour: "2-digit",
-                              minute: "2-digit",
-                              second: "2-digit",
-                            })}
-                          </td>
-                        </tr>
+                        <tbody>
+                          <tr>
+                            <th>Name: </th>
+                            <td>{item.billingInfo.name}</td>
+                          </tr>
+                          <tr>
+                            <th>Phone Number: </th>
+                            <td>{item.billingInfo.phoneNumber}</td>
+                          </tr>
+                          <tr>
+                            <th>Address: </th>
+                            <td>{item.billingInfo.address}</td>
+                          </tr>
+                          <tr>
+                            <th>Date Created :</th>
+                            <td>
+                              {new Date(item.createdAt).toLocaleString(
+                                "en-US",
+                                {
+                                  year: "numeric",
+                                  month: "long",
+                                  day: "numeric",
+                                  hour: "2-digit",
+                                  minute: "2-digit",
+                                  second: "2-digit",
+                                },
+                              )}
+                            </td>
+                          </tr>
+                        </tbody>
                       </table>
 
                       <table className="table bordered">
@@ -74,8 +81,8 @@ const Order = () => {
                         </thead>
 
                         <tbody>
-                          {orderInfo[index].products.map((item, index) => (
-                            <Tr item={item} key={index} />
+                          {item.products.map((product, pIndex) => (
+                            <Tr item={product} key={product.id || pIndex} />
                           ))}
                         </tbody>
                       </table>

@@ -3,7 +3,6 @@ import DataTable from "../components/DataTable";
 import { useSelector } from "react-redux";
 import "../styles/all-order.css";
 
-import axios from "axios";
 import { getAllReceipts } from "../../service/receiptService";
 
 const columns = [
@@ -52,7 +51,7 @@ const AllReceipts = () => {
       setAllOrders(orders);
     };
     getAllOrder();
-  }, []);
+  }, [token]);
 
   return (
     <div className="products">

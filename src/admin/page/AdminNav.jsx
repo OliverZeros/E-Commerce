@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useState } from "react";
+import React, { useRef, useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import "../styles/admin-nav.css";
 import { motion } from "framer-motion";
