@@ -1,71 +1,209 @@
-.products {
-  .info {
-    display: flex;
-    align-items: center;
-    gap: 20px;
-    margin-bottom: 20px;
-    margin-top: 20px;
-    margin-left: 30px;
+/* Modern Admin Data Table & Page Layout Styles */
 
-    h1 {
-      font-size: 2rem;
-      font-weight: 700;
-      color: var(--primary-color);
-    }
-
-    button {
-      padding: 5px;
-      cursor: pointer;
-    }
-  }
-}
-.dataTable {
-  .dataGrid {
-    background: white;
-    padding: 20px;
-
-    .MuiDataGrid-toolbarContainer {
-      flex-direction: row-reverse;
-    }
-
-    img {
-      width: 40px;
-      height: 40px;
-      border-radius: 50%;
-      object-fit: cover;
-    }
-
-    .action {
-      display: flex;
-      gap: 15px;
-
-      img {
-        width: 20px;
-        height: 20px;
-        cursor: pointer;
-      }
-    }
-  }
+.admin__page-container {
+  padding: 2.5rem 0 4rem 0;
+  background-color: #f8fafc;
+  min-height: calc(100vh - 70px);
 }
 
-.dataTable {
-  margin: 0 30px;
-}
-
-.action {
+/* Page Header */
+.admin__page-header {
   display: flex;
-  gap: 20px;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+  gap: 1rem;
 }
 
-.action i {
+.admin__page-title {
+  font-size: 1.75rem;
+  font-weight: 800;
+  color: #0f172a;
+  margin-bottom: 0.25rem;
+}
+
+.admin__page-subtitle {
+  color: #64748b;
+  font-size: 0.9rem;
+  margin: 0;
+}
+
+.admin__primary-btn {
+  background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+  color: #ffffff;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 10px;
+  font-weight: 700;
+  font-size: 0.9rem;
   cursor: pointer;
-  font-size: 1.2rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 12px rgba(15, 23, 42, 0.15);
 }
 
-.update:hover {
-  color: green;
+.admin__primary-btn:hover {
+  background: #1e293b;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(15, 23, 42, 0.25);
+  color: #ffffff;
 }
 
-.delete:hover {
-  color: red;
+/* KPI Summary Cards Grid */
+.admin__kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1.25rem;
+  margin-bottom: 2rem;
+}
+
+.admin__kpi-card {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 14px;
+  padding: 1.25rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  transition: all 0.2s ease;
+}
+
+.admin__kpi-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 15px -3px rgba(0, 0, 0, 0.08);
+}
+
+.admin__kpi-icon {
+  width: 52px;
+  height: 52px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.6rem;
+}
+
+.admin__kpi-val {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: #0f172a;
+  line-height: 1.2;
+}
+
+.admin__kpi-label {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #64748b;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Data Table Wrapper */
+.admin__table-card {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 16px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 15px -2px rgba(0, 0, 0, 0.04);
+  overflow: hidden;
+}
+
+/* MUI DataGrid Custom Styling */
+.MuiDataGrid-root {
+  border: none !important;
+  font-family: inherit !important;
+}
+
+.MuiDataGrid-columnHeaders {
+  background-color: #f8fafc !important;
+  border-bottom: 1.5px solid #e2e8f0 !important;
+  border-radius: 8px !important;
+  color: #475569 !important;
+  font-weight: 700 !important;
+}
+
+.MuiDataGrid-cell {
+  border-bottom: 1px solid #f1f5f9 !important;
+  display: flex;
+  align-items: center;
+  color: #1e293b !important;
+  font-size: 0.9rem !important;
+}
+
+.MuiDataGrid-row:hover {
+  background-color: #f8fafc !important;
+}
+
+/* Action Buttons in Grid */
+.admin__table-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.admin__action-btn {
+  width: 34px;
+  height: 34px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #e2e8f0;
+  background: #ffffff;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  color: #64748b;
+  font-size: 1.1rem;
+}
+
+.admin__action-btn.edit:hover {
+  background-color: #eff6ff;
+  border-color: #bfdbfe;
+  color: #2563eb;
+}
+
+.admin__action-btn.delete:hover {
+  background-color: #fef2f2;
+  border-color: #fecaca;
+  color: #ef4444;
+}
+
+/* Stock Text (no background, only text color) */
+.stock__badge {
+  background: transparent !important;
+  padding: 0 !important;
+  font-size: 0.95rem;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+}
+
+.stock__badge.in-stock {
+  color: #059669 !important;
+}
+
+.stock__badge.low-stock {
+  color: #d97706 !important;
+}
+
+.stock__badge.out-stock {
+  color: #dc2626 !important;
+}
+
+/* User Pill Tag */
+.survey__tag {
+  display: inline-block;
+  padding: 3px 8px;
+  border-radius: 6px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  background: #f1f5f9;
+  color: #334155;
+  border: 1px solid #e2e8f0;
+  margin-right: 4px;
+  margin-bottom: 2px;
 }

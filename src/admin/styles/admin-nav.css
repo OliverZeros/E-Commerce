@@ -1,170 +1,231 @@
+/* Modern Admin Navigation Styles */
+
 .header_admin {
   width: 100%;
-  line-height: 70px;
-  background-color: var(--primary-color) !important;
-}
-
-.nav__wrapper {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  height: 60px;
-}
-
-.logoad {
-  display: flex;
-  align-items: center;
-  column-gap: 8px;
-  cursor: pointer;
-}
-
-.logoad img {
-  width: 8.2rem !important;
-  height: 3.5rem !important;
-  z-index: 100;
-}
-
-.logoad h1 {
-  font-size: 1.2rem;
-  font-weight: 700;
-  color: var(--primary-color);
-}
-
-.menu {
-  display: flex;
-  align-items: center;
-  column-gap: 2.7em;
-  margin-bottom: 0;
-}
-
-.ad_nav_item a {
-  font-weight: 500;
-  color: #fff;
-  cursor: pointer;
-}
-
-.nav__icons .profile {
-  position: relative;
-  z-index: 9;
-}
-
-.nav__icons .profile .profile_action {
-  position: absolute;
-  top: 92%;
-  left: 0;
-  width: 150px;
-  z-index: 10;
-  padding: 15px;
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-  background: var(--card-bg-01);
-  line-height: 30px;
-  margin-top: 0;
-  cursor: pointer;
-}
-
-.nav__icons span i {
-  font-size: 1.5rem;
-  color: var(--primary-color);
-  cursor: pointer;
-  width: 15px;
-  height: 15px;
-}
-
-.cart__icon,
-.fav__icon {
-  position: relative;
-}
-
-.nav__icons span img {
-  width: 35px;
-  height: 35px;
-  cursor: pointer;
-}
-
-.mobile__menu {
-  font-style: 1.3rem;
-  color: var(--primary-color);
-  display: none;
-}
-
-.ad_nav_active {
-  font-weight: 700 !important;
-}
-
-.sticky__header {
-  width: 100%;
-  height: 60px;
-  line-height: 70px;
+  background-color: #0f172a !important;
+  border-bottom: 1px solid #1e293b;
   position: sticky;
   top: 0;
   left: 0;
-  z-index: 999;
-  box-shadow: 3px 3px 8px -3px #ddd;
-  background: #fff;
+  z-index: 1000;
+  box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.15);
+  transition: all 0.3s ease;
 }
 
-@media only screen and (max-width: 768px) {
-  .navigation {
-    position: fixed;
-    top: 0;
+.admin__nav-wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 70px;
+}
+
+/* Brand Logo */
+.admin__brand {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  text-decoration: none;
+  transition: opacity 0.2s ease;
+}
+
+.admin__brand:hover {
+  opacity: 0.9;
+}
+
+.admin__brand img {
+  height: 42px;
+  width: auto;
+  object-fit: contain;
+}
+
+/* Nav Menu */
+.admin__menu {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.admin__menu-link {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #94a3b8;
+  font-weight: 600;
+  font-size: 0.9rem;
+  padding: 8px 16px;
+  border-radius: 8px;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.admin__menu-link:hover {
+  color: #ffffff;
+  background-color: #1e293b;
+}
+
+.admin__menu-link.active {
+  color: #ffffff;
+  background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+}
+
+.admin__menu-link i {
+  font-size: 1.1rem;
+}
+
+/* Action Icons & Profile */
+.admin__nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.admin__visit-store-btn {
+  background: transparent;
+  border: 1px solid #334155;
+  color: #cbd5e1;
+  font-size: 0.85rem;
+  font-weight: 600;
+  padding: 6px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.2s ease;
+}
+
+.admin__visit-store-btn:hover {
+  background: #1e293b;
+  color: #ffffff;
+  border-color: #475569;
+}
+
+.admin__profile {
+  position: relative;
+}
+
+.admin__profile-trigger {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 4px 10px;
+  border-radius: 30px;
+  background: #1e293b;
+  cursor: pointer;
+  border: 1px solid #334155;
+  transition: all 0.2s ease;
+}
+
+.admin__profile-trigger:hover {
+  border-color: #475569;
+}
+
+.admin__profile-avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.admin__profile-info {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+}
+
+.admin__profile-name {
+  color: #ffffff;
+  font-size: 0.8rem;
+  font-weight: 700;
+  line-height: 1.1;
+}
+
+.admin__profile-role {
+  color: #60a5fa;
+  font-size: 0.65rem;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+/* Dropdown Menu */
+.admin__dropdown-menu {
+  position: absolute;
+  top: 120%;
+  right: 0;
+  width: 180px;
+  background: #1e293b;
+  border: 1px solid #334155;
+  border-radius: 12px;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
+  padding: 6px;
+  z-index: 1001;
+}
+
+.admin__dropdown-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 14px;
+  border-radius: 8px;
+  color: #cbd5e1;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  background: transparent;
+  border: none;
+  width: 100%;
+  text-align: left;
+}
+
+.admin__dropdown-item:hover {
+  background: #334155;
+  color: #ffffff;
+}
+
+.admin__dropdown-item.text-danger:hover {
+  background: rgba(239, 68, 68, 0.15);
+  color: #f87171;
+}
+
+/* Mobile Toggle */
+.admin__mobile-toggle {
+  display: none;
+  background: none;
+  border: none;
+  color: #ffffff;
+  font-size: 1.6rem;
+  cursor: pointer;
+}
+
+@media (max-width: 992px) {
+  .admin__menu {
+    display: none;
+    position: absolute;
+    top: 70px;
     left: 0;
     width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.53);
-    z-index: 9999;
-    display: none;
-  }
-
-  .menu {
-    position: absolute;
-    top: 0;
-    right: 0;
-    width: 250px;
-    height: 100%;
-    background: #fff;
-    z-index: 99999;
+    background: #0f172a;
+    border-bottom: 1px solid #1e293b;
+    padding: 1rem;
     flex-direction: column;
-    align-items: center;
-    justify-content: center;
+    align-items: stretch;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.2);
   }
 
-  .active__menu {
+  .admin__menu.show {
+    display: flex;
+  }
+
+  .admin__mobile-toggle {
     display: block;
   }
 
-  .mobile__menu {
-    display: block;
-    margin-top: 5px;
-  }
-
-  .nav__item span i {
-    font-size: 1.1rem !important;
-  }
-
-  .logoad img {
-    width: 1rem;
-    height: 1rem;
-  }
-
-  .logoad h1 {
-    font-size: 1rem;
-  }
-
-  .fav__icon i,
-  .cart__icon i {
-    font-size: 1.2rem !important;
-  }
-
-  .nav__icons span img {
-    width: 1.4rem;
-    height: 1.4rem;
-  }
-
-  .header {
-    width: 100%;
-    height: 60px;
-    line-height: 60px;
+  .admin__profile-info {
+    display: none;
   }
 }

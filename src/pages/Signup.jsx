@@ -40,7 +40,7 @@ const Signup = () => {
       });
       const data = response.data;
       const token = data.bearer;
-      dispatch(login(token));
+      dispatch(login({ token, isAdmin: false }));
       toast.success("Account created!");
       navigate("/survey");
     } catch (error) {

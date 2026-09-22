@@ -6,6 +6,10 @@ export const getAllProducts = () => {
   return api.get(`${API_ENDPOINT}/getAll`, {});
 };
 
+export const getProductById = (id) => {
+  return api.get(`${API_ENDPOINT}/get/${id}`, {});
+};
+
 export const addProduct = (formData, token) => {
   return api.post(`${API_ENDPOINT}/add`, formData, {
     headers: {

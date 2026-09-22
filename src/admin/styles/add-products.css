@@ -1,36 +1,126 @@
-.auth__form {
-  background: var(--primary-color);
-  padding: 40px;
-  border-radius: 5px;
+/* Modern Product Studio (Add & Update) Styles */
+
+.product__studio-container {
+  padding: 2.5rem 0 4rem 0;
+  background-color: #f8fafc;
+  min-height: calc(100vh - 70px);
 }
 
-.auth__form h3 {
-  color: #fff;
-  font-size: 24px;
+.product__studio-card {
+  background: #ffffff;
+  border-radius: 16px;
+  border: 1px solid #e2e8f0;
+  padding: 2rem;
+  box-shadow: 0 4px 15px -2px rgba(0, 0, 0, 0.05);
+}
+
+.product__studio-section-title {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #0f172a;
+  margin-bottom: 1.25rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+/* Image Upload Dropzone & Live Preview */
+.image__upload-dropzone {
+  border: 2px dashed #cbd5e1;
+  border-radius: 12px;
+  padding: 1.5rem;
+  text-align: center;
+  background-color: #f8fafc;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  position: relative;
+  overflow: hidden;
+  margin-bottom: 1.25rem;
+}
+
+.image__upload-dropzone:hover {
+  border-color: #0f172a;
+  background-color: #f1f5f9;
+}
+
+.image__upload-icon {
+  font-size: 2.5rem;
+  color: #94a3b8;
+  margin-bottom: 0.5rem;
+}
+
+.image__preview-box {
+  width: 100%;
+  height: 220px;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid #e2e8f0;
+  margin-bottom: 1.25rem;
+  background: #f1f5f9;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.image__preview-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Attribute Chip Selectors */
+.attribute__group {
+  margin-bottom: 1.25rem;
+}
+
+.attribute__group-label {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #475569;
+  margin-bottom: 0.5rem;
+  display: block;
+}
+
+.attribute__chips-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.attribute__chip {
+  padding: 0.45rem 0.9rem;
+  border-radius: 8px;
+  border: 1.5px solid #e2e8f0;
+  background: #ffffff;
+  color: #475569;
+  font-size: 0.85rem;
   font-weight: 600;
-  margin-bottom: 20px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  user-select: none;
 }
 
-.auth__btn {
-  background: #fff !important;
-  color: var(--primary-color);
-  font-weight: 600;
+.attribute__chip:hover {
+  border-color: #94a3b8;
+  background-color: #f8fafc;
 }
 
-.auth__form p {
-  margin-top: 30px;
+.attribute__chip.selected {
+  background-color: #0f172a;
+  border-color: #0f172a;
+  color: #ffffff;
+  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.12);
 }
 
-.auth__form p a {
-  color: #fff;
-}
-
-.type__product div label {
-  color: #fff;
-  font-weight: 600;
-  margin-right: 30px;
-}
-
-.type__product input {
-  margin-right: 10px;
+/* Action Footer */
+.product__studio-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+  margin-top: 2rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid #f1f5f9;
 }

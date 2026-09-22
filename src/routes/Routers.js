@@ -10,6 +10,7 @@ import Shop from "../pages/Shop";
 import Profile from "../pages/Profile";
 import ProductDetail from "../pages/ProductDetails";
 import Order from "../pages/Order";
+import OrderSuccess from "../pages/OrderSuccess";
 import AdminMain from "../admin/page/AdminMain";
 import AddProducts from "../admin/page/AddProducts";
 import AllProducts from "../admin/page/AllProducts";
@@ -26,6 +27,7 @@ const Routers = () => {
       <Route path="cart" element={<Cart />} />
       <Route path="login" element={<Login />} />
       <Route path="checkout" element={<Checkout />} />
+      <Route path="order-success" element={<OrderSuccess />} />
       <Route path="signup" element={<Signup />} />
       <Route path="survey" element={<Survey />} />
       <Route path="order" element={<Order />} />

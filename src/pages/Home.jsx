@@ -39,7 +39,7 @@ const Home = () => {
   useEffect(() => {
     const getProducts = async () => {
       const response = await getAllProducts();
-      const products = response.data;
+      const products = response.data || [];
 
       dispatch(setProducts(products));
 

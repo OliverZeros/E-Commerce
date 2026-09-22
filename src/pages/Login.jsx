@@ -33,8 +33,8 @@ const Login = () => {
       });
       const data = response.data;
       const token = data.bearer;
-      const isadmin = data.isAdmin;
-      dispatch(login(token));
+      const isadmin = Boolean(data.isAdmin);
+      dispatch(login({ token, isAdmin: isadmin }));
       toast.success("Logged in successfully");
       if (isadmin) {
         navigate("/admin/all-products");

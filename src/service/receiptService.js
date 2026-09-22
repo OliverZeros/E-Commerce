@@ -47,3 +47,18 @@ export const getAllReceipts = (token) => {
     },
   });
 };
+
+export const cancelReceipt = (receiptId, token) => {
+  return api.post(
+    `${API_ENDPOINT}/cancel`,
+    {
+      receiptid: receiptId,
+    },
+    {
+      headers: {
+        Authorization: token,
+      },
+    }
+  );
+};
+

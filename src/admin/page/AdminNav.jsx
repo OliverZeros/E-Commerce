@@ -1,130 +1,135 @@
-import React, { useRef, useState } from "react";
-import { NavLink, useNavigate } from "react-router-dom";
-import "../styles/admin-nav.css";
-import { motion } from "framer-motion";
-import userIcon from "../../assets/images/user-icon.png";
-import { Container, Row } from "reactstrap";
+import React, { useState } from "react";
+import { NavLink, useNavigate, Link } from "react-router-dom";
+import { Container } from "reactstrap";
 import { logout } from "../../redux/slices/authSlice";
 import { useDispatch } from "react-redux";
+import "../styles/admin-nav.css";
 
-const nav__links = [
+const adminNavLinks = [
   {
-    path: "admin/all-products",
+    path: "/admin/all-products",
     display: "Products",
+    icon: "ri-archive-2-line",
   },
   {
-    path: "admin/all-users",
+    path: "/admin/all-users",
     display: "Users",
+    icon: "ri-team-line",
   },
   {
-    path: "admin/all-receipts",
-    display: "Receipt",
+    path: "/admin/all-receipts",
+    display: "Orders & Receipts",
+    icon: "ri-file-list-3-line",
   },
 ];
 
-const Header = () => {
-  const headerRef = useRef(null);
-  const [showLogout, setShowLogout] = useState(false);
-
-  const menuRef = useRef(null);
+const AdminNav = () => {
+  const [showDropdown, setShowDropdown] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  // const stickyHeaderFunc = () => {
-  //   window.addEventListener("scroll", () => {
-  //     if (
-  //       document.body.scrollTop > 80 ||
-  //       document.documentElement.scrollTop > 80
-  //     ) {
-  //       headerRef.current.classList.add("sticky__header");
-  //     } else {
-  //       headerRef.current.classList.remove("sticky__header");
-  //     }
-  //   });
-  // };
-
-  // useEffect(() => {
-  //   stickyHeaderFunc();
-
-  //   return () => window.removeEventListener("scroll", stickyHeaderFunc);
-  // });
-
-  const menuToggle = () => {
-    menuRef.current.classList.toggle("active__menu");
-  };
-
-  const navigateToHome = () => {
-    navigate("/home");
-  };
-
-  const toggleProfileAction = () => {
-    setShowLogout(!showLogout);
-  };
-
-  const logoutUser = () => {
+  const handleLogout = () => {
     dispatch(logout());
-    // setShowLogout(!showLogout);
-    navigate("/home");
+    navigate("/login");
   };
 
   return (
-    <header className="header_admin" ref={headerRef}>
+    <header className="header_admin">
       <Container>
-        <Row>
-          <div className="nav__wrapper">
-            <div className="logoad" onClick={navigateToHome}>
-              <img
-                src="https://res.cloudinary.com/dxw7hwodj/image/upload/v1746629543/logo2_y9efmx.png"
-                alt="logo_Image"
-              />
-            </div>
+        <div className="admin__nav-wrapper">
+          {/* Brand Logo */}
+          <Link to="/home" className="admin__brand" title="Back to Storefront">
+            <img
+              src="https://res.cloudinary.com/dxw7hwodj/image/upload/v1746629543/logo2_y9efmx.png"
+              alt="Brand Logo"
+            />
+          </Link>
 
-            <div className="navigation" ref={menuRef} onClick={menuToggle}>
-              <ul className="menu">
-                {nav__links.map((item, index) => (
-                  <li className="ad_nav_item" key={index}>
-                    <NavLink
-                      to={item.path}
-                      className={(navClass) =>
-                        navClass.isActive ? "ad_nav_active" : ""
-                      }
-                    >
-                      {item.display}
-                    </NavLink>
-                  </li>
-                ))}
-              </ul>
-            </div>
-
-            <div className="nav__icons">
-              <div className="profile">
-                <motion.img
-                  whileTap={{ scale: 1.2 }}
-                  src={userIcon}
-                  alt="user_Icon"
-                  onClick={toggleProfileAction}
-                />
-                <div
-                  className="profile_action"
-                  onClick={logoutUser}
-                  style={{
-                    display: showLogout ? "block" : "none",
-                  }}
+          {/* Navigation Links */}
+          <ul className={`admin__menu ${mobileMenuOpen ? "show" : ""}`}>
+            {adminNavLinks.map((item, index) => (
+              <li key={index}>
+                <NavLink
+                  to={item.path}
+                  className={({ isActive }) =>
+                    `admin__menu-link ${isActive ? "active" : ""}`
+                  }
+                  onClick={() => setMobileMenuOpen(false)}
                 >
-                  <span>Logout</span>
+                  <i className={item.icon}></i>
+                  <span>{item.display}</span>
+                </NavLink>
+              </li>
+            ))}
+          </ul>
+
+          {/* Right Action Icons & Profile */}
+          <div className="admin__nav-actions">
+            <Link to="/home" className="text-decoration-none d-none d-sm-block">
+              <button className="admin__visit-store-btn">
+                <i className="ri-store-line"></i>
+                <span>Storefront</span>
+              </button>
+            </Link>
+
+            <div className="admin__profile">
+              <div
+                className="admin__profile-trigger"
+                onClick={() => setShowDropdown(!showDropdown)}
+              >
+                <img
+                  src="https://api.dicebear.com/7.x/identicon/svg?seed=AdminUser"
+                  alt="Admin Avatar"
+                  className="admin__profile-avatar"
+                />
+                <div className="admin__profile-info">
+                  <span className="admin__profile-name">Administrator</span>
+                  <span className="admin__profile-role">Super Admin</span>
                 </div>
+                <i className="ri-arrow-down-s-line text-muted"></i>
               </div>
-              <div className="mobile__menu">
-                <span onClick={menuToggle}>
-                  <i className="ri-menu-line"></i>
-                </span>
-              </div>
+
+              {showDropdown && (
+                <div className="admin__dropdown-menu">
+                  <Link to="/profile" className="text-decoration-none">
+                    <button
+                      className="admin__dropdown-item"
+                      onClick={() => setShowDropdown(false)}
+                    >
+                      <i className="ri-user-settings-line"></i> My Profile
+                    </button>
+                  </Link>
+                  <Link to="/home" className="text-decoration-none d-sm-none">
+                    <button
+                      className="admin__dropdown-item"
+                      onClick={() => setShowDropdown(false)}
+                    >
+                      <i className="ri-store-line"></i> View Store
+                    </button>
+                  </Link>
+                  <button
+                    className="admin__dropdown-item text-danger"
+                    onClick={handleLogout}
+                  >
+                    <i className="ri-logout-box-r-line"></i> Sign Out
+                  </button>
+                </div>
+              )}
             </div>
+
+            {/* Mobile Hamburger Toggle */}
+            <button
+              className="admin__mobile-toggle"
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            >
+              <i className={mobileMenuOpen ? "ri-close-line" : "ri-menu-line"}></i>
+            </button>
           </div>
-        </Row>
+        </div>
       </Container>
     </header>
   );
 };
 
-export default Header;
+export default AdminNav;

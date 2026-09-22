@@ -1,26 +1,38 @@
-h3 {
-  font-weight: bold;
+/* Modern Order History & Confirmation Styles */
+
+.order__card-modern {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
-hr {
-  margin: 0 auto;
-  padding-top: 30px;
-  border-bottom: 5px dashed rgb(255, 149, 0);
-  color: white;
+.order__card-modern:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.08) !important;
 }
 
-.order__card {
-  margin-top: 30px;
+.order__card-header {
+  background: #f8fafc;
 }
 
-.order__card p {
-  color: black;
+.last-border-0:last-child {
+  border-bottom: none !important;
 }
 
-.order__info {
-  margin-bottom: 20px;
+.order__success-section {
+  background: #f8fafc;
+  min-height: 85vh;
 }
 
-.order__info td {
-  padding-left: 40px;
+.order__success-card {
+  border-color: #e2e8f0;
+}
+
+@media print {
+  header, footer, .d-flex.flex-wrap.gap-3.justify-content-between.mt-4, .checkout__stepper, .navbar {
+    display: none !important;
+  }
+  .order__success-card {
+    border: none !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+  }
 }
