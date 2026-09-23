@@ -1,19 +1,161 @@
-.auth__form {
-  background: var(--primary-color);
-  padding: 40px;
-  border-radius: 5px;
+/* =========================================================
+   Modern Luxury Auth Card Styles (Login & Signup)
+   ========================================================= */
+
+.auth__section {
+  padding: 65px 0 90px 0;
+  background-color: #f8fafc;
+  min-height: 80vh;
+  display: flex;
+  align-items: center;
 }
 
-.auth__btn {
-  background: #fff !important;
-  color: var(--primary-color);
+.auth__luxury-card {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 28px;
+  padding: 42px 38px;
+  box-shadow: 0 16px 36px rgba(15, 23, 42, 0.05);
+}
+
+.auth__brand-header {
+  margin-bottom: 28px;
+}
+
+.auth__icon-wrap {
+  width: 52px;
+  height: 52px;
+  border-radius: 16px;
+  background: #0f172a;
+  color: #ffffff;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  margin-bottom: 16px;
+  box-shadow: 0 8px 18px rgba(15, 23, 42, 0.15);
+}
+
+.auth__title {
+  font-size: 1.65rem;
+  font-weight: 800;
+  color: #0f172a;
+  margin-bottom: 6px;
+  letter-spacing: -0.5px;
+}
+
+.auth__subtitle {
+  font-size: 0.9rem;
+  color: #64748b;
+  line-height: 1.5;
+  margin: 0;
+}
+
+.auth__form-inner {
+  margin-top: 10px;
+}
+
+.auth__form-group {
+  margin-bottom: 20px;
+  text-align: left;
+}
+
+.auth__input-label {
+  font-size: 0.85rem;
   font-weight: 600;
+  color: #334155;
+  margin-bottom: 6px;
+  display: block;
 }
 
-.auth__form p {
-  margin-top: 30px;
+.auth__forgot-link {
+  font-size: 0.8rem;
+  color: #0d9488;
+  font-weight: 600;
+  cursor: pointer;
 }
 
-.auth__form p a {
-  color: #fff;
+.auth__forgot-link:hover {
+  text-decoration: underline;
+}
+
+.auth__input-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+  border: 1.5px solid #cbd5e1;
+  border-radius: 12px;
+  background: #ffffff;
+  padding: 0 14px;
+  transition: all 0.2s ease;
+}
+
+.auth__input-wrap:focus-within {
+  border-color: #0d9488;
+  box-shadow: 0 0 0 3px rgba(13, 148, 136, 0.12);
+}
+
+.auth__input-wrap .input-icon {
+  color: #94a3b8;
+  font-size: 1.2rem;
+  flex-shrink: 0;
+}
+
+.auth__input-wrap input {
+  width: 100%;
+  height: 48px;
+  border: none;
+  outline: none;
+  background: transparent;
+  padding-left: 10px;
+  font-size: 0.95rem;
+  color: #0f172a;
+}
+
+.auth__input-wrap input::placeholder {
+  color: #94a3b8;
+}
+
+.password-toggle-btn {
+  background: none;
+  border: none;
+  outline: none;
+  color: #94a3b8;
+  font-size: 1.15rem;
+  cursor: pointer;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.2s ease;
+}
+
+.password-toggle-btn:hover {
+  color: #0f172a;
+}
+
+.auth__footer-text {
+  font-size: 0.92rem;
+  color: #64748b;
+}
+
+.auth__switch-link {
+  color: #0d9488;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.auth__switch-link:hover {
+  color: #0f172a;
+  text-decoration: underline;
+}
+
+@media (max-width: 576px) {
+  .auth__luxury-card {
+    padding: 30px 22px;
+    border-radius: 20px;
+  }
+  .auth__title {
+    font-size: 1.4rem;
+  }
 }

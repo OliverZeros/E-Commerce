@@ -8,6 +8,7 @@ import Signup from "../pages/Signup";
 import Survey from "../pages/Survey";
 import Shop from "../pages/Shop";
 import Profile from "../pages/Profile";
+import Wishlist from "../pages/Wishlist";
 import ProductDetail from "../pages/ProductDetails";
 import Order from "../pages/Order";
 import OrderSuccess from "../pages/OrderSuccess";
@@ -32,6 +33,7 @@ const Routers = () => {
       <Route path="survey" element={<Survey />} />
       <Route path="order" element={<Order />} />
       <Route path="profile" element={<Profile />} />
+      <Route path="wishlist" element={<Wishlist />} />
       <Route path="shop" element={<Shop />} />
       <Route path="shop/:id" element={<ProductDetail />} />
       <Route path="404" element={<NotFound />} />

@@ -1,124 +1,796 @@
-.hero__section {
-  background-color: var(--hero-bg);
+/* =========================================================
+   Modern Luxury Home Page Styles
+   Inspired by international furniture benchmarks (Article, Castlery, Muuto)
+   ========================================================= */
+
+/* Global Section Header Styles */
+.section-header {
+  margin-bottom: 45px;
 }
 
-.hero__content h2 {
-  color: var(--primary-color);
-  font-size: 2.5rem;
+.section-eyebrow {
+  display: inline-block;
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1.2px;
+  color: #0d9488;
+  margin-bottom: 8px;
+}
+
+.section-heading {
+  font-size: 2.2rem;
+  font-weight: 800;
+  color: #0f172a;
+  letter-spacing: -0.5px;
+  line-height: 1.25;
+}
+
+.section-desc {
+  max-width: 620px;
+  margin: 12px auto 0 auto;
+  color: #64748b;
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+/* =========================================================
+   1. Editorial Luxury Hero Section
+   ========================================================= */
+.hero__luxury-section {
+  position: relative;
+  background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+  padding: 65px 0 85px 0;
+  overflow: hidden;
+}
+
+.hero__luxury-content {
+  position: relative;
+  z-index: 2;
+}
+
+.hero__luxury-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.04);
+  padding: 6px 14px;
+  border-radius: 30px;
+  font-size: 0.78rem;
   font-weight: 600;
-  margin: 20px 0px;
+  color: #0f172a;
+  margin-bottom: 22px;
 }
 
-.section__title {
-  margin-bottom: 30px;
+.hero__luxury-badge i {
+  color: #0d9488;
+  font-size: 0.95rem;
 }
 
-.hero__img img {
-  width: 100%;
+.hero__luxury-title {
+  font-size: 3.1rem;
+  font-weight: 800;
+  color: #0f172a;
+  line-height: 1.18;
+  letter-spacing: -1px;
+  margin-bottom: 20px;
 }
 
-.hero__content p {
-  color: var(--primary-color);
-  line-height: 28px;
-  padding-bottom: 5px;
+.hero__luxury-title span {
+  color: #0d9488;
 }
 
-.hero__section p:nth-child(1) {
+.hero__luxury-subtitle {
+  font-size: 1.05rem;
+  line-height: 1.7;
+  color: #475569;
+  max-width: 520px;
+  margin-bottom: 32px;
+}
+
+.hero__cta-group {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-bottom: 45px;
+}
+
+.hero__btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: #0f172a;
+  color: #ffffff !important;
+  text-decoration: none;
+  padding: 15px 30px;
+  border-radius: 40px;
+  font-size: 0.98rem;
+  font-weight: 600;
+  box-shadow: 0 10px 22px rgba(15, 23, 42, 0.15);
+  transition: all 0.25s ease;
+}
+
+.hero__btn-primary:hover {
+  background: #0d9488;
+  transform: translateY(-2px);
+  box-shadow: 0 14px 26px rgba(13, 148, 136, 0.25);
+  color: #ffffff;
+}
+
+.hero__btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: #ffffff;
+  color: #0f172a !important;
+  border: 1px solid #cbd5e1;
+  text-decoration: none;
+  padding: 14px 26px;
+  border-radius: 40px;
+  font-size: 0.98rem;
+  font-weight: 600;
+  transition: all 0.25s ease;
+}
+
+.hero__btn-secondary:hover {
+  background: #f1f5f9;
+  border-color: #94a3b8;
+  color: #0f172a;
+}
+
+.hero__trust-strip {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+  padding-top: 24px;
+  border-top: 1px solid #e2e8f0;
+}
+
+.trust-item h4 {
+  font-size: 1.35rem;
+  font-weight: 800;
+  color: #0f172a;
+  margin: 0 0 2px 0;
+  letter-spacing: -0.5px;
+}
+
+.trust-item p {
+  font-size: 0.8rem;
+  color: #64748b;
+  margin: 0;
   font-weight: 500;
 }
 
-.buy__btn {
-  border: none;
-  outline: none;
-  padding: 8px 20px;
-  border-radius: 5px;
-  background: var(--primary-color);
-  color: #fff;
-  cursor: pointer;
-  font-size: 1rem;
+.trust-divider {
+  width: 1px;
+  height: 36px;
+  background: #e2e8f0;
 }
 
-.buy__btn a:hover {
-  color: #fff;
+/* Hero Visual & Floating Elements */
+.hero__visual-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 480px;
 }
 
-.hero__content {
-  padding-top: 45px;
+.hero__visual-bg-glow {
+  position: absolute;
+  width: 380px;
+  height: 380px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(13, 148, 136, 0.15) 0%, rgba(241, 245, 249, 0) 70%);
+  filter: blur(40px);
+  z-index: 0;
 }
 
-.timer__count {
-  background: var(--primary-color);
-  height: 300px;
+.hero__main-image-wrap {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 520px;
 }
 
-.timer__count img {
-  width: 70% !important;
-  height: 70% !important;
+.hero__main-image {
+  width: 100%;
+  height: auto;
   object-fit: contain;
+  filter: drop-shadow(0 20px 30px rgba(15, 23, 42, 0.12));
+  animation: heroFloat 6s ease-in-out infinite;
 }
 
-.store__btn {
-  background: #fff;
-  color: var(--primary-color);
+@keyframes heroFloat {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+.hero__floating-card {
+  position: absolute;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(226, 232, 240, 0.9);
+  box-shadow: 0 16px 36px rgba(15, 23, 42, 0.08);
+  border-radius: 16px;
+  padding: 12px 18px;
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.hero__floating-card--product {
+  bottom: 40px;
+  left: -20px;
+}
+
+.card-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #0d9488;
+  box-shadow: 0 0 0 4px rgba(13, 148, 136, 0.2);
+}
+
+.card-label {
+  font-size: 0.68rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: #64748b;
+  display: block;
+}
+
+.hero__floating-card .card-title {
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: #0f172a;
+  margin: 0;
+}
+
+.card-rating {
+  font-size: 0.72rem;
+  color: #d97706;
   font-weight: 600;
-  margin-top: 20px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-top: 2px;
 }
 
-.store__btn a:hover {
-  color: var(--primary-color);
+.hero__floating-card--eco {
+  top: 30px;
+  right: 0px;
 }
 
-@media only screen and (max-width: 992px) {
-  .hero__content h2 {
+.eco-icon {
+  font-size: 1.4rem;
+  color: #059669;
+  background: #ecfdf5;
+  padding: 6px;
+  border-radius: 10px;
+}
+
+.card-sub {
+  font-size: 0.72rem;
+  color: #64748b;
+  display: block;
+}
+
+/* =========================================================
+   2. Shop By Room (Bento Grid)
+   ========================================================= */
+.shop-by-room__section {
+  padding: 85px 0;
+  background-color: #ffffff;
+}
+
+.bento-card {
+  position: relative;
+  display: block;
+  border-radius: 24px;
+  overflow: hidden;
+  text-decoration: none;
+  background: #0f172a;
+}
+
+.bento-card--large {
+  height: 520px;
+}
+
+.bento-card--medium {
+  height: 245px;
+}
+
+.bento-card--wide {
+  height: 250px;
+}
+
+.bento-card__bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.bento-card:hover .bento-card__bg {
+  transform: scale(1.05);
+}
+
+.bento-card__overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(180deg, rgba(15, 23, 42, 0.05) 0%, rgba(15, 23, 42, 0.75) 100%);
+  transition: background 0.3s ease;
+}
+
+.bento-card:hover .bento-card__overlay {
+  background: linear-gradient(180deg, rgba(15, 23, 42, 0.1) 0%, rgba(15, 23, 42, 0.85) 100%);
+}
+
+.bento-card__content {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  padding: 28px;
+  z-index: 2;
+  color: #ffffff;
+}
+
+.bento-tag {
+  display: inline-block;
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(8px);
+  padding: 3px 10px;
+  border-radius: 20px;
+  margin-bottom: 8px;
+}
+
+.bento-title {
+  color: #ffffff;
+  font-size: 1.45rem;
+  font-weight: 700;
+  margin: 0 0 6px 0;
+  letter-spacing: -0.3px;
+}
+
+.bento-card--large .bento-title {
+  font-size: 1.85rem;
+}
+
+.bento-desc {
+  color: #e2e8f0;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  margin-bottom: 12px;
+  max-width: 380px;
+}
+
+.bento-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #ffffff;
+  transition: gap 0.2s ease;
+}
+
+.bento-card:hover .bento-link {
+  gap: 10px;
+  color: #5eead4;
+}
+
+/* =========================================================
+   3. Curated Showcase & Interactive Filter Tabs
+   ========================================================= */
+.curated-section {
+  padding: 85px 0;
+  background-color: #ffffff;
+}
+
+.recommended-bg {
+  background-color: #f8fafc;
+  border-top: 1px solid #f1f5f9;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.view-more-link {
+  color: #0d9488;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.92rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.view-more-link:hover {
+  color: #0f172a;
+}
+
+/* Category Filter Tabs */
+.category-tabs__wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin: 32px 0 45px 0;
+}
+
+.category-tab-btn {
+  border: 1px solid #e2e8f0;
+  background: #ffffff;
+  color: #475569;
+  font-size: 0.92rem;
+  font-weight: 600;
+  padding: 10px 22px;
+  border-radius: 30px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.category-tab-btn:hover {
+  border-color: #94a3b8;
+  color: #0f172a;
+}
+
+.category-tab-btn.is-active {
+  background: #0f172a;
+  border-color: #0f172a;
+  color: #ffffff;
+  box-shadow: 0 4px 14px rgba(15, 23, 42, 0.15);
+}
+
+.view-all-catalog-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  border: 1.5px solid #0f172a;
+  color: #0f172a;
+  text-decoration: none;
+  font-size: 0.95rem;
+  font-weight: 700;
+  padding: 13px 30px;
+  border-radius: 40px;
+  transition: all 0.25s ease;
+}
+
+.view-all-catalog-btn:hover {
+  background: #0f172a;
+  color: #ffffff;
+  transform: translateY(-2px);
+  box-shadow: 0 10px 20px rgba(15, 23, 42, 0.12);
+}
+
+/* =========================================================
+   4. Editorial Lookbook Banner
+   ========================================================= */
+.editorial-banner__section {
+  padding: 30px 15px 80px 15px;
+}
+
+.editorial-banner__container {
+  position: relative;
+  max-width: 1320px;
+  margin: 0 auto;
+  height: 460px;
+  border-radius: 32px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+}
+
+.editorial-banner__image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.editorial-banner__overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, rgba(15, 23, 42, 0.88) 0%, rgba(15, 23, 42, 0.55) 55%, rgba(15, 23, 42, 0.15) 100%);
+}
+
+.editorial-banner__content {
+  position: relative;
+  z-index: 2;
+  padding: 60px;
+  max-width: 660px;
+  color: #ffffff;
+}
+
+.editorial-badge {
+  display: inline-block;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: #5eead4;
+  margin-bottom: 14px;
+}
+
+.editorial-title {
+  color: #ffffff;
+  font-size: 2.3rem;
+  font-weight: 800;
+  line-height: 1.25;
+  letter-spacing: -0.5px;
+  margin-bottom: 16px;
+}
+
+.editorial-desc {
+  color: #e2e8f0;
+  font-size: 1rem;
+  line-height: 1.65;
+  margin-bottom: 28px;
+}
+
+.editorial-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: #ffffff;
+  color: #0f172a;
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 0.95rem;
+  padding: 13px 26px;
+  border-radius: 30px;
+  transition: all 0.2s ease;
+}
+
+.editorial-btn:hover {
+  background: #5eead4;
+  color: #0f172a;
+  transform: translateY(-2px);
+}
+
+/* =========================================================
+   5. Luxury Flash Offer Section
+   ========================================================= */
+.luxury-offer__section {
+  max-width: 1320px;
+  margin: 0 auto 90px auto;
+  background: #0f172a;
+  border-radius: 32px;
+  padding: 65px 60px;
+  color: #ffffff;
+  overflow: hidden;
+  box-shadow: 0 24px 48px rgba(15, 23, 42, 0.2);
+}
+
+.offer-badge {
+  display: inline-block;
+  background: rgba(13, 148, 136, 0.2);
+  color: #5eead4;
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  padding: 5px 14px;
+  border-radius: 20px;
+  margin-bottom: 16px;
+  border: 1px solid rgba(94, 234, 212, 0.3);
+}
+
+.offer-title {
+  color: #ffffff;
+  font-size: 2.5rem;
+  font-weight: 800;
+  line-height: 1.2;
+  letter-spacing: -0.8px;
+  margin-bottom: 16px;
+}
+
+.offer-desc {
+  color: #94a3b8;
+  font-size: 1rem;
+  line-height: 1.6;
+  max-width: 480px;
+}
+
+.offer-cta-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: #ffffff;
+  color: #0f172a;
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 1rem;
+  padding: 14px 32px;
+  border-radius: 40px;
+  transition: all 0.25s ease;
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.2);
+}
+
+.offer-cta-btn:hover {
+  background: #5eead4;
+  color: #0f172a;
+}
+
+.offer-image-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.offer-image {
+  max-width: 80%;
+  height: auto;
+  object-fit: contain;
+  filter: drop-shadow(0 20px 30px rgba(0, 0, 0, 0.35));
+}
+
+/* =========================================================
+   6. Testimonials Section
+   ========================================================= */
+.testimonials__section {
+  padding: 85px 0 100px 0;
+  background-color: #f8fafc;
+  border-top: 1px solid #f1f5f9;
+}
+
+.testimonial__card {
+  background: #ffffff;
+  border-radius: 20px;
+  border: 1px solid #e2e8f0;
+  padding: 32px 28px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  box-shadow: 0 4px 16px rgba(15, 23, 42, 0.03);
+  transition: all 0.3s ease;
+}
+
+.testimonial__card:hover {
+  transform: translateY(-4px);
+  border-color: #cbd5e1;
+  box-shadow: 0 16px 32px rgba(15, 23, 42, 0.08);
+}
+
+.testimonial__rating {
+  color: #d97706;
+  font-size: 1rem;
+  margin-bottom: 14px;
+  display: flex;
+  gap: 4px;
+}
+
+.testimonial__quote {
+  font-size: 0.98rem;
+  line-height: 1.65;
+  color: #334155;
+  font-style: italic;
+  margin-bottom: 24px;
+}
+
+.testimonial__author {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-top: auto;
+}
+
+.testimonial__avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #e2e8f0;
+}
+
+.author-name {
+  font-size: 0.98rem;
+  font-weight: 700;
+  color: #0f172a;
+  margin: 0 0 2px 0;
+}
+
+.author-role {
+  font-size: 0.78rem;
+  color: #64748b;
+  font-weight: 500;
+}
+
+/* =========================================================
+   Responsive Breakpoints
+   ========================================================= */
+@media (max-width: 992px) {
+  .hero__luxury-title {
+    font-size: 2.5rem;
+  }
+  .section-heading {
+    font-size: 1.85rem;
+  }
+  .hero__floating-card--product {
+    left: 0;
+    bottom: 20px;
+  }
+  .hero__floating-card--eco {
+    top: 10px;
+    right: 0;
+  }
+  .bento-card--large {
+    height: 380px;
+  }
+  .editorial-banner__content {
+    padding: 40px;
+  }
+  .editorial-title {
+    font-size: 1.8rem;
+  }
+  .luxury-offer__section {
+    padding: 45px 30px;
+    margin: 0 15px 60px 15px;
+  }
+  .luxury-offer__content-col {
+    text-align: center;
+  }
+  .offer-title {
     font-size: 2rem;
   }
-
-  .section__title {
-    font-size: 1.7rem;
+  .offer-desc {
+    margin: 0 auto;
   }
+}
 
-  .counter__img {
+@media (max-width: 576px) {
+  .hero__luxury-section {
+    padding: 45px 0 60px 0;
+  }
+  .hero__luxury-title {
+    font-size: 2rem;
+  }
+  .hero__trust-strip {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+  .trust-divider {
     display: none;
   }
-
-  .clock__top-content {
-    text-align: center;
+  .bento-card--large,
+  .bento-card--medium,
+  .bento-card--wide {
+    height: 220px;
   }
-
-  .clock__top-content h4 {
-    font-size: 0.9rem !important;
+  .editorial-banner__container {
+    height: 380px;
+    border-radius: 20px;
   }
-
-  .clock__top-content h3 {
-    font-size: 0.9rem !important;
+  .editorial-banner__content {
+    padding: 24px;
   }
-
-  .count__down-col {
-    text-align: center;
-  }
-}
-
-@media only screen and (max-width: 768px) {
-  .hero__content h2 {
-    font-size: 1.6rem;
-  }
-
-  .hero__content p {
-    font-size: 1rem;
-  }
-
-  .buy__btn {
-    font-size: 0.9rem;
-  }
-
-  .section__title {
-    font-size: 1.4rem;
-  }
-}
-
-@media only screen and (max-width: 576px) {
-  .hero__content {
-    padding-top: 0;
-    margin-bottom: 40px;
+  .editorial-title {
+    font-size: 1.45rem;
   }
 }

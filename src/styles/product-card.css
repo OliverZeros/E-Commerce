@@ -1,63 +1,240 @@
+/* =========================================================
+   Modern Luxury Furniture Product Card
+   ========================================================= */
+
 .product__item {
-  cursor: pointer;
+  position: relative;
+  background: #ffffff;
+  border-radius: 18px;
+  border: 1px solid #edf0f5;
+  padding: 12px;
+  height: 100%;
   display: flex;
   flex-direction: column;
-  justify-content: space-between !important;
+  justify-content: space-between;
+  transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 0.28s cubic-bezier(0.16, 1, 0.3, 1),
+              border-color 0.28s ease;
 }
 
-.product__img {
-  flex: 1 !important;
+.product__item:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 16px 32px rgba(15, 23, 42, 0.08);
+  border-color: #cbd5e1;
 }
 
-.product__bottom {
-  flex: 1 !important;
+/* Image Container */
+.product__img-box {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  background-color: transparent;
+  border-radius: 14px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px;
 }
 
-.product__item .product__img img {
-  border-radius: 8px;
+.product__img-link {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
 }
 
-.product__info h3 a {
-  font-size: 1.1rem;
-  color: var(--primary-color);
+.product__img-box img {
+  max-width: 95%;
+  max-height: 95%;
+  object-fit: contain;
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  mix-blend-mode: multiply;
+}
+
+.product__item:hover .product__img-box img {
+  transform: scale(1.06);
+}
+
+/* Category Badge inside image */
+.product__category-tag {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(6px);
+  color: #475569;
+  font-size: 0.72rem;
   font-weight: 600;
-  margin-top: 15px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  padding: 4px 10px;
+  border-radius: 20px;
+  border: 1px solid rgba(226, 232, 240, 0.8);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.03);
+  z-index: 2;
 }
 
-.product__info span {
-  font-size: 0.9rem;
+/* Bottom Content */
+.product__bottom-content {
+  padding: 14px 4px 4px 4px;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  justify-content: space-between;
 }
 
-.product__info a:hover {
-  color: inherit;
+.product__rating {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.8rem;
+  color: #d97706;
+  margin-bottom: 6px;
+}
+
+.product__rating i {
+  font-size: 0.85rem;
+}
+
+.product__rating span {
+  font-weight: 600;
+  color: #1e293b;
+}
+
+.product__rating .rating__count {
+  font-weight: 400;
+  color: #94a3b8;
+  font-size: 0.75rem;
+}
+
+.product__name {
+  margin: 0 0 10px 0;
+  font-size: 0.98rem;
+  line-height: 1.4;
+  font-weight: 600;
+}
+
+.product__name a {
+  color: #0f172a;
+  text-decoration: none;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  transition: color 0.2s ease;
+}
+
+.product__name a:hover {
+  color: #0d9488;
+}
+
+.product__card-bottom {
+  margin-top: auto;
+  padding-top: 8px;
+  border-top: 1px dashed #f1f5f9;
 }
 
 .product__card-bottom .price {
-  color: var(--primary-color);
-  font-size: 1.3rem;
-  font-weight: 500;
+  color: #0f172a;
+  font-size: 1.05rem;
+  font-weight: 700;
+  letter-spacing: -0.2px;
 }
 
-.product__card-bottom span i {
-  font-size: 1.2rem;
-  padding: 5px;
-  background: var(--primary-color);
-  color: #fff;
-  border-radius: 50px;
+.product__add-btn {
+  border: none;
+  outline: none;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: #0f172a;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.2s ease;
 }
 
-@media only screen and (max-width: 992px) {
-  .product__info h3 a {
-    font-size: 1.1rem;
+.product__add-btn:hover {
+  background: #0d9488;
+  color: #ffffff;
+}
+
+/* Responsive tweaks */
+@media (max-width: 768px) {
+  .product__item {
+    border-radius: 14px;
+    padding: 10px;
   }
-}
-
-@media only screen and (max-width: 768px) {
-  .product__info h3 a {
+  .product__name {
+    font-size: 0.92rem;
+  }
+  .product__card-bottom .price {
+    font-size: 0.95rem;
+  }
+  .product__add-btn {
+    width: 32px;
+    height: 32px;
+    font-size: 0.95rem;
+  }
+  .product__fav-btn {
+    width: 32px;
+    height: 32px;
     font-size: 1rem;
+    top: 8px;
+    right: 8px;
   }
+}
 
-  .product__card-bottom {
-    font-size: 1rem;
-  }
+/* Wishlist Floating Favorite Button */
+.product__fav-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(226, 232, 240, 0.85);
+  box-shadow: 0 4px 12px rgba(15, 23, 42, 0.08);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #64748b;
+  font-size: 1.15rem;
+  cursor: pointer;
+  z-index: 5;
+  transition: all 0.22s ease;
+  outline: none;
+  padding: 0;
+}
+
+.product__fav-btn:hover {
+  background: #ffffff;
+  color: #ef4444;
+  box-shadow: 0 6px 16px rgba(239, 68, 68, 0.18);
+  border-color: rgba(254, 202, 202, 0.85);
+}
+
+.product__fav-btn.is-favorite {
+  background: #ffffff;
+  color: #ef4444;
+  border-color: rgba(254, 202, 202, 0.95);
+  box-shadow: 0 4px 14px rgba(239, 68, 68, 0.22);
+}
+
+.product__fav-btn.is-favorite i {
+  animation: heartPulse 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@keyframes heartPulse {
+  0% { transform: scale(0.6); }
+  50% { transform: scale(1.3); }
+  100% { transform: scale(1); }
 }

@@ -1,29 +1,227 @@
-.auth__form {
-  background: var(--primary-color);
-  padding: 40px;
-  border-radius: 5px;
+/* =========================================================
+   Modern Luxury Survey Studio Styles
+   ========================================================= */
+
+.survey__section {
+  padding: 60px 0 95px 0;
+  background-color: #f8fafc;
 }
 
-.auth__btn {
-  background: #fff !important;
-  color: var(--primary-color);
-  font-weight: 600;
+.survey__studio-card {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 28px;
+  padding: 50px 48px;
+  box-shadow: 0 16px 40px rgba(15, 23, 42, 0.04);
 }
 
-.form__group p {
+.survey__badge {
+  display: inline-block;
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  color: #0d9488;
+  background: #f0fdfa;
+  border: 1px solid #ccfbf1;
+  padding: 5px 14px;
+  border-radius: 20px;
+}
+
+.survey__title {
+  font-size: 2.1rem;
+  font-weight: 800;
+  color: #0f172a;
+  letter-spacing: -0.5px;
+  margin: 14px 0 8px 0;
+}
+
+.survey__subtitle {
+  font-size: 1rem;
+  color: #64748b;
+  line-height: 1.6;
+  max-width: 520px;
+  margin: 0 auto;
+}
+
+/* Step Blocks */
+.survey__step-block {
+  margin-top: 40px;
+  padding-top: 35px;
+  border-top: 1px solid #f1f5f9;
+}
+
+.survey__step-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 22px;
+}
+
+.step-num {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: #0f172a;
   color: #ffffff;
-  font-weight: 600;
-  font-size: 1.8rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 0.9rem;
+  flex-shrink: 0;
 }
 
-.auth__form label {
-  color: #52ce44;
-  font-weight: 600;
-  font-size: 1.2rem;
+.step-title {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: #0f172a;
+  margin: 0;
 }
 
-.form__group input[type="checkbox"] {
-  margin-top: 10px;
-  margin-right: 40px;
-  height: 18px;
+.step-sub {
+  font-size: 0.85rem;
+  color: #64748b;
+  margin: 2px 0 0 0;
+}
+
+/* Chips Grids */
+.survey__chips-grid {
+  display: grid;
+  gap: 14px;
+}
+
+.survey__chips-grid--4 {
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+}
+
+.survey__chips-grid--3 {
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+}
+
+.survey__chips-grid--2 {
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+}
+
+/* Single Chip Card */
+.survey__chip-card {
+  position: relative;
+  background: #ffffff;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 18px;
+  padding: 18px 16px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  cursor: pointer;
+  user-select: none;
+  transition: all 0.22s ease;
+}
+
+.survey__chip-card:hover {
+  border-color: #cbd5e1;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 18px rgba(15, 23, 42, 0.04);
+}
+
+.survey__chip-card.is-selected {
+  border-color: #0f172a;
+  background: #f8fafc;
+  box-shadow: 0 8px 20px rgba(15, 23, 42, 0.08);
+}
+
+.chip-icon-wrap {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  background: #f1f5f9;
+  color: #0f172a;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.35rem;
+  flex-shrink: 0;
+  transition: all 0.2s ease;
+}
+
+.survey__chip-card.is-selected .chip-icon-wrap {
+  background: #0f172a;
+  color: #ffffff;
+}
+
+.chip-color-swatch {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.chip-info {
+  flex-grow: 1;
+}
+
+.chip-name {
+  font-size: 0.98rem;
+  font-weight: 700;
+  color: #0f172a;
+  margin: 0 0 2px 0;
+}
+
+.chip-desc {
+  font-size: 0.78rem;
+  color: #64748b;
+  line-height: 1.4;
+  display: block;
+}
+
+.chip-check {
+  color: #cbd5e1;
+  font-size: 1.35rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.2s ease;
+}
+
+.survey__chip-card.is-selected .chip-check {
+  color: #0d9488;
+}
+
+/* Actions */
+.survey__actions-box {
+  max-width: 480px;
+  margin: 45px auto 0 auto;
+}
+
+.survey__skip-btn {
+  background: none;
+  border: none;
+  color: #94a3b8;
+  font-size: 0.88rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: color 0.2s ease;
+  padding: 8px 16px;
+}
+
+.survey__skip-btn:hover {
+  color: #0f172a;
+  text-decoration: underline;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .survey__studio-card {
+    padding: 32px 20px;
+    border-radius: 20px;
+  }
+  .survey__title {
+    font-size: 1.6rem;
+  }
+  .survey__chips-grid--4,
+  .survey__chips-grid--3,
+  .survey__chips-grid--2 {
+    grid-template-columns: 1fr;
+  }
 }

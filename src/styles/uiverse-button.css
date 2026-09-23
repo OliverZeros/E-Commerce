@@ -1,0 +1,195 @@
+/* =========================================================
+   OliverZeros / bitter-parrot-97 Button Effect (Uiverse.io)
+   Concentric expanding layer ripples + text roll
+   ========================================================= */
+
+.uiverse-btn {
+  position: relative;
+  display: inline-flex;
+  height: 3.4rem;
+  align-items: center;
+  justify-content: center;
+  border-radius: 9999px;
+  padding: 0 2rem;
+  font-family: inherit;
+  font-size: 1.05rem;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  cursor: pointer;
+  border: none;
+  outline: none;
+  text-decoration: none !important;
+  user-select: none;
+  -webkit-user-select: none;
+  overflow: hidden;
+  transition: transform 0.2s ease, box-shadow 0.25s ease;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+}
+
+.uiverse-btn:active {
+  transform: scale(0.98);
+}
+
+.uiverse-btn.w-100 {
+  width: 100%;
+}
+
+.uiverse-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+/* Background container */
+.uiverse-btn .btn-bg {
+  overflow: hidden;
+  border-radius: 9999px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  transform: scale(1);
+  transition: transform 1.8s cubic-bezier(0.19, 1, 0.22, 1);
+  z-index: 1;
+}
+
+.uiverse-btn .btn-bg-layers {
+  display: block;
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%);
+  top: -60%;
+  aspect-ratio: 1 / 1;
+  width: max(220%, 12rem);
+}
+
+.uiverse-btn .btn-bg-layer {
+  display: block;
+  border-radius: 9999px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  transform: scale(0);
+}
+
+/* ---------------------------------------------------------
+   Theme 1: Vibrant (Exact OliverZeros / bitter-parrot-97 palette)
+   --------------------------------------------------------- */
+.uiverse-btn--vibrant {
+  color: #1d1d1f !important;
+}
+
+.uiverse-btn--vibrant .btn-bg {
+  background-color: rgba(255, 208, 116, 1);
+}
+
+.uiverse-btn--vibrant .btn-bg-layer-1 {
+  background-color: rgba(163, 116, 255, 1);
+}
+
+.uiverse-btn--vibrant .btn-bg-layer-2 {
+  background-color: rgba(23, 241, 209, 1);
+}
+
+.uiverse-btn--vibrant .btn-bg-layer-3 {
+  background-color: rgba(255, 208, 116, 1);
+}
+
+/* ---------------------------------------------------------
+   Theme 2: Dark Luxury (Slate-900 with Teal/Cyan Ripple)
+   --------------------------------------------------------- */
+.uiverse-btn--dark {
+  color: #ffffff !important;
+}
+
+.uiverse-btn--dark .btn-bg {
+  background-color: #0f172a;
+}
+
+.uiverse-btn--dark .btn-bg-layer-1 {
+  background-color: #6366f1;
+}
+
+.uiverse-btn--dark .btn-bg-layer-2 {
+  background-color: #0d9488;
+}
+
+.uiverse-btn--dark .btn-bg-layer-3 {
+  background-color: #0f172a;
+}
+
+/* ---------------------------------------------------------
+   Hover Ripples (Concentric expansion)
+   --------------------------------------------------------- */
+.uiverse-btn:hover .btn-bg-layer {
+  transition: transform 1.3s cubic-bezier(0.19, 1, 0.22, 1),
+              opacity 0.3s linear;
+}
+
+.uiverse-btn:hover .btn-bg-layer-1 {
+  transform: scale(1);
+}
+
+.uiverse-btn:hover .btn-bg-layer-2 {
+  transition-delay: 0.1s;
+  transform: scale(1);
+}
+
+.uiverse-btn:hover .btn-bg-layer-3 {
+  transition-delay: 0.2s;
+  transform: scale(1);
+}
+
+/* ---------------------------------------------------------
+   Rolling Text Animation
+   --------------------------------------------------------- */
+.uiverse-btn .btn-inner {
+  position: relative;
+  z-index: 2;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
+
+.uiverse-btn .btn-inner-static,
+.uiverse-btn .btn-inner-hover {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  pointer-events: none;
+  white-space: nowrap;
+}
+
+.uiverse-btn .btn-inner-static {
+  opacity: 1;
+  transform: translateY(0);
+  transition: transform 1.2s cubic-bezier(0.19, 1, 0.22, 1),
+              opacity 0.3s linear;
+}
+
+.uiverse-btn .btn-inner-hover {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  transform: translateY(70%);
+  transition: transform 1.2s cubic-bezier(0.19, 1, 0.22, 1),
+              opacity 0.3s linear;
+}
+
+.uiverse-btn:hover .btn-inner-static {
+  opacity: 0;
+  transform: translateY(-70%);
+}
+
+.uiverse-btn:hover .btn-inner-hover {
+  opacity: 1;
+  transform: translateY(0);
+}

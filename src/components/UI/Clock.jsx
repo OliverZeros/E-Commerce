@@ -22,9 +22,9 @@ const Clock = () => {
 
     const interval = setInterval(() => {
       const now = new Date().getTime();
-      const different = destination - now;
+      const difference = destination - now;
 
-      if (different <= 0) {
+      if (difference <= 0) {
         clearInterval(interval);
         setDays(0);
         setHours(0);
@@ -33,12 +33,12 @@ const Clock = () => {
         return;
       }
 
-      const d = Math.floor(different / (1000 * 60 * 60 * 24));
+      const d = Math.floor(difference / (1000 * 60 * 60 * 24));
       const h = Math.floor(
-        (different % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60),
+        (difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60),
       );
-      const m = Math.floor((different % (1000 * 60 * 60)) / (1000 * 60));
-      const s = Math.floor((different % (1000 * 60)) / 1000);
+      const m = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
+      const s = Math.floor((difference % (1000 * 60)) / 1000);
 
       setDays(d);
       setHours(h);
@@ -49,37 +49,42 @@ const Clock = () => {
     return () => clearInterval(interval);
   }, []);
 
+  const formatNum = (num) => String(num).padStart(2, "0");
+
   return (
-    <div className="clock__wrapper d-flex align-items-center gap-3">
-      <div className="clock__data d-flex align-items-center gap-3">
-        <div className="text-center">
-          <h1 className="text-white fs-3 mb-2">{days}</h1>
-          <h5 className="text-white fs-6">Days</h5>
+    <div className="clock__wrapper">
+      <div className="clock__item">
+        <div className="clock__tile">
+          <span className="clock__number">{formatNum(days)}</span>
         </div>
-        <span className="text-white fs-3">:</span>
+        <span className="clock__label">Ngày</span>
       </div>
 
-      <div className="clock__data d-flex align-items-center gap-3">
-        <div className="text-center">
-          <h1 className="text-white fs-3 mb-2">{hours}</h1>
-          <h5 className="text-white fs-6">Hours</h5>
+      <span className="clock__divider">:</span>
+
+      <div className="clock__item">
+        <div className="clock__tile">
+          <span className="clock__number">{formatNum(hours)}</span>
         </div>
-        <span className="text-white fs-3">:</span>
+        <span className="clock__label">Giờ</span>
       </div>
 
-      <div className="clock__data d-flex align-items-center gap-3">
-        <div className="text-center">
-          <h1 className="text-white fs-3 mb-2">{minutes}</h1>
-          <h5 className="text-white fs-6">Minutes</h5>
+      <span className="clock__divider">:</span>
+
+      <div className="clock__item">
+        <div className="clock__tile">
+          <span className="clock__number">{formatNum(minutes)}</span>
         </div>
-        <span className="text-white fs-3">:</span>
+        <span className="clock__label">Phút</span>
       </div>
 
-      <div className="clock__data d-flex align-items-center gap-3">
-        <div className="text-center">
-          <h1 className="text-white fs-3 mb-2">{seconds}</h1>
-          <h5 className="text-white fs-6">Seconds</h5>
+      <span className="clock__divider">:</span>
+
+      <div className="clock__item">
+        <div className="clock__tile">
+          <span className="clock__number">{formatNum(seconds)}</span>
         </div>
+        <span className="clock__label">Giây</span>
       </div>
     </div>
   );

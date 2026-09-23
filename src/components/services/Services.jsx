@@ -1,28 +1,28 @@
 import React from "react";
-
 import { Container, Row, Col } from "reactstrap";
 import { motion } from "framer-motion";
-
 import "./services.css";
-
 import serviceData from "../../assets/data/serviceData";
 
 const Services = () => {
   return (
-    <section className="services">
+    <section className="services__section">
       <Container>
-        <Row>
+        <Row className="gy-4">
           {serviceData.map((item, index) => (
-            <Col lg="3" md="4" key={index}>
+            <Col lg="3" md="6" sm="6" key={index}>
               <motion.div
-                whileHover={{ scale: 1.1 }}
-                className="service__item"
-                style={{ background: `${item.bg}` }}
+                whileHover={{ y: -4 }}
+                transition={{ duration: 0.2 }}
+                className="service__luxury-card"
               >
-                <span>
-                  <i class={item.icon}></i>
-                </span>
-                <div>
+                <div className="service__header">
+                  <div className="service__icon-wrap">
+                    <i className={item.icon}></i>
+                  </div>
+                  <span className="service__tag">{item.tag}</span>
+                </div>
+                <div className="service__content">
                   <h3>{item.title}</h3>
                   <p>{item.subtitle}</p>
                 </div>

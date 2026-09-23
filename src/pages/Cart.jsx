@@ -1,23 +1,23 @@
 import React, { useCallback, useEffect, useState } from "react";
-import "../styles/cart.css";
+import { Link, useNavigate } from "react-router-dom";
+import { Container, Row, Col } from "reactstrap";
+import { useSelector, useDispatch } from "react-redux";
+import { toast } from "react-toastify";
+import { motion } from "framer-motion";
+
 import Helmet from "../components/Helmet/Helmet";
 import CommonSection from "../components/UI/CommonSection";
-import { Container, Row, Col } from "reactstrap";
-
-import { motion } from "framer-motion";
-import { useSelector, useDispatch } from "react-redux";
+import UiverseButton from "../components/UI/UiverseButton";
 import { cartActions } from "../redux/slices/cartSlice";
-import { useNavigate } from "react-router-dom";
-
-import { Link } from "react-router-dom";
-
-import { toast } from "react-toastify";
 import { getCartItems, deleteCartItem } from "../service/cartService";
+
+import "../styles/cart.css";
 
 const Cart = () => {
   const token = useSelector((state) => state.auth.token);
   const [cartItems, setCartItems] = useState([]);
   const [totalAmount, setTotalAmount] = useState(0);
+  const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -25,121 +25,248 @@ const Cart = () => {
     if (token) {
       navigate("/checkout");
     } else {
+      toast.info("Vui lòng đăng nhập để tiến hành thanh toán");
       navigate("/login");
     }
   };
 
   const getCartData = useCallback(async () => {
     try {
+      setLoading(true);
       const response = await getCartItems(token);
-      const { productsInCart } = response.data;
-      setCartItems(productsInCart);
-      const total = productsInCart.reduce((acc, item) => {
-        return acc + item.price * item.quantity;
+      const { productsInCart } = response.data || { productsInCart: [] };
+      setCartItems(productsInCart || []);
+
+      const total = (productsInCart || []).reduce((acc, item) => {
+        return acc + Number(item.price || 0) * (item.quantity || 1);
       }, 0);
       setTotalAmount(total);
-      const totalQuantity = productsInCart.reduce((acc, item) => {
-        return acc + item.quantity;
+
+      const totalQuantity = (productsInCart || []).reduce((acc, item) => {
+        return acc + (item.quantity || 1);
       }, 0);
       dispatch(cartActions.setTotalQuantity(totalQuantity));
     } catch (error) {
-      return [];
+      setCartItems([]);
+    } finally {
+      setLoading(false);
     }
   }, [token, dispatch]);
+
   useEffect(() => {
     getCartData();
   }, [getCartData]);
 
-  return (
-    <Helmet title="Cart">
-      <CommonSection title="Shopping Cart" />
-      <section>
-        <Container>
-          <Row>
-            <Col lg="9">
-              {cartItems.length === 0 ? (
-                <h2 className="fs-4 text-center">No item added to the cart</h2>
-              ) : (
-                <table className="table bordered">
-                  <thead>
-                    <tr>
-                      <th>Image</th>
-                      <th>Product Name</th>
-                      <th>Price</th>
-                      <th>Qty</th>
-                      <th>Delete</th>
-                    </tr>
-                  </thead>
+  const totalItemsCount = cartItems.reduce(
+    (acc, item) => acc + (item.quantity || 1),
+    0
+  );
 
-                  <tbody>
+  return (
+    <Helmet title="Giỏ Hàng - Nội Thất Cao Cấp">
+      <CommonSection title="Giỏ Hàng Của Bạn" />
+
+      <section className="cart__section">
+        <Container>
+          {loading ? (
+            <div className="cart__loading">
+              <div className="spinner-border text-primary" role="status"></div>
+              <p className="mt-3 text-muted">Đang tải giỏ hàng...</p>
+            </div>
+          ) : cartItems.length === 0 ? (
+            <div className="cart__empty-box text-center">
+              <div className="cart__empty-icon">
+                <i className="ri-shopping-bag-3-line"></i>
+              </div>
+              <h3 className="cart__empty-title">Giỏ hàng của bạn đang trống</h3>
+              <p className="cart__empty-desc">
+                Hãy khám phá các mẫu nội thất tinh tế để hoàn thiện không gian sống của bạn.
+              </p>
+              <div className="mt-4">
+                <UiverseButton
+                  text="Khám Phá Cửa Hàng"
+                  to="/shop"
+                  variant="vibrant"
+                  icon="ri-arrow-right-line"
+                />
+              </div>
+            </div>
+          ) : (
+            <Row className="gy-4">
+              {/* Left Column: Product List */}
+              <Col lg="8" md="12">
+                <div className="cart__card">
+                  <div className="cart__header">
+                    <h4 className="cart__title">
+                      Danh Sách Sản Phẩm ({totalItemsCount} món)
+                    </h4>
+                    <span className="cart__badge">Miễn Phí Vận Chuyển Toàn Quốc</span>
+                  </div>
+
+                  <div className="cart__items-list">
                     {cartItems.map((item, index) => (
-                      <Tr
+                      <CartItemRow
                         item={item}
-                        key={index}
+                        key={item.id || index}
                         token={token}
                         getCartData={getCartData}
                       />
                     ))}
-                  </tbody>
-                </table>
-              )}
-            </Col>
+                  </div>
+                </div>
+              </Col>
 
-            <Col lg="3">
-              <div>
-                <h6 className="d-flex align-item-center justify-content-between">
-                  Subtotal
-                  <span className="fs-4 fw-bold">{totalAmount} VNĐ</span>
-                </h6>
-              </div>
-              <p className="fs-6 mt-2">
-                Thuế và phí vận chuyển sẽ được tính khi thanh toán
-              </p>
-              <div>
-                <button onClick={handleCheckout} className="buy__btn w-100">
-                  Checkout
-                </button>
+              {/* Right Column: Order Summary */}
+              <Col lg="4" md="12">
+                <div className="cart__summary-card">
+                  <h4 className="summary__title">Tóm Tắt Đơn Hàng</h4>
 
-                <Link to="/shop">
-                  <button className="buy__btn w-100 mt-3">
-                    Continue Shopping
-                  </button>
-                </Link>
-              </div>
-            </Col>
-          </Row>
+                  <div className="summary__row">
+                    <span className="summary__label">Tạm tính ({totalItemsCount} món)</span>
+                    <span className="summary__value">
+                      {totalAmount.toLocaleString("vi-VN")} VNĐ
+                    </span>
+                  </div>
+
+                  <div className="summary__row">
+                    <span className="summary__label">Vận chuyển & lắp đặt</span>
+                    <span className="summary__badge-free">Miễn Phí</span>
+                  </div>
+
+                  <div className="summary__row">
+                    <span className="summary__label">Bảo hành chính hãng</span>
+                    <span className="summary__value">10 Năm</span>
+                  </div>
+
+                  <div className="summary__divider"></div>
+
+                  <div className="summary__total-row">
+                    <div>
+                      <span className="total-title">Tổng Thanh Toán</span>
+                      <span className="total-tax-note">(Đã bao gồm thuế VAT)</span>
+                    </div>
+                    <span className="total-price">
+                      {totalAmount.toLocaleString("vi-VN")} VNĐ
+                    </span>
+                  </div>
+
+                  {/* Large Buttons with Uiverse bitter-parrot-97 effect */}
+                  <div className="summary__actions">
+                    <UiverseButton
+                      text="Tiến Hành Thanh Toán"
+                      onClick={handleCheckout}
+                      variant="vibrant"
+                      className="w-100"
+                      icon="ri-shield-check-line"
+                    />
+
+                    <div className="mt-3">
+                      <UiverseButton
+                        text="Tiếp Tục Mua Sắm"
+                        to="/shop"
+                        variant="dark"
+                        className="w-100"
+                        icon="ri-arrow-go-back-line"
+                      />
+                    </div>
+                  </div>
+
+                  {/* Trust guarantees */}
+                  <div className="summary__guarantees">
+                    <div className="guarantee-item">
+                      <i className="ri-lock-2-line"></i>
+                      <span>Thanh toán bảo mật SSL 256-bit</span>
+                    </div>
+                    <div className="guarantee-item">
+                      <i className="ri-truck-line"></i>
+                      <span>Giao lắp tận phòng chu đáo</span>
+                    </div>
+                    <div className="guarantee-item">
+                      <i className="ri-refresh-line"></i>
+                      <span>30 ngày đổi trả miễn phí</span>
+                    </div>
+                  </div>
+                </div>
+              </Col>
+            </Row>
+          )}
         </Container>
       </section>
     </Helmet>
   );
 };
 
-const Tr = ({ item, token, getCartData }) => {
+const CartItemRow = ({ item, token, getCartData }) => {
+  const [deleting, setDeleting] = useState(false);
+
   const deleteProduct = async () => {
     try {
+      setDeleting(true);
       await deleteCartItem(item.id, token);
-      toast.success("Product removed from cart");
+      toast.success("Đã xóa sản phẩm khỏi giỏ");
       getCartData();
     } catch (error) {
-      console.error("Failed to delete product from cart", error);
+      toast.error("Không thể xóa sản phẩm");
+    } finally {
+      setDeleting(false);
     }
   };
+
+  const imgSrc = (
+    Array.isArray(item.imageUrl) ? item.imageUrl[0] : item.imageUrl || "/noavatar.png"
+  ).replace(/^http:\/\//i, "https://");
+
+  const lineTotal = Number(item.price || 0) * (item.quantity || 1);
+
   return (
-    <tr>
-      <td>
-        <img src={item.imageUrl} alt="" />
-      </td>
-      <td>{item.name}</td>
-      <td>{item.price} VNĐ</td>
-      <td>{item.quantity}</td>
-      <td>
-        <motion.i
-          whileTap={{ scale: 1.2 }}
+    <div className={`cart-item ${deleting ? "is-deleting" : ""}`}>
+      <Link to={`/shop/${item.id}`} className="cart-item__thumb-wrap">
+        <img
+          src={imgSrc}
+          alt={item.name}
+          className="cart-item__thumb"
+          onError={(e) => {
+            e.target.src = "/noavatar.png";
+          }}
+        />
+      </Link>
+
+      <div className="cart-item__info">
+        <span className="cart-item__category">Nội Thất Cao Cấp</span>
+        <h5 className="cart-item__name">
+          <Link to={`/shop/${item.id}`}>{item.name}</Link>
+        </h5>
+        <div className="cart-item__price-unit">
+          Đơn giá: {Number(item.price || 0).toLocaleString("vi-VN")} VNĐ
+        </div>
+      </div>
+
+      <div className="cart-item__qty-box">
+        <span className="qty-label">Số lượng</span>
+        <span className="qty-badge">{item.quantity}</span>
+      </div>
+
+      <div className="cart-item__total-box">
+        <span className="total-label">Thành tiền</span>
+        <span className="cart-item__total-price">
+          {lineTotal.toLocaleString("vi-VN")} VNĐ
+        </span>
+      </div>
+
+      <div className="cart-item__action">
+        <motion.button
+          whileTap={{ scale: 0.9 }}
+          whileHover={{ scale: 1.1 }}
           onClick={deleteProduct}
-          className="ri-delete-bin-line delete-icon"
-        ></motion.i>
-      </td>
-    </tr>
+          className="cart-item__del-btn"
+          title="Xóa khỏi giỏ hàng"
+          disabled={deleting}
+          type="button"
+        >
+          <i className="ri-delete-bin-line"></i>
+        </motion.button>
+      </div>
+    </div>
   );
 };
 

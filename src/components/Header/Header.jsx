@@ -29,13 +29,37 @@ const Header = () => {
   const headerRef = useRef(null);
   const token = useSelector((state) => state.auth.token);
   const totalQuantity = useSelector((state) => state.cart.totalQuantity);
+  const totalWishlist = useSelector((state) => state.wishlist.totalWishlist);
   const isLoggedIn = Boolean(token);
   const isAdmin = useSelector((state) => state.auth.isAdmin);
-  const [showLogout, setShowLogout] = useState(false);
+  const [isProfileOpen, setIsProfileOpen] = useState(false);
+  const hoverTimeoutRef = useRef(null);
 
   const menuRef = useRef(null);
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
+  const handleMouseEnterProfile = () => {
+    if (hoverTimeoutRef.current) clearTimeout(hoverTimeoutRef.current);
+    setIsProfileOpen(true);
+  };
+
+  const handleMouseLeaveProfile = () => {
+    hoverTimeoutRef.current = setTimeout(() => {
+      setIsProfileOpen(false);
+    }, 180);
+  };
+
+  const closeProfileDropdown = () => {
+    if (hoverTimeoutRef.current) clearTimeout(hoverTimeoutRef.current);
+    setIsProfileOpen(false);
+  };
+
+  useEffect(() => {
+    return () => {
+      if (hoverTimeoutRef.current) clearTimeout(hoverTimeoutRef.current);
+    };
+  }, []);
 
   useEffect(() => {
     if (!token) return;
@@ -80,9 +104,10 @@ const Header = () => {
     navigate("/login");
   };
 
-  const toggleProfileAction = () => {
-    setShowLogout(!showLogout);
+  const navigateToWishlist = () => {
+    navigate("/wishlist");
   };
+
 
   const logoutUser = () => {
     dispatch(logout());
@@ -142,74 +167,115 @@ const Header = () => {
             </div>
 
             <div className="nav__icons">
-              <span className="fav__icon">
+              <span
+                className="fav__icon"
+                onClick={navigateToWishlist}
+                title="Sản phẩm yêu thích"
+                style={{ cursor: "pointer" }}
+              >
                 <i className="ri-heart-line"></i>
-                <span className="badge">1</span>
+                <span className="badge">{totalWishlist}</span>
               </span>
               <span className="cart__icon" onClick={navigateToCart}>
                 <i className="ri-shopping-bag-3-line"></i>
                 <span className="badge">{totalQuantity}</span>
               </span>
-              <div className="profile">
+              <div
+                className="profile"
+                onMouseEnter={handleMouseEnterProfile}
+                onMouseLeave={handleMouseLeaveProfile}
+              >
                 {isLoggedIn ? (
-                  <div>
+                  <>
                     <motion.img
-                      whileTap={{ scale: 1.2 }}
+                      whileHover={{ scale: 1.08 }}
+                      whileTap={{ scale: 0.95 }}
                       src={userIcon}
                       alt="user_Icon"
-                      onClick={toggleProfileAction}
+                      onClick={() => navigate("/profile")}
                     />
                     <div
-                      className="profile_action"
-                      style={{
-                        display: showLogout ? "flex" : "none",
-                        flexDirection: "column",
-                        gap: "6px",
-                        width: "160px",
-                        padding: "10px 14px",
-                        borderRadius: "10px",
-                        boxShadow: "0 8px 24px rgba(0,0,0,0.15)",
-                        backgroundColor: "#ffffff",
-                        border: "1px solid #e2e8f0",
-                      }}
+                      className={`profile_action ${isProfileOpen ? "is-open" : ""}`}
                     >
                       {isAdmin && (
                         <div
-                          style={{ cursor: "pointer", fontWeight: 600, color: "#2563eb", padding: "4px 0" }}
+                          className="profile_action-item admin-portal"
                           onClick={() => {
-                            setShowLogout(false);
+                            closeProfileDropdown();
                             navigate("/admin/all-products");
                           }}
                         >
-                          <i className="ri-dashboard-line me-1"></i> Admin Portal
+                          <i className="ri-dashboard-line"></i>
+                          <span>Quản trị hệ thống</span>
                         </div>
                       )}
                       <div
-                        style={{ cursor: "pointer", fontWeight: 500, color: "#1e293b", padding: "4px 0" }}
+                        className="profile_action-item"
                         onClick={() => {
-                          setShowLogout(false);
+                          closeProfileDropdown();
                           navigate("/profile");
                         }}
                       >
-                        <i className="ri-user-3-line me-1"></i> My Profile
+                        <i className="ri-user-3-line"></i>
+                        <span>Tài khoản của tôi</span>
                       </div>
                       <div
-                        style={{ cursor: "pointer", fontWeight: 500, color: "#ef4444", padding: "4px 0" }}
-                        onClick={logoutUser}
+                        className="profile_action-item"
+                        onClick={() => {
+                          closeProfileDropdown();
+                          navigate("/order");
+                        }}
                       >
-                        <i className="ri-logout-box-r-line me-1"></i> Logout
+                        <i className="ri-file-list-3-line"></i>
+                        <span>Đơn mua</span>
+                      </div>
+                      <div className="profile_action-divider"></div>
+                      <div
+                        className="profile_action-item logout-item"
+                        onClick={() => {
+                          closeProfileDropdown();
+                          logoutUser();
+                        }}
+                      >
+                        <i className="ri-logout-box-r-line"></i>
+                        <span>Đăng xuất</span>
                       </div>
                     </div>
-                  </div>
+                  </>
                 ) : (
-                  <div>
+                  <>
                     <motion.img
-                      whileTap={{ scale: 1.2 }}
+                      whileHover={{ scale: 1.08 }}
+                      whileTap={{ scale: 0.95 }}
                       src={userIcon}
                       alt="user_Icon"
                       onClick={navigateToLogin}
                     />
-                  </div>
+                    <div
+                      className={`profile_action ${isProfileOpen ? "is-open" : ""}`}
+                    >
+                      <div
+                        className="profile_action-item"
+                        onClick={() => {
+                          closeProfileDropdown();
+                          navigate("/login");
+                        }}
+                      >
+                        <i className="ri-login-box-line"></i>
+                        <span>Đăng nhập</span>
+                      </div>
+                      <div
+                        className="profile_action-item"
+                        onClick={() => {
+                          closeProfileDropdown();
+                          navigate("/signup");
+                        }}
+                      >
+                        <i className="ri-user-add-line"></i>
+                        <span>Đăng ký</span>
+                      </div>
+                    </div>
+                  </>
                 )}
               </div>
               <div className="mobile__menu">

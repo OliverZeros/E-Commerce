@@ -1,13 +1,74 @@
+/* =========================================================
+   Luxury Countdown Clock
+   ========================================================= */
+
+.clock__wrapper {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 24px 0 32px 0;
+}
+
+.clock__item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+
+.clock__tile {
+  background: rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 12px;
+  min-width: 64px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.15);
+}
+
+.clock__number {
+  color: #ffffff;
+  font-size: 1.6rem;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.5px;
+}
+
+.clock__label {
+  color: #94a3b8;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  font-weight: 500;
+}
+
+.clock__divider {
+  color: rgba(255, 255, 255, 0.4);
+  font-size: 1.4rem;
+  font-weight: 600;
+  margin-bottom: 22px;
+}
+
 @media only screen and (max-width: 992px) {
-    .clock__wrapper {
-        justify-content: center;
-    }
+  .clock__wrapper {
+    justify-content: center;
+  }
+}
 
-    .clock__data h1 {
-        font-size: 1.1rem !important;
-    }
-
-    .clock__data h5 {
-        font-size: 0.9rem !important;
-    }
+@media only screen and (max-width: 576px) {
+  .clock__tile {
+    min-width: 48px;
+    height: 48px;
+  }
+  .clock__number {
+    font-size: 1.25rem;
+  }
+  .clock__divider {
+    font-size: 1rem;
+    margin-bottom: 18px;
+  }
 }

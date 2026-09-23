@@ -1,27 +1,27 @@
 const serviceData = [
   {
     icon: "ri-truck-line",
-    title: "Free Shipping",
-    // subtitle: "Lorem ipsum dolor sit amet.",
-    bg: "#fdefe6",
+    title: "Giao Lắp Tận Nơi",
+    subtitle: "Miễn phí vận chuyển & hỗ trợ lắp đặt trọn gói trong phòng bạn chọn",
+    tag: "White Glove",
   },
   {
-    icon: "ri-refresh-line",
-    title: "Easy Returns",
-    // subtitle: "Lorem ipsum dolor sit amet.",
-    bg: "#ceebe9",
+    icon: "ri-shield-check-line",
+    title: "Bảo Hành 10 Năm",
+    subtitle: "Cam kết khung sườn gỗ tự nhiên & chất liệu chế tác cao cấp",
+    tag: "Certified",
   },
   {
-    icon: "ri-secure-payment-line",
-    title: "Secure Payment",
-    // subtitle: "Lorem ipsum dolor sit amet.",
-    bg: "#e2f2b2",
+    icon: "ri-home-heart-line",
+    title: "30 Ngày Trải Nghiệm",
+    subtitle: "Thử sản phẩm trực tiếp tại nhà, đổi trả thuận tiện không phiền hà",
+    tag: "Risk-Free",
   },
   {
-    icon: "ri-exchange-dollar-line",
-    title: " Back Guarantee",
-    // subtitle: "Lorem ipsum dolor sit amet.",
-    bg: "#d6e5fb",
+    icon: "ri-customer-service-2-line",
+    title: "Tư Vấn Thiết Kế 1-1",
+    subtitle: "Kiến trúc sư nội thất đồng hành lên phối cảnh không gian miễn phí",
+    tag: "Interior Pro",
   },
 ];
 

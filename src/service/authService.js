@@ -3,8 +3,15 @@ import api from "./api";
 const API_ENDPOINT = "/auth";
 
 export const loginService = (data) => {
+  const account = (
+    data.identifier ||
+    data.email ||
+    data.username ||
+    ""
+  ).trim();
+
   return api.post(`${API_ENDPOINT}/login`, {
-    username: data.email.trim(),
+    identifier: account,
     password: data.password,
   });
 };

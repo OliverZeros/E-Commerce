@@ -1,88 +1,143 @@
-import React from "react";
-import { useState } from "react";
-import Helmet from "../components/Helmet/Helmet";
-import { toast } from "react-toastify";
-import { useNavigate, Link } from "react-router-dom";
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { Container, Row, Col, Form, FormGroup } from "reactstrap";
 import { useDispatch } from "react-redux";
+import { toast } from "react-toastify";
+
+import Helmet from "../components/Helmet/Helmet";
+import UiverseButton from "../components/UI/UiverseButton";
 import { login } from "../redux/slices/authSlice";
 import { loginService } from "../service/authService";
 
 import "../styles/login.css";
 
 const Login = () => {
-  const [email, setemail] = useState("");
+  const [account, setAccount] = useState("");
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+  const [loading, setLoading] = useState(false);
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const handleEmailChange = (e) => {
-    setemail(e.target.value);
-  };
-
-  const handlePasswordChange = (e) => {
-    setPassword(e.target.value);
-  };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (!account.trim() || !password) {
+      toast.error("Vui lòng điền email hoặc tên đăng nhập và mật khẩu");
+      return;
+    }
+
     try {
-      const response = await loginService({
-        email,
-        password,
-      });
+      setLoading(true);
+      const response = await loginService({ identifier: account.trim(), password });
       const data = response.data;
       const token = data.bearer;
-      const isadmin = Boolean(data.isAdmin);
-      dispatch(login({ token, isAdmin: isadmin }));
-      toast.success("Logged in successfully");
-      if (isadmin) {
+      const isAdmin = Boolean(data.isAdmin);
+
+      dispatch(login({ token, isAdmin }));
+      toast.success("Đăng nhập thành công!");
+
+      if (isAdmin) {
         navigate("/admin/all-products");
       } else {
         navigate("/home");
       }
     } catch (error) {
       console.error("Login failed:", error);
-      toast.error("Invalid email or password! Plaese try again!");
+      toast.error(
+        error.response?.data?.message ||
+          "Email, tên đăng nhập hoặc mật khẩu không chính xác! Vui lòng thử lại."
+      );
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
-    <Helmet title={"Login"}>
-      <section>
+    <Helmet title="Đăng Nhập - Nội Thất Cao Cấp">
+      <section className="auth__section">
         <Container>
-          <Row>
-            <Col lg="6" className="m-auto text-center">
-              <h3 className="fw-bold mb-4">Login</h3>
+          <Row className="justify-content-center">
+            <Col lg="5" md="8" sm="11">
+              <div className="auth__luxury-card">
+                {/* Brand Header */}
+                <div className="auth__brand-header text-center">
+                  <div className="auth__icon-wrap">
+                    <i className="ri-user-smile-line"></i>
+                  </div>
+                  <h3 className="auth__title">Chào Mừng Trở Lại</h3>
+                  <p className="auth__subtitle">
+                    Đăng nhập để tiếp tục trải nghiệm không gian sống tinh tế
+                  </p>
+                </div>
 
-              <Form className="auth__form" onSubmit={handleSubmit}>
-                <FormGroup className="form__group">
-                  <input
-                    type="text"
-                    id="email"
-                    value={email}
-                    onChange={handleEmailChange}
-                    placeholder="Enter your email"
-                  />
-                </FormGroup>
+                {/* Form */}
+                <Form onSubmit={handleSubmit} className="auth__form-inner">
+                  <FormGroup className="auth__form-group">
+                    <label className="auth__input-label">Email hoặc Tên đăng nhập</label>
+                    <div className="auth__input-wrap">
+                      <i className="ri-user-line input-icon"></i>
+                      <input
+                        type="text"
+                        id="account"
+                        value={account}
+                        onChange={(e) => setAccount(e.target.value)}
+                        placeholder="Nhập email hoặc tên đăng nhập..."
+                        required
+                        autoComplete="username"
+                      />
+                    </div>
+                  </FormGroup>
 
-                <FormGroup className="form__group">
-                  <input
-                    type="password"
-                    id="password"
-                    value={password}
-                    onChange={handlePasswordChange}
-                    placeholder="Enter your password"
-                  />
-                </FormGroup>
+                  <FormGroup className="auth__form-group">
+                    <div className="d-flex justify-content-between align-items-center mb-1">
+                      <label className="auth__input-label mb-0">Mật khẩu</label>
+                      <span className="auth__forgot-link">Quên mật khẩu?</span>
+                    </div>
+                    <div className="auth__input-wrap">
+                      <i className="ri-lock-password-line input-icon"></i>
+                      <input
+                        type={showPassword ? "text" : "password"}
+                        id="password"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                        placeholder="Nhập mật khẩu của bạn"
+                        required
+                      />
+                      <button
+                        type="button"
+                        className="password-toggle-btn"
+                        onClick={() => setShowPassword(!showPassword)}
+                      >
+                        <i
+                          className={
+                            showPassword ? "ri-eye-off-line" : "ri-eye-line"
+                          }
+                        ></i>
+                      </button>
+                    </div>
+                  </FormGroup>
 
-                <button type="submit" className="buy__btn auth__btn">
-                  Login
-                </button>
-                <p>
-                  Don't have account? <Link to="/signup">Create account</Link>
-                </p>
-              </Form>
+                  {/* Large Button with OliverZeros bitter-parrot-97 effect */}
+                  <div className="mt-4">
+                    <UiverseButton
+                      text={loading ? "Đang xử lý..." : "Đăng Nhập"}
+                      type="submit"
+                      variant="vibrant"
+                      className="w-100"
+                      disabled={loading}
+                      icon="ri-login-box-line"
+                    />
+                  </div>
+
+                  <div className="auth__footer-text text-center mt-4">
+                    <span>Chưa có tài khoản? </span>
+                    <Link to="/signup" className="auth__switch-link">
+                      Tạo tài khoản mới
+                    </Link>
+                  </div>
+                </Form>
+              </div>
             </Col>
           </Row>
         </Container>

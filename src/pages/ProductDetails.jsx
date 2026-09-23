@@ -10,6 +10,8 @@ import { addToCartService } from "../service/cartService";
 import { toast } from "react-toastify";
 import { useSelector, useDispatch } from "react-redux";
 import { cartActions } from "../redux/slices/cartSlice";
+import { wishlistActions } from "../redux/slices/wishlistSlice";
+import { getProductById } from "../service/productService";
 import { useNavigate } from "react-router-dom";
 
 import "../styles/product-details.css";
@@ -23,9 +25,40 @@ const ProductDetails = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const [rating, setRating] = useState(null);
   const { id } = useParams();
   const product = products.find((item) => item.id === id);
+  const [fetchedProduct, setFetchedProduct] = useState(null);
+  const [loading, setLoading] = useState(!product);
+
+  const currentProduct = product || fetchedProduct;
+
+  useEffect(() => {
+    if (!product && id) {
+      setLoading(true);
+      getProductById(id)
+        .then((res) => {
+          setFetchedProduct(res.data);
+        })
+        .catch((err) => {
+          console.error("Failed to load product detail:", err);
+        })
+        .finally(() => setLoading(false));
+    }
+  }, [id, product]);
+
+  const wishlistItems = useSelector((state) => state.wishlist.wishlistItems);
+  const [rating, setRating] = useState(null);
+  const isFavorite = wishlistItems.some((fav) => fav.id === id);
+
+  const toggleWishlist = () => {
+    if (!currentProduct) return;
+    dispatch(wishlistActions.toggleWishlist(currentProduct));
+    if (isFavorite) {
+      toast.info("Đã xóa khỏi danh sách yêu thích");
+    } else {
+      toast.success("Đã thêm vào danh sách yêu thích ❤️");
+    }
+  };
 
   const submitHandler = (e) => {
     e.preventDefault();
@@ -42,9 +75,14 @@ const ProductDetails = () => {
     console.log(revewObj);
     toast.success("Review submitted");
   };
-  const relatedProducts = products.filter(
-    (item) => item.productType.category === product.productType.category
-  );
+
+  const relatedProducts = (products || []).filter((item) => {
+    if (!currentProduct) return false;
+    const currentCat =
+      currentProduct.category || currentProduct.productType?.category;
+    const itemCat = item.category || item.productType?.category;
+    return currentCat && itemCat === currentCat && item.id !== currentProduct.id;
+  });
 
   const addToCart = async () => {
     if (!token) {
@@ -67,57 +105,133 @@ const ProductDetails = () => {
 
   useEffect(() => {
     window.scrollTo(0, 0);
-  }, [product]);
+  }, [currentProduct]);
+
+  if (loading) {
+    return (
+      <Helmet title="Đang tải...">
+        <CommonSection title="Chi Tiết Sản Phẩm" />
+        <div className="text-center py-5">
+          <div className="spinner-border text-primary" role="status"></div>
+          <p className="mt-3 text-muted">Đang tải thông tin sản phẩm...</p>
+        </div>
+      </Helmet>
+    );
+  }
+
+  if (!currentProduct) {
+    return (
+      <Helmet title="Không tìm thấy sản phẩm">
+        <CommonSection title="Sản Phẩm Không Tồn Tại" />
+        <div className="text-center py-5">
+          <h3 className="text-muted mb-3">Sản phẩm không tồn tại hoặc đã bị xóa.</h3>
+          <button className="buy__btn" onClick={() => navigate("/shop")}>
+            Khám phá cửa hàng
+          </button>
+        </div>
+      </Helmet>
+    );
+  }
+
+  const imgSrc = (
+    Array.isArray(currentProduct.imageUrl)
+      ? currentProduct.imageUrl[0]
+      : currentProduct.imageUrl || "/noavatar.png"
+  ).replace(/^http:\/\//i, "https://");
+
+  const categoryName =
+    currentProduct.category ||
+    currentProduct.productType?.category ||
+    "Nội thất";
+
+  const formattedPrice = currentProduct.price
+    ? Number(currentProduct.price).toLocaleString("vi-VN") + " VNĐ"
+    : "Liên hệ";
 
   return (
-    <Helmet title={product.name}>
-      <CommonSection title={product.name} />
+    <Helmet title={currentProduct.name}>
+      <CommonSection title={currentProduct.name} />
       <section className="pt-0">
         <Container>
           <Row>
             <Col lg="6">
               <div className="product__image">
-                <img src={product.imageUrl} alt={product.name} />
+                <img
+                  src={imgSrc}
+                  alt={currentProduct.name}
+                  onError={(e) => {
+                    e.target.src = "/noavatar.png";
+                  }}
+                />
               </div>
             </Col>
 
             <Col lg="6">
               <div className="product__details">
-                <h2>{product.name}</h2>
+                <h2>{currentProduct.name}</h2>
                 <div className="product__rating d-flex align-item-center gap-5 mb-3">
                   <div>
                     <span>
-                      <i class="ri-star-s-fill"></i>
+                      <i className="ri-star-s-fill"></i>
                     </span>
                     <span>
-                      <i class="ri-star-s-fill"></i>
+                      <i className="ri-star-s-fill"></i>
                     </span>
                     <span>
-                      <i class="ri-star-s-fill"></i>
+                      <i className="ri-star-s-fill"></i>
                     </span>
                     <span>
-                      <i class="ri-star-s-fill"></i>
+                      <i className="ri-star-s-fill"></i>
                     </span>
                     <span>
-                      <i class="ri-star-s-fill"></i>
+                      <i className="ri-star-s-fill"></i>
                     </span>
                   </div>
                   <p>
-                    (<span>{product.rating}</span> ratings)
+                    (<span>{currentProduct.rating || 5}</span> ratings)
                   </p>
                 </div>
 
                 <div className="d-flex align-items-center gap-5">
-                  <span className="product__price">{product.price} VNĐ</span>
-                  <span>Category:{product.productType.category}</span>
+                  <span className="product__price">{formattedPrice}</span>
+                  <span>Danh mục: {categoryName}</span>
                 </div>
-                <motion.button
-                  whileTap={{ scale: 1.2 }}
-                  className="buy__btn"
-                  onClick={addToCart}
-                >
-                  Add to Cart
-                </motion.button>
+                <div className="d-flex align-items-center gap-3 mt-4">
+                  <motion.button
+                    whileTap={{ scale: 0.95 }}
+                    className="buy__btn m-0"
+                    onClick={addToCart}
+                  >
+                    <i className="ri-shopping-bag-line me-1"></i> Add to Cart
+                  </motion.button>
+                  <motion.button
+                    whileTap={{ scale: 0.92 }}
+                    whileHover={{ scale: 1.04 }}
+                    type="button"
+                    className={`wishlist__btn ${isFavorite ? "active" : ""}`}
+                    onClick={toggleWishlist}
+                    style={{
+                      padding: "10px 20px",
+                      borderRadius: "8px",
+                      border: isFavorite ? "1px solid #ef4444" : "1px solid #cbd5e1",
+                      backgroundColor: isFavorite ? "#fef2f2" : "#ffffff",
+                      color: isFavorite ? "#ef4444" : "#475569",
+                      fontWeight: 600,
+                      cursor: "pointer",
+                      display: "inline-flex",
+                      alignItems: "center",
+                      gap: "8px",
+                      transition: "all 0.2s ease",
+                      boxShadow: isFavorite ? "0 2px 10px rgba(239, 68, 68, 0.15)" : "0 2px 6px rgba(0,0,0,0.04)",
+                    }}
+                  >
+                    <i
+                      className={isFavorite ? "ri-heart-fill" : "ri-heart-line"}
+                      style={{ fontSize: "1.2rem", color: isFavorite ? "#ef4444" : "#64748b" }}
+                    ></i>
+                    <span>{isFavorite ? "Đã Yêu Thích" : "Lưu Yêu Thích"}</span>
+                  </motion.button>
+                </div>
               </div>
             </Col>
           </Row>
@@ -144,7 +258,7 @@ const ProductDetails = () => {
               </div>
               {tab === "desc" ? (
                 <div className="tab__content mt-5">
-                  <p>{product.description}</p>
+                  <p>{currentProduct.description || "Chưa có mô tả chi tiết cho sản phẩm này."}</p>
                 </div>
               ) : (
                 <div className="product__review">
@@ -152,7 +266,7 @@ const ProductDetails = () => {
                     <ul>
                       <li className="mb-4">
                         <h6>Jhon Doe</h6>
-                        <span>{product.rating}( rating)</span>
+                        <span>{currentProduct.rating || 5}( rating)</span>
                       </li>
                     </ul>
 

@@ -84,32 +84,113 @@
   z-index: 10;
 }
 
-.nav__icons .profile img {
-  width: 35px;
-  height: 35px;
-  cursor: pointer;
-  border-radius: 50%;
-}
-
 .nav__icons .profile {
   position: relative;
-  z-index: 9;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+}
+
+.nav__icons .profile img {
+  width: 36px;
+  height: 36px;
+  cursor: pointer;
+  border-radius: 50%;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.nav__icons .profile:hover img {
+  transform: scale(1.08);
 }
 
 .nav__icons .profile .profile_action {
   position: absolute;
-  top: 92%;
+  top: calc(100% + 10px);
+  right: 0;
+  min-width: 190px;
+  z-index: 1000;
+  padding: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 14px;
+  box-shadow: 0 14px 35px rgba(15, 23, 42, 0.12), 0 4px 10px rgba(15, 23, 42, 0.04);
+  line-height: normal;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(8px);
+  transition: opacity 0.2s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.2s cubic-bezier(0.16, 1, 0.3, 1),
+              visibility 0.2s;
+  pointer-events: none;
+}
+
+/* Invisible bridge ensures smooth mouse transition from avatar to dropdown */
+.nav__icons .profile .profile_action::before {
+  content: "";
+  position: absolute;
+  top: -14px;
   left: 0;
-  width: 150px;
-  z-index: 10;
-  padding: 15px;
+  width: 100%;
+  height: 14px;
+}
+
+/* Show on hover or when open class is applied */
+.nav__icons .profile:hover .profile_action,
+.nav__icons .profile .profile_action.is-open {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+.profile_action-item {
   display: flex;
   align-items: center;
-  flex-direction: column;
-  background: var(--card-bg-01);
-  line-height: 30px;
-  margin-top: 0;
+  gap: 10px;
+  padding: 9px 12px;
+  border-radius: 9px;
+  font-size: 0.88rem;
+  font-weight: 500;
+  color: #334155;
   cursor: pointer;
+  transition: all 0.18s ease;
+  text-decoration: none;
+}
+
+.profile_action-item:hover {
+  background-color: #f1f5f9;
+  color: #0f172a;
+}
+
+.profile_action-item i {
+  font-size: 1.15rem;
+  line-height: 1;
+}
+
+.profile_action-item.admin-portal {
+  color: #2563eb;
+  font-weight: 600;
+}
+.profile_action-item.admin-portal:hover {
+  background-color: #eff6ff;
+  color: #1d4ed8;
+}
+
+.profile_action-item.logout-item {
+  color: #ef4444;
+}
+.profile_action-item.logout-item:hover {
+  background-color: #fef2f2;
+  color: #dc2626;
+}
+
+.profile_action-divider {
+  height: 1px;
+  background-color: #f1f5f9;
+  margin: 4px 6px;
 }
 
 .mobile__menu {
