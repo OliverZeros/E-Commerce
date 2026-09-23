@@ -206,16 +206,13 @@ const Chatbot = () => {
         <button
           className="chatbot__trigger-btn"
           onClick={() => setIsOpen(true)}
-          title="Trợ lý AI tư vấn mua sắm"
+          title="Trợ lý mua sắm"
           aria-label="Open AI Chatbot"
         >
           <div className="chatbot__trigger-icon">
-            <AIIcon size={18} />
+            <AIIcon size={19} />
           </div>
-          <div className="chatbot__trigger-content">
-            <span className="chatbot__trigger-title">Trợ lý AI</span>
-            <span className="chatbot__trigger-subtitle">Hỏi đáp & Đổi trả</span>
-          </div>
+          <span className="chatbot__trigger-title">Trợ lý mua sắm</span>
           {hasUnread && <span className="chatbot__unread-dot"></span>}
         </button>
       )}
