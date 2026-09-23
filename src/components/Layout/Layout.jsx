@@ -5,6 +5,7 @@ import Routes from "../../routes/Routers";
 
 import AdminNav from "../../admin/page/AdminNav";
 import { useLocation } from "react-router-dom";
+import Chatbot from "../Chatbot/Chatbot";
 
 const Layout = () => {
   const location = useLocation();
@@ -17,13 +18,16 @@ const Layout = () => {
     );
   }
 
+  const isAdmin = location.pathname.startsWith("/admin");
+
   return (
     <>
-      {location.pathname.startsWith("/admin") ? <AdminNav /> : <Header />}
+      {isAdmin ? <AdminNav /> : <Header />}
       <div>
         <Routes />
       </div>
       <Footer />
+      {!isAdmin && <Chatbot />}
     </>
   );
 };
