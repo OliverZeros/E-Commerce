@@ -7,54 +7,16 @@ import { addToCartService } from "../../service/cartService";
 import { sendMessageToBot, getQuickQuestions } from "../../service/chatbotService";
 import "./chatbot.css";
 
-// Icon SVG Robot AI cao cấp, sắc nét và hiện đại
-const RobotIcon = ({ size = 38 }) => (
+// Icon AI tối giản, tinh tế chuẩn phong cách hiện đại
+const AIIcon = ({ size = 18, className = "" }) => (
   <svg
     width={size}
     height={size}
-    viewBox="0 0 36 36"
-    fill="none"
-    xmlns="http://www.w3.org/2000/svg"
-    className="chatbot__robot-svg"
+    viewBox="0 0 24 24"
+    fill="currentColor"
+    className={className}
   >
-    <defs>
-      <linearGradient id="aiOrbGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-        <stop offset="0%" stopColor="#38bdf8" />
-        <stop offset="50%" stopColor="#6366f1" />
-        <stop offset="100%" stopColor="#a855f7" />
-      </linearGradient>
-      <linearGradient id="aiFaceGrad" x1="0%" y1="0%" x2="0%" y2="100%">
-        <stop offset="0%" stopColor="#1e293b" />
-        <stop offset="100%" stopColor="#0f172a" />
-      </linearGradient>
-    </defs>
-    {/* Outer soft glowing halo */}
-    <circle cx="18" cy="18" r="17" fill="url(#aiOrbGrad)" />
-    
-    {/* Antenna */}
-    <path d="M18 10V6.5" stroke="#ffffff" strokeWidth="1.6" strokeLinecap="round" />
-    <circle cx="18" cy="5" r="2.2" fill="#38bdf8" stroke="#ffffff" strokeWidth="0.8" />
-    
-    {/* Robot Head Body */}
-    <rect x="8.5" y="10.5" width="19" height="15" rx="5" fill="url(#aiFaceGrad)" stroke="rgba(255,255,255,0.9)" strokeWidth="1.4" />
-    
-    {/* Glowing Eyes */}
-    <circle cx="13.5" cy="17.5" r="2.2" fill="#38bdf8" />
-    <circle cx="22.5" cy="17.5" r="2.2" fill="#38bdf8" />
-    {/* Specular highlights */}
-    <circle cx="14.2" cy="16.7" r="0.8" fill="#ffffff" />
-    <circle cx="23.2" cy="16.7" r="0.8" fill="#ffffff" />
-    
-    {/* Cheeks */}
-    <circle cx="11.2" cy="20.2" r="1.1" fill="#f472b6" opacity="0.85" />
-    <circle cx="24.8" cy="20.2" r="1.1" fill="#f472b6" opacity="0.85" />
-
-    {/* Friendly Smile */}
-    <path d="M15 21.2C16.2 22.4 19.8 22.4 21 21.2" stroke="#ffffff" strokeWidth="1.3" strokeLinecap="round" />
-    
-    {/* Tiny sparkles */}
-    <path d="M29 6.5L29.6 8.2L31.5 8.8L29.6 9.4L29 11L28.4 9.4L26.5 8.8L28.4 8.2L29 6.5Z" fill="#fde047" />
-    <path d="M5.5 21.5L6 22.8L7.5 23.2L6 23.7L5.5 25L5 23.7L3.5 23.2L5 22.8L5.5 21.5Z" fill="#67e8f9" />
+    <path d="M12 2L14.4 8.6L21 11L14.4 13.4L12 20L9.6 13.4L3 11L9.6 8.6L12 2ZM19 15L20 17.5L22.5 18.5L20 19.5L19 22L18 19.5L15.5 18.5L18 17.5L19 15Z" />
   </svg>
 );
 
@@ -244,23 +206,15 @@ const Chatbot = () => {
         <button
           className="chatbot__trigger-btn"
           onClick={() => setIsOpen(true)}
-          title="Chat với Trợ lý AI E-Commerce"
+          title="Trợ lý AI tư vấn mua sắm"
           aria-label="Open AI Chatbot"
         >
-          <div className="chatbot__trigger-glow"></div>
           <div className="chatbot__trigger-icon">
-            <RobotIcon size={38} />
+            <AIIcon size={18} />
           </div>
           <div className="chatbot__trigger-content">
-            <div className="chatbot__trigger-badge">
-              <span className="chatbot__badge-sparkle">✨</span>
-              <span>AI ASSISTANT</span>
-              <span className="chatbot__live-dot" title="Đang trực tuyến"></span>
-            </div>
-            <span className="chatbot__trigger-title">Hỏi về sản phẩm & đổi trả</span>
-          </div>
-          <div className="chatbot__trigger-chat-icon">
-            <i className="ri-chat-smile-2-fill"></i>
+            <span className="chatbot__trigger-title">Trợ lý AI</span>
+            <span className="chatbot__trigger-subtitle">Hỏi đáp & Đổi trả</span>
           </div>
           {hasUnread && <span className="chatbot__unread-dot"></span>}
         </button>
@@ -274,7 +228,7 @@ const Chatbot = () => {
             <div className="chatbot__header-info">
               <div className="chatbot__avatar-wrapper">
                 <div className="chatbot__avatar">
-                  <RobotIcon size={38} />
+                  <AIIcon size={20} />
                 </div>
                 <span className="chatbot__status-dot"></span>
               </div>
