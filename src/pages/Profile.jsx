@@ -164,13 +164,9 @@ const Profile = () => {
                     <h3 className="fw-bold mb-0 text-dark">
                       {userData?.username || "Valued Customer"}
                     </h3>
-                    <span
-                      className={`badge rounded-pill ${
-                        userData?.usertype === "ADMIN" ? "bg-danger" : "bg-primary"
-                      }`}
-                    >
-                      {userData?.usertype || "CUSTOMER"}
-                    </span>
+                    {userData?.usertype === "ADMIN" && (
+                      <span className="badge rounded-pill bg-danger">ADMIN</span>
+                    )}
                   </div>
                   <p className="text-muted mb-0 d-flex align-items-center gap-1">
                     <i className="ri-mail-line"></i> {userData?.email || "No email available"}
